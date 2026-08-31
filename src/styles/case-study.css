@@ -1,0 +1,1457 @@
+    /* ---------- Case-study overlay ---------- */
+    /* Clicking a card zooms the full page open FROM that card (the panel scales
+       up from the card's position + fades in). The page's top image mirrors the
+       card's top image, so it reads as the card simply zooming into the page. */
+    /* full-bleed: the case study covers the ENTIRE screen (not a floating
+       card on a dimmed backdrop) — it just behaves like a modal: opens over
+       the page, locks scroll underneath, closes with the cross / Esc. */
+    .cs-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .cs-overlay.open { visibility: visible; pointer-events: auto; }
+
+    /* The paper background appears quickly; the ZOOM lives on the cover image
+       (a FLIP from the clicked card, set in JS) and the text FADES IN just
+       after — so it reads as the card's image opening up, then the copy
+       arriving slowly. */
+    .cs-panel {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background-color: var(--paper-bg);
+      background-image: var(--paper-image);
+      background-repeat: repeat;
+      background-size: var(--paper-size);
+      background-blend-mode: var(--paper-blend);
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+    .cs-overlay.open .cs-panel { opacity: 1; }
+
+    /* cover image zooms in with a single keyframe — identical for EVERY card
+       (no dependence on where the card sits or how the title wraps). 0.42s is
+       ~30% faster than the previous 0.6s. */
+    .cs-cover { transform-origin: center center; }
+    @keyframes cs-zoom {
+      from { transform: scale(0.72); }
+      to   { transform: scale(1); }
+    }
+    .cs-overlay.open .cs-cover { animation: cs-zoom 0.42s var(--ease); }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-overlay.open .cs-cover { animation: none; }
+    }
+
+    /* The header (title / meta / cover) shows immediately on open. Everything
+       below reveals on SCROLL: each content block fades + rises in as it enters
+       the viewport, and stays put (one-time — no re-animation on scroll back up).
+       JS adds .reveal-in via an IntersectionObserver. */
+    .cs-content .cs-section > *,
+    .cs-content .cs-divider,
+    .cs-content .cs-footer {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s var(--ease);
+    }
+    .cs-content .cs-section > .reveal-in,
+    .cs-content .cs-divider.reveal-in,
+    .cs-content .cs-footer.reveal-in {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-content .cs-section > *,
+      .cs-content .cs-divider,
+      .cs-content .cs-footer { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* quick section nav (scroll-spy) — floats in the left gutter */
+    .cs-nav {
+      position: fixed;
+      top: 50%;
+      left: 56px;
+      transform: translateY(-50%);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .cs-overlay.text-in .cs-nav { opacity: 1; }
+    .cs-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s var(--ease);
+    }
+    .cs-nav-item::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: transparent;
+      flex: none;
+      transition: background 0.3s var(--ease);
+    }
+    .cs-nav-item:hover { color: var(--text); }
+    .cs-nav-item.active { color: var(--text); }
+    .cs-nav-item.active::before { background: var(--accent); }
+
+    /* content sits in a readable centred 600px column on the full-bleed page —
+       exactly 600px, no horizontal padding, so text and images are a true
+       600px wide (matching the design's 600px column). */
+    .cs-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 80px 0 80px;
+    }
+    /* only pad the sides once the viewport is too narrow to hold 600px */
+    @media (max-width: 640px) {
+      .cs-content { padding-left: 20px; padding-right: 20px; }
+    }
+    /* back chevron sits to the LEFT of the title, hanging into the gutter
+       (per the design). It's fixed, so it stays pinned near the top of the
+       viewport at every scroll position while the case study is open.
+       left = column-centre (50%) − half-column (300) − 34px into the gutter. */
+    .cs-title-row { display: flex; align-items: flex-start; }
+    .cs-back {
+      position: fixed;
+      top: 88px;
+      left: max(20px, calc(50% - 358px));
+      flex: none;
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--card-bg);
+      border: 0.5px solid var(--hairline);
+      border-radius: 50%;
+      box-shadow: 0 1px 2px rgba(10, 13, 18, 0.05), inset 0 0 0 1px rgba(10, 13, 18, 0.04);
+      color: var(--icon);
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .cs-back:hover {
+      background: var(--card-bg-hover);
+      box-shadow: 0 2px 6px rgba(10, 13, 18, 0.10), inset 0 0 0 1px rgba(10, 13, 18, 0.04);
+    }
+    /* The overlay moves focus to this button on open (main.js), which otherwise
+       shows the browser's default blue focus ring. Suppress it for mouse/programmatic
+       focus; keep a tasteful accent ring for keyboard users (accessibility). */
+    .cs-back:focus { outline: none; }
+    .cs-back:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    /* The dialog container receives focus on open (to move focus into the study
+       for keyboard/AT users); it must never render a focus ring itself. */
+    .cs-overlay:focus, .cs-overlay:focus-visible { outline: none; }
+    /* On narrow widths the back arrow no longer has a side gutter to sit in, so it
+       lines up over the title column. Lift it into the top padding so it sits ~12px
+       ABOVE the title on first view instead of overlapping it; being fixed, it
+       stays pinned there while scrolling. (Placed after the base rule so it wins.) */
+    @media (max-width: 640px) {
+      .cs-back { top: 26px; }
+    }
+    .cs-back svg { display: block; }
+    .cs-section { scroll-margin-top: 32px; }
+    .cs-category {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 12px;
+    }
+    .cs-title {
+      font-size: 24px;
+      line-height: 36px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .cs-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;   /* columns stretched across the full width (design: SPACE_BETWEEN + fill) */
+      gap: 16px 40px;                   /* 40px = minimum column gap when space collapses; 16px row gap on wrap */
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .cs-meta > div { display: flex; flex-direction: column; gap: 6px; }
+    .cs-meta-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cs-meta-val { font-size: 14px; line-height: 20px; color: var(--text); }
+    .cs-cover {
+      margin-bottom: 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--hairline);    /* Figma cover frame: hairline border, no mat */
+      border-radius: 4px;
+      overflow: hidden;             /* image fills to the border (padding 0) */
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 6px 24px -14px rgba(0, 0, 0, 0.12);
+    }
+    .cs-cover img { display: block; width: 100%; height: auto; }
+
+    /* Case Study 2 (Cosmofeed): the hero cover also sits on the 6px white mat,
+       matching the Figma "Thumbnail" frame (white card, 6px padding, inner image
+       radius 3). The .cs-frame figures inherit the mat from the base rule. */
+    #caseStudyCosmo .cs-cover { padding: 6px; }
+    #caseStudyCosmo .cs-cover img { border-radius: 3px; }
+    /* This export is a self-contained white card (its baked-in shadow was cropped
+       out of the PNG), so it sits flush with no mat/border and gets its lift from a
+       CSS shadow instead. 6px radius matches the Figma card (Frame 2147262900). */
+    #caseStudyCosmo .cs-frame--flush {
+      padding: 0;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 28px -10px rgba(0, 0, 0, 0.14);
+    }
+    #caseStudyCosmo .cs-frame--flush > .cs-fig { border-radius: 6px; }
+
+    .cs-section { margin-bottom: 60px; scroll-margin-top: 32px; }
+    /* Merged sections group two headings under one nav item (About + Phase I on
+       Unify, About + Introduction on Cosmofeed). The second heading gets a 32px
+       gap from the first block, matching the design. */
+    #cs-phase1 p + h2, #csc-intro p + h2 { margin-top: 32px; }
+    /* every section heading is 16px / 30px Medium (from the design) */
+    .cs-section h2,
+    .cs-section h3 {
+      font-size: 16px;
+      line-height: 30px;
+      font-weight: 500;   /* Helvetica Neue Medium */
+      color: var(--text);
+      margin-bottom: 4px;   /* heading sits close to its body text (from the design) */
+    }
+    .cs-section h3 { margin-top: 24px; margin-bottom: 4px; }
+    /* a "hero" image directly under a heading: 16px above, 32px below (design) */
+    .cs-section h2 + .cs-frame, .cs-section h3 + .cs-frame,
+    .cs-section h2 + .cs-dubai, .cs-section h3 + .cs-dubai { margin-top: 16px; margin-bottom: 32px; }
+    .cs-section h2 + ul, .cs-section h2 + ol,
+    .cs-section h3 + ul, .cs-section h3 + ol { margin-top: 4px; }
+    /* the "Solving for 3Ts" sub-headings (1. Technical, etc.) are 15px, and each
+       sub-section is separated by 64px — except the first, which sits 12px under
+       the "Solving for 3Ts" heading (from the design) */
+    #cs-3ts h3 { font-size: 15px; line-height: 24px; margin-top: 64px; }
+    #cs-3ts h3:first-of-type { margin-top: 12px; }
+    #cs-problem h3 { margin-top: 32px; }
+    #cs-impact h3 { margin-top: 48px; }
+
+    /* ---- Case Study 2 (Cosmofeed): typography & spacing tuned to the Figma
+       design. h3 sub-headings are 15/26 Medium; sub-heading gaps are 32px
+       (Redesign/Research), 48px (Impact) and 60px (Addressing sub-sections). */
+    #caseStudyCosmo .cs-section h3 { font-size: 15px; line-height: 26px; margin-top: 32px; }
+    #caseStudyCosmo #csc-addressing h3 { margin-top: 60px; }
+    #caseStudyCosmo #csc-addressing h3:first-of-type { margin-top: 12px; }
+    #caseStudyCosmo #csc-impact h3 { margin-top: 48px; }
+    /* images: 32px block gap in top-level sections, 24px inside Addressing */
+    #caseStudyCosmo .cs-frame { margin: 32px 0; }
+    #caseStudyCosmo #csc-addressing .cs-frame { margin: 24px 0; }
+    /* framed figures use a 4px outer radius (Figma "Thumbnail" cards); the flush
+       intro/feedback exports keep their own 6px radius set above. */
+    #caseStudyCosmo .cs-frame:not(.cs-frame--flush) { border-radius: 4px; }
+    /* the feedback screenshot sits 12px under its heading (design) */
+    #caseStudyCosmo #csc-impact h3 + .cs-frame { margin-top: 12px; }
+    /* blockquote: muted-grey body with dark emphasis, 32px block gap */
+    #caseStudyCosmo .cs-section blockquote { margin: 32px 0; color: var(--quote-muted); }
+    #caseStudyCosmo .cs-section blockquote strong { color: var(--text); }
+    /* the attribution line sits in the dark text colour in the design (not muted) */
+    #caseStudyCosmo .cs-section blockquote cite { color: var(--text); }
+    /* list items keep the 6px inter-item gap (Figma text listSpacing = 6). */
+    #caseStudyCosmo .cs-section li { margin-bottom: 6px; }
+    /* bulleted lead-in labels (Frauds:, Product Policies:, Sale of illegal items:)
+       — Medium weight with a hanging bullet, each starting a 40px-separated
+       sub-block, sitting 4px above its body text (from the design) */
+    #caseStudyCosmo .cs-bullet {
+      position: relative;
+      padding-left: 20px;
+      font-weight: 500;
+      margin: 60px 0 4px;
+    }
+    #caseStudyCosmo .cs-bullet::before {
+      content: "\2022";
+      position: absolute;
+      left: 5px;
+      color: var(--text);
+    }
+    /* first bullet sits 12px under the sub-section heading; a bullet directly
+       above an image gets the design's 12px label-to-image gap */
+    #caseStudyCosmo #csc-addressing h3 + .cs-bullet { margin-top: 12px; }
+    /* Scoped to #csc-addressing so it out-specifies the section's 24px .cs-frame
+       margin — a bullet directly above an image keeps the design's 12px gap. */
+    #caseStudyCosmo #csc-addressing .cs-bullet + .cs-frame { margin-top: 12px; }
+    /* body text right after a bullet sits 4px below it (override the p+p 12px) */
+    #caseStudyCosmo .cs-bullet + p { margin-top: 0; }
+    /* inline label beside a section heading (e.g. "Aug 2024", the 3Ts subtitle) */
+    .cs-date,
+    .cs-subtitle { font-weight: 400; font-size: 15px; color: var(--muted); margin-left: 10px; }
+    /* subtle centred separator between sections (from the design) — sits in the
+       60px section gap, centred (60px above from the section, 60px below) */
+    .cs-divider { display: flex; justify-content: center; margin: 0 0 60px; }
+    .cs-divider img { display: block; width: 200px; height: auto; }
+    /* case-study footer: flower illustration + note + socials, centred at the
+       end of the column (reuses the landing-page footer illustration + socials) */
+    .cs-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-top: 100px;
+      text-align: center;
+    }
+    .cs-footer .social { justify-content: center; }
+    .cs-section p {
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--text);
+    }
+    .cs-section p + p { margin-top: 12px; }
+    .cs-section ul, .cs-section ol { margin: 12px 0; padding-left: 22px; }
+    .cs-section li { font-size: 15px; line-height: 26px; color: var(--text); margin-bottom: 6px; }
+    .cs-section blockquote {
+      margin: 24px 0;
+      padding-left: 16px;
+      border-left: 3px solid var(--accent);
+      font-style: italic;
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--text);
+    }
+    /* attribution line under a testimonial blockquote */
+    .cs-section blockquote cite {
+      display: block;
+      margin-top: 8px;
+      font-style: normal;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    /* Case Study 1 (UnifyApps): blockquotes are two-tone in the design — the
+       regular italic body is muted #666 and only the emphasised run is #3D3D3D
+       (matches the Cosmofeed treatment). */
+    #caseStudy .cs-section blockquote { color: var(--quote-muted); }
+    #caseStudy .cs-section blockquote strong { color: var(--text); }
+    /* metric cards: three self-contained card exports in an even row. They carry
+       their own shadow (transparent PNGs), so no frame/border is added here. */
+    .cs-stats {
+      display: flex;
+      gap: 16px;
+      margin: 32px 0 0;
+    }
+    .cs-stats img {
+      flex: 1 1 0;
+      min-width: 0;              /* allow shrinking below the image's 568px intrinsic width */
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* the metric cards stay in a single row at every width — each fills an equal
+       share (flex: 1) and scales down together rather than stacking on mobile. */
+    @media (max-width: 560px) {
+      .cs-stats { gap: 8px; }
+    }
+    /* case-study figures: each screenshot fills a framed card — a hairline border
+       and 6px radius, NO inner mat (Figma "V1": 0.5px #ECEAE7 border, padding 0,
+       image edge-to-edge). The Dubai polaroids are intentionally NOT framed (they
+       carry their own baked-in shadow/tilt). */
+    .cs-frame {
+      display: block;
+      background: var(--card-bg);
+      border: 0.5px solid var(--hairline);      /* Figma frame border */
+      border-radius: 6px;
+      overflow: hidden;
+      padding: 6px;                     /* 6px white mat around every screenshot */
+      margin: 24px 0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05), 0 6px 24px -14px rgba(0, 0, 0, 0.04);
+    }
+    .cs-fig { display: block; width: 100%; height: auto; }  /* fills the frame */
+    .cs-frame > .cs-fig { margin: 0; border-radius: 3px; }  /* inner image radius inside the mat */
+    /* Case Study 1 (UnifyApps): every figure export already BAKES IN its own
+       6px white mat + ~4px rounded corners (Figma "Thumbnail" frames), so the
+       CSS frame must NOT add its own padding — doing so produced a double mat
+       (~12px). The Phase I "V1" screenshot is the exception: it's flush (no mat,
+       6px corners). So here the card contributes only the hairline border +
+       shadow, with radius matched to each baked corner. */
+    #caseStudy .cs-frame { padding: 0; border-radius: 4px; }
+    #caseStudy .cs-frame > .cs-fig { border-radius: 4px; }
+    #caseStudy #cs-phase1 .cs-frame { border-radius: 6px; }
+    #caseStudy #cs-phase1 .cs-frame > .cs-fig { border-radius: 6px; }
+    /* the user-quotes graphic is a transparent SVG that already carries its own
+       cards — it needs NO mount frame or background; it sits straight on the paper. */
+    .cs-fig--plain { margin: 24px 0; border-radius: 0; box-shadow: none; background: none; }
+    /* real (non-placeholder) images open in a lightbox on click */
+    img.cs-zoom { cursor: zoom-in; }
+    /* empty image slots that are placeholders in the design */
+    .cs-fig.placeholder { aspect-ratio: 16 / 7; background: var(--thumb); }
+
+    /* placeholder image slot (used until real screenshots are dropped in): a
+       framed grey block with a small "image" glyph, matching the design's empty
+       image frames (588×368 ≈ 3:2). Sits inside a .cs-frame like a real figure. */
+    .cs-ph {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 588 / 368;
+      border-radius: 4px;                 /* INNER, matches .cs-fig */
+      background: var(--thumb-fill);
+      color: var(--ph-icon);
+    }
+    .cs-ph svg { display: block; width: 34px; height: 34px; }
+    /* cover placeholder keeps the same look but the cover's own aspect ratio */
+    .cs-cover .cs-ph { aspect-ratio: 16 / 9; }
+    /* modal cover placeholder fills the fixed 16:10 cover box */
+    .pm-cover .cs-ph { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; }
+
+    /* Dubai-sprint photos: three scattered polaroids (rotation + shadow are
+       baked into the exports), lightly overlapping and staggered like the
+       design. Each rises independently on hover. */
+    .cs-dubai {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 32px 0;
+    }
+    .cs-dubai img {
+      width: 38%;
+      height: auto;
+      position: relative;
+      /* drop-shadow (not box-shadow) so it follows each polaroid's tilted shape */
+      filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.1)) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.1));
+      transition: transform 0.32s var(--ease);
+    }
+    .cs-dubai img:nth-child(1) { margin-top: 7%;  margin-right: -7%; z-index: 1; }
+    .cs-dubai img:nth-child(2) { margin-top: 0;                      z-index: 3; }
+    .cs-dubai img:nth-child(3) { margin-top: 6%;  margin-left: -7%;  z-index: 2; }
+    .cs-dubai img:hover { transform: translateY(-12px); z-index: 4; }
+
+    /* ---------- Intro block (moved from the old project modal) ---------- */
+    /* Outcome metric cards (three-up), matching the Figma card frames:
+       189×144, 0.5px hairline border, 6px radius, 16/20 padding, soft shadow. */
+    .cs-metrics {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .cs-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 0.5px solid var(--hairline);
+      border-radius: 6px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+    .cs-metric-num {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--accent);
+    }
+    .cs-metric-text { display: flex; flex-direction: column; gap: 2px; }
+    .cs-metric-title { font-family: var(--sans); font-size: 14px; line-height: 24px; font-weight: 500; color: var(--text); }
+    .cs-metric-desc { font-family: var(--sans); font-size: 14px; line-height: 22px; color: var(--quote-muted); }
+
+    /* Embedded demo video (Canva) — the grey placeholder in the design. */
+    .cs-video {
+      position: relative;
+      aspect-ratio: 600 / 380;
+      margin: 32px 0 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--thumb-fill);
+    }
+    .cs-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* User-quote cards (Phase I): three exported cards (avatar + card + text),
+       each carrying its own soft shadow + transparent padding, so they lay out
+       in a simple 3-up grid with no extra chrome. */
+    .cs-quotes {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+      padding: 0;
+    }
+    .cs-quotes img { display: block; width: 100%; height: auto; }
+    @media (max-width: 560px) {
+      /* Keep the outcome + quote cards in a horizontal row on phones so they
+         stay compact instead of stretching to full width. */
+      .cs-metrics { gap: 8px; }
+      .cs-metric { padding: 12px 12px; gap: 12px; }
+      .cs-metric-num { font-size: 14px; line-height: 20px; }
+      .cs-metric-title { font-size: 13px; line-height: 18px; }
+      .cs-metric-desc { font-size: 12px; line-height: 17px; }
+      .cs-quotes { gap: 6px; }
+    }
+
+    /* ---------- Image lightbox / preview ---------- */
+    .cs-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;                              /* image → caption gap (design) */
+      padding: 40px 72px;
+      background: rgba(0, 0, 0, 0.6);         /* design overlay: black 60% */
+      -webkit-backdrop-filter: blur(8px);     /* design: background blur radius 8 */
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      cursor: zoom-out;
+      transition: opacity 0.28s ease, visibility 0.28s ease;
+    }
+    .cs-lightbox.open { opacity: 1; visibility: visible; }
+    .cs-lightbox img.cs-lightbox-img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: min(900px, 88vw);            /* design image width: 900px */
+      max-height: 78vh;
+      /* mat (padding + background) and radius are set inline per-image in JS to
+         mirror the on-page figure exactly; these are just sane fallbacks. */
+      background: var(--card-bg);
+      padding: 6px;
+      border-radius: 4px;
+    }
+    .cs-lightbox figcaption {
+      font-family: var(--sans);
+      font-size: 15px;                        /* design caption size */
+      line-height: 26px;                      /* design caption line-height */
+      color: rgba(255, 255, 255, 0.85);       /* design: white 85% */
+      text-align: center;
+      max-width: 900px;
+    }
+    /* prev / next navigators (design: 32px circle, black 80%, edge-anchored) */
+    .cs-lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .cs-lightbox-nav:hover { background: rgba(0, 0, 0, 0.95); }
+    .cs-lightbox-nav.prev { left: 24px; }
+    .cs-lightbox-nav.next { right: 24px; }
+    .cs-lightbox-nav svg { display: block; }
+
+    /* ---------- Project intro modal ---------- */
+    /* The UniFi apps card opens this first: a floating modal (cover image, a
+       short summary, and a pinned CTA) over a LIGHTLY-BLURRED page — no black
+       overlay, the page just softens behind it. Its CTA reveals the full case
+       study. Styled to match the site: red eyebrow, Helvetica Neue throughout,
+       soft rounded card. */
+    .pm-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      /* dark, blurred scrim (matches the Figma modal background: black 60% +
+         8px background-blur — same treatment as the preview/lightbox). */
+      background: rgba(0, 0, 0, 0.6);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.28s ease, visibility 0.28s ease;
+    }
+    .pm-overlay.open { opacity: 1; visibility: visible; }
+
+    .pm-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: min(560px, 100%);
+      max-height: min(880px, calc(100vh - 48px));
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
+      overflow: hidden;                          /* clip cover to rounded corners */
+      transform: translateY(16px) scale(0.98);
+      transition: transform 0.34s var(--ease);
+    }
+    .pm-overlay.open .pm-card { transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .pm-card { transform: none; transition: none; }
+    }
+
+    /* cover + header + body scroll together; the footer stays pinned */
+    .pm-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+    .pm-cover {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--thumb-fill);
+      display: block;
+    }
+    .pm-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .pm-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border: none;
+      border-radius: 50%;
+      background: var(--chip-translucent);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      color: var(--text);
+      cursor: pointer;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      transition: background 0.15s ease;
+    }
+    .pm-close:hover { background: var(--card-bg); }
+    .pm-close svg { display: block; }
+
+    .pm-head { padding: 26px 28px 22px; }
+    .pm-eyebrow {
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1;
+      color: var(--accent);
+      margin: 0 0 14px;
+    }
+    .pm-title {
+      font-family: var(--sans);
+      font-size: 27px;
+      line-height: 34px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+    .pm-sub {
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 25px;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+    .pm-tag {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1;
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 999px;
+      padding: 9px 14px;
+    }
+
+    .pm-rule { height: 1px; background: var(--card-border); margin: 0 28px; }
+
+    .pm-body { padding: 24px 28px 28px; }
+    .pm-body h3 {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 24px;
+      font-weight: 500;
+      color: var(--text);
+      margin: 0 0 10px;
+    }
+    .pm-body h3 + p { margin: 0 0 4px; }
+    .pm-body h3:not(:first-child) { margin-top: 24px; }
+    .pm-body p {
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 24px;
+      color: var(--icon);
+      margin: 0;
+    }
+
+    /* pinned footer + a soft fade so the body reads as scrolling under it */
+    .pm-foot { position: relative; flex: none; padding: 16px 28px 20px; background: var(--card-bg); }
+    .pm-foot::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; top: -28px;
+      height: 28px;
+      background: linear-gradient(to top, var(--card-bg), transparent);
+      pointer-events: none;
+    }
+    .pm-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--cta-text);
+      background: var(--cta-bg);
+      border: none;
+      border-radius: 12px;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .pm-cta:hover { background: var(--cta-hover); }
+    .pm-cta svg { display: block; }
+
+    /* ---- Unify project modal (detailed intro — Figma node 320:129042) ---- */
+    /* Fixed 540×760 card; the header + body scroll inside, footer stays pinned
+       (clamped to the viewport so it never overflows on short screens). */
+    .pm-study .pm-card {
+      width: min(540px, 100%);
+      height: min(760px, calc(100vh - 48px));
+      max-height: none;
+      border-radius: 10px;               /* Figma modal radius */
+    }
+    /* Inset, rounded cover image (6px white border on top/left/right). */
+    .pm-study .pm-cover {
+      padding: 6px 6px 0;
+      aspect-ratio: auto;
+      background: transparent;
+      flex: none;            /* stays pinned at the top; only .pm-scroll scrolls */
+    }
+    .pm-study .pm-cover-ph {
+      aspect-ratio: 528 / 314;
+      border-radius: 8px;
+      background: var(--thumb-fill);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Embedded demo video (Canva for Unify, YouTube for Cosmofeed) fills the
+       cover box; rounded corners clipped, grey placeholder shows while loading. */
+    .pm-study .pm-cover-ph iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .pm-study .pm-head { padding: 20px 20px 0; }
+    /* Red, sentence-case study title (20/28 Medium). */
+    .pm-study .pm-title {
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--accent);
+      margin: 0 0 20px;
+    }
+    /* Role / Timeline / Company meta row (both project-intro modals). 12px gap
+       between the label/value items; wraps onto the next line on narrow widths. */
+    .pm-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+    /* Each column fills an equal share of the row (fill container) but never
+       shrinks below its own content — so when the row gets too narrow the columns
+       wrap to the next line (keeping the 12px gap) instead of overlapping. */
+    .pm-meta-col { display: flex; flex-direction: column; gap: 8px; flex: 1 1 0; min-width: max-content; }
+    .pm-meta-val { white-space: nowrap; }
+    .pm-meta-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      line-height: 12px;
+      font-weight: 500;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pm-meta-val { font-family: var(--sans); font-size: 14px; line-height: 22px; color: var(--text); }
+    .pm-study .pm-rule { margin: 13px 0 0; height: 0.5px; }
+
+    .pm-study .pm-body {
+      padding: 20px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* TLDR block: label + quote + narrative paragraphs. */
+    .pm-tldr { display: flex; flex-direction: column; gap: 8px; }
+    /* Scoped under .pm-study so it beats the base `.pm-body h3` rule (the label
+       is an <h3>); otherwise h3's 17/24 + 10px margin leak in. */
+    .pm-study .pm-tldr-label {
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 26px;
+      font-weight: 500;
+      color: var(--text);
+      margin: 0;
+    }
+    .pm-tldr-content { display: flex; flex-direction: column; gap: 16px; }
+    /* Cosmofeed TLDR label sits tighter to its body (design gap 4 vs unify 8). */
+    #projectModalCosmo .pm-tldr { gap: 4px; }
+    .pm-tldr-content > p {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 24px;
+      color: var(--text);
+      margin: 0;
+    }
+    .pm-quote { display: flex; gap: 16px; margin: 0; }
+    .pm-quote::before {
+      content: "";
+      flex: none;
+      width: 3px;
+      align-self: stretch;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .pm-quote p {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 24px;
+      font-style: italic;
+      color: var(--text);
+      margin: 0;
+    }
+    .pm-quote strong { font-weight: 500; }
+
+    /* Three-up outcome stats. */
+    .pm-stats { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+    .pm-stat { display: flex; flex-direction: column; gap: 20px; padding: 0 16px; }
+    /* Leading metric sits flush to the column's left edge (Figma: first stat has
+       padding-left 0; both the 2-up and 3-up rows share this). */
+    .pm-stat:first-child { padding-left: 0; }
+    /* Hairline separators sit centred in the gutter with 16px of breathing room
+       on BOTH sides — a right-hand border on every metric except the last
+       (Figma nodes 320:129129 / 323:130174, 0.5px #E6E6E6). */
+    .pm-stat:not(:last-child) { border-right: 0.5px solid var(--hairline); }
+    .pm-stat-num { font-family: var(--mono); font-weight: 400; font-size: 16px; line-height: 24px; color: var(--accent); }
+    .pm-stat-text { display: flex; flex-direction: column; gap: 2px; }
+    .pm-stat-title { font-family: var(--sans); font-size: 14px; line-height: 24px; font-weight: 500; color: var(--text); }
+    .pm-stat-desc { font-family: var(--sans); font-size: 14px; line-height: 22px; color: var(--quote-muted); }
+
+    /* CTA with a trailing lock (locked case study). */
+    .pm-study .pm-foot { padding: 16px 20px; }
+    .pm-cta--locked { border-radius: 6px; font-size: 14px; line-height: 20px; padding: 8px 16px; gap: 6px; }
+
+    /* Close button straddles the top-right corner (Figma "Button utility"):
+       32px white circle, hairline border, soft shadow, dark X. The card must
+       allow overflow for the button to hang off the corner, so the scroll and
+       footer carry the rounding instead. */
+    .pm-study .pm-card { overflow: visible; }
+    /* Cover is pinned above the scroll, so the card's own rounded bg handles the
+       top corners; the footer rounds the bottom. */
+    .pm-study .pm-foot { border-radius: 0 0 10px 10px; }
+    .pm-study .pm-close {
+      top: -16px;
+      right: -16px;
+      background: var(--card-bg);
+      border: 1px solid var(--hairline);
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(10, 13, 18, 0.05);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cs-scrim, .cs-panel { transition: none; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 0 20px 108px; }
+      .page { padding-top: 40px; gap: 60px; }
+      .work-grid { grid-template-columns: 1fr; row-gap: 40px; }
+      .cs-content { padding: 64px 20px 88px; }
+      .cs-title { font-size: 24px; }
+    }
+
+    /* hide the floating nav when the gutter is too narrow to hold it */
+    @media (max-width: 1079px) {
+      .cs-nav { display: none; }
+    }
+
+    /* ---------- Art & play page (a dock-switched view) ---------- */
+    /* Only one <main> is visible at a time. The attribute-selector rule beats
+       .page's display:flex (higher specificity), so [hidden] truly hides. */
+    .page[hidden], .art-page[hidden], .about-page[hidden], .work-page[hidden] { display: none; }
+
+    .art-page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      /* 1200px is the Figma design width (4 × 285 cols + 3 × 20 gaps). Below that
+         the gallery stays a centred block with growing side gutters (min with
+         88vw) instead of bleeding to the screen edges — matches the contained,
+         centred feel of the Home column. */
+      max-width: min(1200px, 88vw);
+      margin: 0 auto;
+      padding-top: 80px;
+    }
+
+    /* Header is offset to the right, aligned to the 2nd grid column (per the
+       design), reusing the landing column's 600px measure. */
+    .art-head {
+      max-width: 600px;
+      margin-left: calc((100% - 60px) / 4 + 20px);   /* one column + one gap */
+      display: flex;
+      flex-direction: column;
+      gap: 8px;                        /* title → body copy (Figma) */
+      margin-bottom: 40px;
+    }
+    .art-title {
+      font-family: var(--sans);
+      font-weight: 500;                /* Helvetica Neue Medium, 24/36, accent */
+      font-size: 24px;
+      line-height: 36px;
+      color: var(--accent);
+    }
+    .art-desc {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;                       /* between the two paragraphs (Figma) */
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--text);
+    }
+
+    /* Balanced masonry (built in JS): images are distributed across the columns
+       by height, then every column is stretched to a shared height so all
+       columns END ON THE SAME LINE. Column count is set by JS per breakpoint. */
+    .art-grid { display: flex; gap: 20px; align-items: stretch; }
+    .art-col  { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+    .tile {
+      flex: 0 1 auto;                  /* JS sets flex-grow per tile so the
+                                          column fills its shared height */
+      min-height: 0;
+      overflow: hidden;
+      padding: 5px;                    /* white mat around the artwork */
+      background: var(--card-bg);
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08),
+                  0 6px 16px rgba(0, 0, 0, 0.05);
+      transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+    }
+    .tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10),
+                  0 12px 26px rgba(0, 0, 0, 0.08);
+    }
+    @media (prefers-reduced-motion: reduce) { .tile { transition: none; } }
+
+    /* Artwork fills the mat at its natural aspect ratio (no crop). The grey
+       shows only while the image loads. */
+    .tile-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;               /* fill the tile's flex height; crop is
+                                          minimal because columns are balanced */
+      border-radius: 3px;
+      background: var(--thumb-fill);
+    }
+
+    /* Footer: reuse the flower illustration + note + the shared chip-style
+       socials (same as the landing / case-study footers), sitting well below
+       the grid (matches the design's spacing). */
+    .art-foot { margin-top: 160px; }
+    .art-foot .social { justify-content: center; }
+
+    /* Below the full 4-column desktop, drop the column-2 offset so the header
+       aligns to the grid's left edge. The whole content block stays centred
+       (via .art-page); the text itself is always left-aligned. */
+    @media (max-width: 1200px) {
+      .art-head { margin-left: 0; }
+    }
+    @media (max-width: 900px) {
+      .art-foot { margin-top: 100px; }
+    }
+    @media (max-width: 520px) {
+      .art-page { padding-top: 40px; }
+    }
+
+    /* ---------- More work page (a dock-switched view) ---------- */
+    .work-page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: min(1200px, 88vw);
+      margin: 0 auto;
+      padding-top: 80px;
+    }
+
+    .work-head {
+      max-width: 600px;
+      margin: 0 auto 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    .work-title {
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 36px;
+      color: var(--accent);
+    }
+    .work-desc { font-size: 15px; line-height: 26px; color: var(--text); }
+
+    /* Bento grid of side-project previews: 2 fluid columns (matches the art
+       grid's 20px gap). Each tile keeps the desktop 590:400 crop ratio at
+       any width — height scales with the column instead of staying a fixed
+       400px, so narrower screens shrink the whole image instead of cropping
+       further into it. */
+    .mw-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+    .mw-card {
+      display: block;
+      margin: 0;
+      aspect-ratio: 59 / 40;
+      overflow: hidden;
+      padding: 5px;                    /* white mat around the screenshot */
+      background: var(--card-bg);
+      border: 0.5px solid var(--hairline);
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08),
+                  0 6px 16px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+    }
+    .mw-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10),
+                  0 12px 26px rgba(0, 0, 0, 0.08);
+    }
+    .mw-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 3px;
+      background: var(--thumb-fill);
+    }
+    @media (prefers-reduced-motion: reduce) { .mw-card { transition: none; } }
+
+    .work-foot { margin-top: 100px; }
+    .work-foot .social { justify-content: center; }
+
+    @media (max-width: 700px) {
+      .mw-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .work-page { padding-top: 40px; }
+      .work-foot { margin-top: 60px; }
+    }
+
+    /* ---------- About page (a dock-switched view) ---------- */
+    .about-page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--col);       /* 600px content column, centred (matches Figma) */
+      margin: 0 auto;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .about-title {
+      font-family: var(--sans);
+      font-weight: 500;            /* Helvetica Neue Medium, 24/36, accent red */
+      font-size: 24px;
+      line-height: 36px;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .about-inner {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Photo pile: three white-matted cards, lightly tilted and offset, stacked
+       (Figma "Group 37007" — 520×354 group of 490×310 cards). */
+    .about-stack {
+      position: relative;
+      width: 100%;
+      max-width: 529px;
+      aspect-ratio: 529 / 428;   /* hugs the tighter pile: front card at top, deepest at bottom */
+      margin-top: 32px;            /* title → stack (Figma gap) */
+      cursor: pointer;             /* click anywhere to send the front card back */
+    }
+    /* Each card sits at the same origin and is placed into one of THREE SLOTS via
+       transform, so cards can glide between slots on click. */
+    .about-photo {
+      position: absolute;
+      top: 0; left: 0;
+      width: 92.63%;              /* 490 / 529 */
+      padding: 1.4%;              /* thin white mat (~4.9px on a 490 card) */
+      background: var(--card-bg);
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07),
+                  0 12px 28px -12px rgba(0, 0, 0, 0.10);
+      transform-origin: 50% 50%;
+      transition: left 0.62s cubic-bezier(0.33, 1, 0.68, 1),
+                  top 0.62s cubic-bezier(0.33, 1, 0.68, 1),
+                  transform 0.62s cubic-bezier(0.33, 1, 0.68, 1),
+                  box-shadow 0.62s cubic-bezier(0.33, 1, 0.68, 1);
+      will-change: left, top, transform;
+    }
+    .about-photo .ph-media {
+      position: relative;
+      display: block;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .about-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 490 / 390;   /* image height ~340→380px, width unchanged */
+      object-fit: cover;
+      object-position: center bottom;  /* default: crop keeps the bottom of each photo */
+    }
+    /* Photos whose subject sits up top crop from the top instead. */
+    .about-photo img.crop-top {
+      object-position: center top;
+    }
+    /* Photos whose subject sits mid-frame crop from the centre. */
+    .about-photo img.crop-center {
+      object-position: center center;
+    }
+    /* Overlay belongs to the SLOT, not the image: whichever card is in a slot
+       gets that slot's darkness. Bottom = darker, middle = lighter, top = none.
+       It cross-fades as cards move, so the tint stays put while photos cycle. */
+    .about-photo .ph-overlay {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      transition: opacity 0.62s cubic-bezier(0.33, 1, 0.68, 1);
+      pointer-events: none;
+    }
+    /* Five slots forming a tight, lightly-fanned pile — cards sit nearly on top
+       of one another with just a small offset/rotation so the deck reads as a
+       stack, not a spread. Offsets are % of the container so it scales. data-pos
+       0 = front. */
+    .about-photo[data-pos="0"] { left: 5.5%; top: 0;    transform: rotate(0.4deg);  z-index: 5; }
+    .about-photo[data-pos="1"] { left: 4.9%; top: 1.3%; transform: rotate(-0.6deg); z-index: 4; }
+    .about-photo[data-pos="2"] { left: 4.3%; top: 2.6%; transform: rotate(1.0deg);  z-index: 3; }
+    .about-photo[data-pos="3"] { left: 3.7%; top: 3.9%; transform: rotate(1.7deg);  z-index: 2; }
+    .about-photo[data-pos="4"] { left: 3.1%; top: 5.2%; transform: rotate(2.3deg);  z-index: 1; }
+    .about-photo[data-pos="5"] { left: 2.5%; top: 6.5%; transform: rotate(2.9deg);  z-index: 0; }
+    /* Tint deepens with depth so the pile reads even where cards barely peek out. */
+    .about-photo[data-pos="0"] .ph-overlay { opacity: 0;    }
+    .about-photo[data-pos="1"] .ph-overlay { opacity: 0.07; }
+    .about-photo[data-pos="2"] .ph-overlay { opacity: 0.14; }
+    .about-photo[data-pos="3"] .ph-overlay { opacity: 0.22; }
+    .about-photo[data-pos="4"] .ph-overlay { opacity: 0.30; }
+    .about-photo[data-pos="5"] .ph-overlay { opacity: 0.37; }
+    @media (prefers-reduced-motion: reduce) {
+      .about-photo { transition: none; }
+      .about-photo .ph-overlay { transition: none; }
+    }
+    /* Reset (on re-entering About) snaps the pile back with no glide. */
+    .about-stack.no-anim .about-photo,
+    .about-stack.no-anim .about-photo .ph-overlay { transition: none; }
+
+    /* Hand-drawn caption that floats beside the deck (Figma "Love hopping art
+       galleries" + Arrow_01). One element; JS sets its text from the front card
+       and cycles it between three slots — right / left-top / left-bottom. */
+    .deck-caption {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--hand);
+      font-size: 18px;
+      line-height: 1.1;
+      color: var(--text);
+      pointer-events: none;             /* clicks fall through to the deck */
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 6;
+    }
+    /* Text wraps within a 180px container (≈ two lines); aligned toward the deck.
+       width:max-content + max-width caps it at 180px (and stops the flex item from
+       collapsing to word-width when positioned outside its containing block). */
+    .deck-caption .dc-text {
+      flex: none;
+      width: max-content;
+      max-width: 180px;
+      white-space: normal;
+      text-align: left;
+    }
+    .deck-caption.show { opacity: 1; }
+    .deck-caption .dc-arrow { flex: none; display: block; }
+    .deck-caption .dc-arrow img { height: 52px; width: auto; display: block; }
+    /* Left slots: arrow moves to the deck side (right of the text) and flips
+       horizontally so it still points back at the deck; text hugs the deck. */
+    .deck-caption[data-slot="left-top"],
+    .deck-caption[data-slot="left-bottom"] { flex-direction: row-reverse; }
+    .deck-caption[data-slot="left-top"]  .dc-arrow,
+    .deck-caption[data-slot="left-bottom"] .dc-arrow { transform: scaleX(-1); }
+    .deck-caption[data-slot="left-top"]  .dc-text,
+    .deck-caption[data-slot="left-bottom"] .dc-text { text-align: right; }
+    /* Slots (anchored just outside the deck's left / right edges). */
+    .deck-caption[data-slot="right"] {
+      left: calc(100% + 12px); top: 60%; transform: translateY(-50%);
+    }
+    .deck-caption[data-slot="left-top"] {
+      right: calc(100% + 12px); top: 26%; transform: translateY(-50%);
+    }
+    .deck-caption[data-slot="left-bottom"] {
+      right: calc(100% + 12px); top: 84%; transform: translateY(-50%);
+    }
+    /* Not enough room in the margins on narrow screens — hide the floating caption. */
+    @media (max-width: 1024px) { .deck-caption { display: none; } }
+
+    /* Copy block: left-aligned body, 15/26, #3D3D3D (Figma text frame) */
+    /* Hint caption under the deck (Figma: 14/20, #8F8F8F, centered, 12px below). */
+    .about-caption {
+      width: 100%;
+      margin: 12px 0 0;            /* deck → caption (Figma gap); no default p-margin */
+      text-align: center;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--muted);
+    }
+    /* On small screens the floating deck caption is hidden (see max-width:1024px
+       above), so this bottom line carries the front card's caption instead of the
+       "quick facts" hint — keeping the same hint style (14/20, #8F8F8F, sans). */
+
+    .about-copy {
+      width: 100%;
+      margin-top: 48px;            /* caption → copy (Figma gap) */
+      display: flex;
+      flex-direction: column;
+      gap: 12px;                   /* between paragraphs (Figma gap) */
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--text);
+    }
+
+    /* ---- Extended About content: detours list, photo strip, "now" note ---- */
+    .about-more {
+      width: 100%;
+      margin-top: 60px;            /* intro copy → first section (Figma gap) */
+      display: flex;
+      flex-direction: column;
+      gap: 60px;                   /* between sections (Figma gap) */
+      text-align: left;
+    }
+    .am-block { display: flex; flex-direction: column; gap: 8px; }
+    .am-heading {
+      margin: 0;
+      font-family: var(--sans);
+      font-weight: 500;            /* Helvetica Neue Medium, 16/30 */
+      font-size: 16px;
+      line-height: 30px;
+      color: var(--text);
+    }
+    .am-block p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 26px;
+      color: var(--text);
+    }
+    .am-block p strong,
+    .about-copy strong { font-weight: 500; }   /* Figma Medium emphasis */
+    .am-para { display: flex; flex-direction: column; gap: 12px; }   /* between paragraphs (Figma gap) */
+
+    /* "Let's connect!" contact list — label, a filler line, then the handle
+       + an action icon (copy for email, external-link for social links). */
+    .connect-block { gap: 10px; }   /* heading → list (overrides .am-block's default 8px) */
+    .connect-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .connect-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .connect-label {
+      flex: none;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--text);
+    }
+    /* Same hand-drawn wavy hairline as the detours rail (rail-line.svg), just
+       oriented horizontally, so the filler reads as hand-drawn, not a plain rule. */
+    .connect-line {
+      flex: 1 1 auto;
+      height: 8px;
+      background: url("/assets/common/rail-line-horizontal.svg") left center / 40px 8px repeat-x;
+    }
+    .connect-value {
+      position: relative;
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .connect-value .connect-icon { flex: none; color: inherit; }
+    /* Force the post-copy tick (swapped in by main.js, sized for the 15x12
+       footer envelope) down to the same 12x12 box as the copy icon it replaces. */
+    .connect-value .email-glyph { width: 12px; height: 12px; }
+
+    /* Numbered "stepper" list with a connecting rail and hand-drawn numbers. */
+    .am-detours { display: flex; flex-direction: column; gap: 16px; }
+    .am-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+    .am-step { position: relative; display: flex; gap: 16px; align-items: flex-start; }
+    .am-step:not(:last-child)::before {   /* thin (0.5px) hand-drawn wavy rail between badges */
+      content: "";
+      position: absolute;
+      left: 6px; top: 22px; bottom: -18px;   /* 8px box centred on the 20px badge */
+      width: 8px;
+      background: url("/assets/common/rail-line.svg") center top / 8px 40px repeat-y;
+    }
+    .am-num {
+      flex: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--thumb);
+      color: var(--text);
+      font-family: var(--hand);
+      font-size: 15px; line-height: 20px;
+      text-align: center;
+      position: relative; z-index: 1;   /* sit above the rail */
+    }
+    .am-step p { margin: 0; font-size: 15px; line-height: 26px; color: var(--text); }
+
+    /* Second photo pile — a horizontal fan of small tilted cards (Figma "Group 36886"). */
+    .am-strip {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      aspect-ratio: 580 / 208;
+      align-self: center;
+      margin-top: 8px;
+    }
+    .am-card {
+      position: absolute;
+      width: 22.9%;                /* 133 / 580 */
+      padding: 0.69%;              /* 4px mat on the 580 strip (Figma) */
+      background: var(--card-bg);
+      border-radius: 4px;          /* Figma card radius */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 10px 22px -12px rgba(0,0,0,0.10);
+      transform-origin: 50% 50%;
+      /* rise composes with each card's own tilt (translate first, then rotate) */
+      transform: translateY(var(--rise, 0px)) rotate(var(--rot, 0deg));
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      cursor: pointer;
+    }
+    .am-card:hover {
+      --rise: -8px;                /* lift 8px on hover */
+      z-index: 6;                  /* pop above the fan */
+      box-shadow: 0 6px 14px rgba(0,0,0,0.10), 0 18px 34px -14px rgba(0,0,0,0.16);
+    }
+    .am-card .am-photo {
+      display: block;
+      width: 100%;
+      aspect-ratio: 125 / 167;
+      object-fit: cover;
+      border-radius: 3px;          /* Figma image radius */
+      background: var(--thumb);         /* placeholder until real images are added */
+    }
+    .am-card:nth-child(1) { left: 1.6%;  top: 14%;  --rot: 6.28deg;  z-index: 1; }
+    .am-card:nth-child(2) { left: 19.8%; top: 6.3%; --rot: 2.6deg;   z-index: 2; }
+    .am-card:nth-child(3) { left: 38.4%; top: 1%;   --rot: 1.05deg;  z-index: 3; }
+    .am-card:nth-child(4) { left: 59.8%; top: 4.3%; --rot: -5.76deg; z-index: 4; }
+    .am-card:nth-child(5) { left: 78.8%; top: 8.7%; --rot: -6.66deg; z-index: 5; }
+    @media (prefers-reduced-motion: reduce) { .am-card { transition: none; } }
+
+    .about-foot { margin-top: 160px; }
+    .about-foot .social { justify-content: center; }
+
+    @media (max-width: 520px) {
+      .about-page { padding-top: 40px; }
+      .about-foot { margin-top: 100px; }
+    }
+
+    /* ---------- Scroll / entrance reveal (Art + About views) ----------
+       Elements marked [data-reveal] fade + rise into place. On opening a view
+       the lead text reveals first; 0.5s later the in-view content follows, and
+       everything further down reveals as it scrolls into frame (JS-driven). */
+    [data-reveal] { transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+    [data-reveal]:not(.revealed) { opacity: 0; transform: translateY(16px); }
+    /* Tiles keep their snappy hover transform/shadow while still fading in. */
+    .tile[data-reveal] { transition: transform 0.32s var(--ease), box-shadow 0.28s var(--ease), opacity 0.6s var(--ease); }
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] { transition: none; }
+      [data-reveal]:not(.revealed) { opacity: 1; transform: none; }
+    }
+
+/* --- Emil design-eng polish (local recreate) --- */
+:root {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.social a {
+  transition: transform 160ms var(--ease-out-strong), background-color 160ms ease, color 160ms ease;
+}
+
+.social a:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social a:hover {
+    transform: translateY(-1px);
+  }
+  .social a:hover:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social a,
+  .mw-carousel-card,
+  .avatar,
+  .thumb,
+  .curl,
+  .thumb-inner .ui {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -4,7 +4,6 @@ import { resolve } from 'node:path';
 /** MPA routes — Vite dev/preview serve root index.html for /route without a trailing slash. */
 const MPA_ROUTES = [
   '/about',
-  '/art',
   '/more-work',
   '/work/redesigned-ai-agents',
   '/work/redesigned-payment-pages',
@@ -60,7 +59,6 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about/index.html'),
-        art: resolve(__dirname, 'art/index.html'),
         moreWork: resolve(__dirname, 'more-work/index.html'),
         unify: resolve(__dirname, 'work/redesigned-ai-agents/index.html'),
         cosmo: resolve(__dirname, 'work/redesigned-payment-pages/index.html'),
