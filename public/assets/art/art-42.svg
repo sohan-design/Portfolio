@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="620" viewBox="0 0 780 620">
+  <rect width="100%" height="100%" fill="#F4F4F2"/>
+  <rect x="191" y="51" width="191" height="171" rx="12" fill="#2B6CB0" opacity="0.35"/><rect x="228" y="104" width="208" height="200" rx="12" fill="#2B6CB0" opacity="0.50"/><rect x="265" y="157" width="225" height="229" rx="12" fill="#2B6CB0" opacity="0.65"/><rect x="302" y="210" width="82" height="258" rx="12" fill="#2B6CB0" opacity="0.35"/><rect x="339" y="263" width="99" height="107" rx="12" fill="#2B6CB0" opacity="0.50"/>
+  <text x="50%" y="92%" text-anchor="middle" font-family="Helvetica Neue, Arial" font-size="18" fill="#8F8F8F">Art 42</text>
+</svg>

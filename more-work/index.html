@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Local recreation with dummy images — personalize before publishing -->
+<head>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>More work · Sugandha</title>
+  <meta name="description" content="More work — a few more things Sugandha has shipped and tinkered with on the side." />
+
+  <!-- Favicons -->
+  <!-- Social / link preview -->
+  <meta property="og:title" content="More work · Sugandha" />
+  <meta property="og:description" content="More work — a few more things Sugandha has shipped and tinkered with on the side." />
+  <meta property="og:image:width" content="2400" />
+  <meta property="og:image:height" content="1260" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="More work · Sugandha" />
+  <meta name="twitter:description" content="More work — a few more things Sugandha has shipped and tinkered with on the side." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Roboto+Mono:ital,wght@0,400;0,500;1,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <!-- ===== More work (dock-switched view; hidden until "More work" is selected) ===== -->
+  <main class="work-page" id="page-work">
+    <header class="work-head" data-reveal data-reveal-lead>
+      <h1 class="work-title">More work</h1>
+      <p class="work-desc">A few more things I&rsquo;ve shipped or tinkered with.</p>
+    </header>
+
+    <div class="mw-grid">
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/creator-tools.svg" alt="Info cards" loading="lazy" width="2320" height="1560" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/app-build-history.svg" alt="Build activity history with an AI chat assistant" loading="lazy" width="1740" height="1170" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/marketing-dashboard.svg" alt="Marketing analytics dashboard" loading="lazy" width="2320" height="1560" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/agent-graph-view.svg" alt="Knowledge graph" loading="lazy" width="2320" height="1560" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/entry-point-config.svg" alt="Configuration modal" loading="lazy" width="1740" height="1170" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/garden-api.svg" alt="Nested cards" loading="lazy" width="1882" height="1574" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/agent-trace-view.svg" alt="Agent session trace with steps and JSON output" loading="lazy" width="1740" height="1170" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/templates.svg" alt="Template cards view" loading="lazy" width="2320" height="1560" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/marketing-funnel.svg" alt="Marketing funnel and growth analytics dashboard" loading="lazy" width="2320" height="1560" /></figure>
+      <figure class="mw-card" data-reveal data-cursor-icon="expand"><img class="cs-zoom" src="/assets/more-work/loan-decisions.svg" alt="AI-generated UI review with code view" loading="lazy" width="2320" height="1560" /></figure>
+    </div>
+
+    <!-- Image lightbox: click any screenshot above to preview it enlarged
+         (same component the case-study pages use). -->
+    <div class="cs-lightbox" id="csLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+      <button class="cs-lightbox-nav prev" id="csLightboxPrev" type="button" aria-label="Previous image">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="cs-lightbox-nav next" id="csLightboxNext" type="button" aria-label="Next image">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <figure style="margin:0; display:contents;">
+        <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
+        <figcaption id="csLightboxCaption"></figcaption>
+      </figure>
+    </div>
+
+    <!-- Footer illustration + note + socials (mirrors the landing footer) -->
+    <footer class="footer work-foot" data-reveal>
+      <div class="footer-illo-wrap">
+        <img class="footer-illo" src="/assets/common/footer-illustration.svg" alt="" aria-hidden="true" />
+        <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-30px;--r:-32deg;--s:0.52;--d:0ms" />
+        <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-20px;--r:-20deg;--s:0.68;--d:90ms" />
+        <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-6px;--r:0deg;--s:0.9;--d:180ms" />
+        <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-2px;--r:2deg;--s:0.6;--d:270ms" />
+        <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:10px;--r:12deg;--s:0.6;--d:360ms" />
+      </div>
+      <p class="footer-note">More things brewing :)</p>
+      <nav class="social" aria-label="Social links">
+        <a href="mailto:sugandhajain0312@gmail.com" aria-label="Email">
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.94 1.47C0.44 0.81 0.86 0.56 1.52 0.64L13.51 0.72C14.17 0.72 14.5 1.06 14.34 1.72L14 9.79C13.96 10.38 13.59 10.63 12.92 10.54L1.61 10.63C0.86 10.63 0.53 10.21 0.65 9.54L0.94 1.47Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1.19 1.39C3.47 3.16 5.55 4.72 7.43 6.05C9.37 4.72 11.45 3.14 13.67 1.31" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/sugandhajain-/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.37 2.74C2.13 2.74 2.74 2.13 2.74 1.37C2.74 0.61 2.13 0 1.37 0C0.61 0 0 0.61 0 1.37C0 2.13 0.61 2.74 1.37 2.74Z" fill="currentColor"/>
+            <path d="M1.37 4.37L1.33 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5.66 12L5.61 4.54M5.61 7.2C5.91 4.89 9.94 4.54 10.29 7.37C10.37 8.14 10.33 8.91 10.33 9.43V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="https://x.com/Sugandhx_" target="_blank" rel="noopener" aria-label="X">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.83 1.06C3.57 3.45 6.96 6.6 10.98 10.52" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10.9 0.75C8.15 3.6 4.77 6.93 0.75 10.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </nav>
+    </footer>
+  </main>
+
+
+  <!-- Floating dock (ruler aesthetic; tooltip label appears on hover).
+       Icons, line, red marker and ruler exported directly from the Figma component. -->
+  <nav class="dock" aria-label="Sections">
+    <div class="dock-icons">
+      <a class="dock-item" href="/" data-view="home" data-tip="Home" aria-label="Home">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M3 10.4358C5.14527 8.44378 7.55871 6.64328 10.2403 5.03433C11.2363 3.65522 12.2323 3.65522 13.2284 5.03433C15.9099 6.64328 18.3234 8.44378 20.4687 10.4358H19.2045V19.4H13.4582V14.3433C13.4582 14.1134 13.3433 13.9985 13.1134 13.9985H10.3552C10.1254 13.9985 10.0104 14.1134 10.0104 14.3433V19.4H4.26418V10.4358H3Z"/></svg>
+      </a>
+      <a class="dock-item active" href="/more-work" data-view="more-work" data-tip="More work" aria-label="More work">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+      </a>
+      <a class="dock-item" href="/art" data-view="art" data-tip="Art" aria-label="Art">
+        <svg class="dock-ico dock-ico--outline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12.9938 12.9034C13.0803 12.8746 13.3039 12.8746 13.4841 12.752C13.6716 12.6222 13.6932 12.579 14.097 12.1391C14.508 11.6993 15.3516 10.798 15.9428 10.1131C16.5268 9.42808 17.082 8.76474 17.63 8.02929C18.1708 7.28663 18.9279 6.11136 19.2235 5.66433C19.5119 5.21729 19.3316 5.52012 19.3749 5.3615C19.4182 5.19566 19.4903 4.82794 19.4975 4.68373C19.5047 4.53953 19.5047 4.5179 19.4037 4.50347C19.3028 4.48184 19.0504 4.5179 18.8846 4.56116C18.7188 4.60442 18.8774 4.43137 18.4231 4.74862C17.9761 5.05866 16.9522 5.82295 16.188 6.46466C15.4165 7.09917 14.5945 7.85624 13.823 8.57727C13.0515 9.29829 11.9627 10.3294 11.5518 10.7836C11.148 11.2451 11.4003 11.2234 11.3715 11.31"/><path d="M10.2321 15.4486C10.1961 15.4126 10.0735 15.3405 9.98699 15.2323C9.90768 15.1241 9.85721 14.9439 9.74184 14.8069C9.63369 14.6699 9.43901 14.4969 9.31644 14.4031C9.19386 14.3166 9.08571 14.3166 9.0064 14.2517C8.93429 14.194 8.88382 14.0715 8.85498 14.0354"/><path d="M5.38696 18.9744C5.42301 18.7293 5.54559 18.0227 5.60327 17.5035C5.66095 16.9844 5.66095 16.249 5.72584 15.8452C5.79074 15.4414 5.86284 15.3116 5.99983 15.0809C6.14404 14.8502 6.35314 14.6339 6.55502 14.468C6.75691 14.3022 7.0309 14.1796 7.23279 14.1003C7.42746 14.021 7.48515 14.021 7.75193 14.0066C8.01871 13.9994 8.646 14.0354 8.82625 14.0354"/><path d="M12.9648 12.9034C12.8206 12.7448 12.3736 12.2184 12.1068 11.9516C11.84 11.6849 11.4939 11.4181 11.3713 11.3099"/><path d="M8.85498 14.0066C8.87661 13.9273 8.7973 13.7831 8.97755 13.5163C9.16502 13.2495 9.64811 12.752 9.95815 12.4131C10.2682 12.0742 10.6143 11.6777 10.845 11.4902C11.0829 11.3099 11.2848 11.3388 11.3714 11.3099"/><path d="M12.9647 12.9323C12.9358 13.0188 12.9791 13.2062 12.8133 13.4225C12.6402 13.6461 12.2869 13.9417 11.9552 14.2517C11.6164 14.5618 11.0612 15.0953 10.7872 15.2972C10.5132 15.4919 10.3762 15.4198 10.2969 15.4486"/><path d="M4.5 19.4071C4.64421 19.3422 5.21382 19.0754 5.35802 19.0033"/><path d="M10.2681 15.4775C10.2609 15.6866 10.2609 16.4437 10.2321 16.7393C10.2105 17.0349 10.1744 17.0926 10.1095 17.2584C10.0518 17.4242 10.0014 17.5612 9.86437 17.7199C9.73458 17.8785 9.54712 18.0587 9.31639 18.2102C9.08566 18.3544 8.7612 18.4986 8.48721 18.6067C8.21322 18.7149 7.93923 18.787 7.65803 18.8519C7.37683 18.9168 7.17494 18.9817 6.80001 19.0033C6.42508 19.0321 5.65358 19.0033 5.42285 19.0033"/></svg>
+        <svg class="dock-ico dock-ico--filled" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.06103 20.4676C4.86328 20.4535 4.65582 20.4379 4.60044 20.4329L4.5 20.4238L4.7231 20.0639C4.84576 19.8662 4.97279 19.635 5.00533 19.5502C5.17618 19.1077 5.28914 18.364 5.34139 17.3417C5.37299 16.7215 5.41617 16.4781 5.55479 16.137C5.81324 15.5012 6.3239 14.9587 6.94688 14.6573C7.39934 14.4386 7.84835 14.3604 8.38403 14.4073C9.54552 14.5093 10.4808 15.2565 10.8287 16.3605C11.0963 17.2094 10.9677 18.185 10.498 18.8696C9.7464 19.9657 7.45785 20.6381 5.06103 20.4676ZM11.7167 16.0538C11.6926 15.9966 11.6548 15.893 11.6326 15.8241C11.5687 15.627 11.4198 15.3473 11.2242 15.056C10.8265 14.4649 10.1566 13.9408 9.50422 13.7111C9.39251 13.6717 9.28863 13.6288 9.27361 13.6157C9.24764 13.5929 9.69352 13.0953 10.319 12.4489L10.6181 12.1401L10.7887 12.2258C11.743 12.7058 12.7196 13.6952 13.1276 14.5954L13.2202 14.7991L12.6536 15.3273C12.3422 15.6176 12.0137 15.9236 11.9239 16.0069L11.7605 16.1586L11.7167 16.0538ZM13.8376 13.9233C13.5913 13.4671 13.0954 12.8222 12.724 12.4761C12.3222 12.1019 11.8234 11.7273 11.452 11.5214C11.3788 11.4808 11.319 11.4379 11.319 11.426C11.319 11.3803 15.0779 7.63272 15.465 7.29229C16.5908 6.30227 17.8339 5.38109 18.7273 4.87544C19.1816 4.61824 19.5083 4.50434 19.8037 4.50027C20.0221 4.49746 20.0549 4.50528 20.1782 4.59195C20.2524 4.6439 20.3559 4.74747 20.4079 4.82162C20.4945 4.94491 20.5024 4.97776 20.4995 5.19617C20.492 5.76596 20.0327 6.5748 18.7564 8.2676C17.2166 10.3099 15.8204 12.0618 15.0419 12.9298C14.6918 13.32 13.9609 14.0875 13.9393 14.0875C13.9321 14.0875 13.8861 14.0137 13.8376 13.9233Z"/></svg>
+      </a>
+      <a class="dock-item" href="/about" data-view="about" data-tip="About" aria-label="About">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.4001 8C15.4468 8.52667 15.3334 9.02 15.0601 9.48C14.6334 9.78 14.3201 10.1733 14.1201 10.66C13.7201 10.9933 13.2668 11.21 12.7601 11.31C12.2534 11.2767 11.7468 11.2767 11.2401 11.31C10.7868 11.1033 10.3334 10.8867 9.8801 10.66C9.49343 10.32 9.1801 9.92667 8.9401 9.48C8.9801 8.95334 8.86676 8.46 8.6001 8C8.8601 7.54 8.97343 7.04667 8.9401 6.52C9.12676 6.02667 9.4401 5.63334 9.8801 5.34C10.2734 5 10.7268 4.78334 11.2401 4.69C11.7468 4.73667 12.2534 4.73667 12.7601 4.69C13.2734 4.77667 13.7268 4.99334 14.1201 5.34C14.5401 5.65334 14.8534 6.04667 15.0601 6.52C15.1201 7.02667 15.2334 7.52 15.4001 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.90015 19.2C6.12015 18.0133 6.22015 16.8133 6.20015 15.6C6.95348 14.9066 7.82015 14.4066 8.80015 14.1C9.85348 13.7866 10.9201 13.72 12.0001 13.9C13.0535 14.18 14.1201 14.2466 15.2001 14.1C16.0201 14.68 16.8868 15.18 17.8001 15.6C18.2001 16.7733 18.3001 17.9733 18.1001 19.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <span class="dock-line" aria-hidden="true"></span>
+    <span class="dock-dot" aria-hidden="true"></span>
+    <div class="dock-ruler" aria-hidden="true"></div>
+  </nav>
+
+  <!-- Custom cursor badge (follows the pointer over interactive elements) -->
+  <div id="cursor" aria-hidden="true">
+    <span class="cursor-icon"></span>
+    <span class="cursor-text"></span>
+    <span class="cursor-icon-after"></span>
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

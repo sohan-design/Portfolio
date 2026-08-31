@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="120" viewBox="0 0 280 120" fill="none">
+  <path d="M20 90 C60 40, 100 100, 140 70 C180 40, 220 90, 260 60" stroke="#2B2626" stroke-width="1.5" fill="none"/>
+  <circle cx="70" cy="55" r="8" fill="#B81919" opacity="0.7"/>
+  <circle cx="150" cy="48" r="10" fill="#B81919" opacity="0.5"/>
+  <circle cx="230" cy="52" r="7" fill="#B81919" opacity="0.8"/>
+  <text x="140" y="110" text-anchor="middle" font-family="Caveat, cursive" font-size="16" fill="#ADADAD">dummy illustration</text>
+</svg>

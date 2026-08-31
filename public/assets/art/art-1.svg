@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="780" viewBox="0 0 620 780">
+  <rect width="100%" height="100%" fill="#F4F4F2"/>
+  <rect x="136" y="196" width="236" height="176" rx="12" fill="#B81919" opacity="0.35"/><rect x="173" y="249" width="93" height="205" rx="12" fill="#B81919" opacity="0.50"/><rect x="210" y="302" width="110" height="234" rx="12" fill="#B81919" opacity="0.65"/><rect x="247" y="355" width="127" height="83" rx="12" fill="#B81919" opacity="0.35"/><rect x="284" y="408" width="144" height="112" rx="12" fill="#B81919" opacity="0.50"/>
+  <text x="50%" y="92%" text-anchor="middle" font-family="Helvetica Neue, Arial" font-size="18" fill="#8F8F8F">Art 1</text>
+</svg>
