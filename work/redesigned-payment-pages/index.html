@@ -4,19 +4,19 @@
 <head>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redesigning Payment Pages · Sugandha</title>
-  <meta name="description" content="Case study: redesigning Cosmofeed's Payment Pages — a 4.3x increase in transactions." />
+  <title>Redesigning Edmingle.com · Sugandha</title>
+  <meta name="description" content="Case study: redesigning Edmingle.com — 35% increase in enterprise consumers seeking AI features." />
 
   <!-- Favicons -->
   <!-- Social / link preview -->
-  <meta property="og:title" content="Redesigning Payment Pages · Sugandha" />
-  <meta property="og:description" content="Case study: redesigning Cosmofeed's Payment Pages — a 4.3x increase in transactions." />
+  <meta property="og:title" content="Redesigning Edmingle.com · Sugandha" />
+  <meta property="og:description" content="Case study: redesigning Edmingle.com — 35% increase in enterprise consumers seeking AI features." />
   <meta property="og:image:width" content="2400" />
   <meta property="og:image:height" content="1260" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Redesigning Payment Pages · Sugandha" />
-  <meta name="twitter:description" content="Case study: redesigning Cosmofeed's Payment Pages — a 4.3x increase in transactions." />
+  <meta name="twitter:title" content="Redesigning Edmingle.com · Sugandha" />
+  <meta name="twitter:description" content="Case study: redesigning Edmingle.com — 35% increase in enterprise consumers seeking AI features." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
@@ -24,215 +24,224 @@
   <link rel="stylesheet" href="/src/styles/main.css" />
 </head>
 <body data-study="cosmo">
-  <!-- Case-study overlay: Cosmofeed / Payment Pages (mirrors the Unify markup
-       exactly — same classes, animations, nav, spacing — only the content and
-       section ids change). Images are placeholders until real screenshots land. -->
-  <div class="cs-overlay" id="caseStudyCosmo" data-project="cosmo" role="dialog" aria-modal="true" aria-labelledby="csc-title" aria-hidden="true">
+  <div class="cs-overlay" id="caseStudyCosmo" data-project="cosmo" data-hero-intro role="dialog" aria-modal="true" aria-labelledby="csc-title" aria-hidden="true">
     <nav class="cs-nav" aria-label="Case study sections">
       <a class="cs-nav-item" href="#csc-lead">TLDR</a>
-      <a class="cs-nav-item" href="#csc-intro">Introduction to Payment Pages</a>
-      <a class="cs-nav-item" href="#csc-goals">Redesign goals</a>
+      <a class="cs-nav-item" href="#csc-context">Project context</a>
+      <a class="cs-nav-item" href="#csc-stakeholders">Stakeholder alignment</a>
       <a class="cs-nav-item" href="#csc-research">Research</a>
-      <a class="cs-nav-item" href="#csc-addressing">Addressing the concerns</a>
+      <a class="cs-nav-item" href="#csc-content">Content &amp; IA</a>
+      <a class="cs-nav-item" href="#csc-designs">Key page designs</a>
+      <a class="cs-nav-item" href="#csc-conversion">Conversion &amp; UX</a>
+      <a class="cs-nav-item" href="#csc-handoff">Handoff</a>
       <a class="cs-nav-item" href="#csc-impact">Impact</a>
-      <a class="cs-nav-item" href="#csc-reflection">Reflection</a>
     </nav>
 
     <div class="cs-panel">
       <article class="cs-content">
-        <div class="cs-title-row">
-          <button class="cs-back" type="button" aria-label="Back to work" data-cs-close>
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <h1 class="cs-title" id="csc-title">How did the Payment Pages redesign lift transactions by 4.3x?</h1>
+        <div class="cs-hero">
+          <header class="site-header">
+            <nav class="site-nav" aria-label="Primary">
+              <div class="nav-links">
+                <a class="nav-link" href="/" data-nav="home">Home</a>
+                <a class="nav-link" href="/more-work" data-nav="works">Works</a>
+                <a class="nav-link" href="/about" data-nav="about">About</a>
+              </div>
+              <div class="nav-social" aria-label="Social links">
+                <a href="mailto:sugandhajain0312@gmail.com" aria-label="Email">
+                  <img src="/assets/nav/email.svg" alt="" width="18" height="18" />
+                </a>
+                <a href="https://www.instagram.com/sugandhaa_art/" target="_blank" rel="noopener" aria-label="Instagram">
+                  <img src="/assets/nav/instagram.svg" alt="" width="18" height="18" />
+                </a>
+                <a href="https://www.linkedin.com/in/sugandhajain-/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                  <img src="/assets/nav/linkedin.svg" alt="" width="18" height="18" />
+                </a>
+              </div>
+            </nav>
+          </header>
+          <div class="cs-hero-fill" aria-hidden="true">
+            <div class="cs-hero-shader" data-hero-shader data-shader-color="#4285F4"></div>
+          </div>
+          <div class="cs-title-row">
+            <button class="cs-back" type="button" aria-label="Back to work" data-cs-close>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <h1 class="cs-title" id="csc-title">
+              <span class="cs-title-line">How did redesigning Edmingle.com unlock</span>
+              <span class="cs-title-line">35% more enterprise AI demand?</span>
+            </h1>
+          </div>
+          <div class="cs-meta">
+            <div><span class="cs-meta-label">Role</span><span class="cs-meta-val">Product Designer</span></div>
+            <div><span class="cs-meta-label">Timeline</span><span class="cs-meta-val">1 month</span></div>
+            <div><span class="cs-meta-label">Team</span><span class="cs-meta-val">Founders, design &amp; dev</span></div>
+          </div>
         </div>
-        <div class="cs-meta">
-          <div><span class="cs-meta-label">Role</span><span class="cs-meta-val">Product Designer</span></div>
-          <div><span class="cs-meta-label">Timeline</span><span class="cs-meta-val">Jan - Feb 2023</span></div>
-          <div><span class="cs-meta-label">Team</span><span class="cs-meta-val">Sole designer</span></div>
-        </div>
-        <div class="cs-cover" id="csc-cover"><img src="/assets/case-study-cosmofeed/cosmo-cover.svg" alt="Before &amp; After — the Payment Pages redesign" /></div>
+
+        <div class="cs-body">
+        <div class="cs-cover" id="csc-cover"><img src="/assets/case-study-cosmofeed/cosmo-cover.svg" alt="Before &amp; After — the Edmingle.com website redesign" /></div>
 
         <section class="cs-section cs-intro" id="csc-lead">
-          <p>Payment Pages was initially launched in Dec. 2022 as an MVP version. In just 6 months, it became the Highest&#8209;Revenue&#8209;Driving product for Cosmofeed (among 4 other products). The product was far from perfect; however, we saw a huge potential in the market.</p>
-          <p>Later, I was given the task of redesigning the creation flow, which not only provides a good experience but also fits the new branding.</p>
-          <p>Here&rsquo;s what we were able to achieve within 2 months of the redesign:</p>
+          <p>Edmingle had shipped a wave of new product features — most notably its AI capabilities — but the website hadn&rsquo;t kept pace. The old site still spoke to individual creators, while the product was moving firmly toward enterprise and org-focused buyers.</p>
+          <p>We had one month to revamp edmingle.com: reposition the brand, put AI front and centre, and ship a site that could compete with the best in the edtech space.</p>
+          <p>Here&rsquo;s what we achieved within that sprint:</p>
           <div class="cs-metrics">
             <div class="cs-metric">
               <span class="cs-metric-num">01</span>
               <div class="cs-metric-text">
-                <span class="cs-metric-title">4.3x</span>
-                <span class="cs-metric-desc">Increase in total transactions made on payment pages in 3 months</span>
+                <span class="cs-metric-title">35%</span>
+                <span class="cs-metric-desc">Increase in enterprise consumers who specifically demanded AI features</span>
               </div>
             </div>
             <div class="cs-metric">
               <span class="cs-metric-num">02</span>
               <div class="cs-metric-text">
-                <span class="cs-metric-title">8x</span>
-                <span class="cs-metric-desc">Increase in total amount transacted through payment pages in 3 months</span>
+                <span class="cs-metric-title">1 week</span>
+                <span class="cs-metric-desc">To ship the new hero as an MVP and validate the direction</span>
+              </div>
+            </div>
+            <div class="cs-metric">
+              <span class="cs-metric-num">03</span>
+              <div class="cs-metric-text">
+                <span class="cs-metric-title">Parallel</span>
+                <span class="cs-metric-desc">Design and development ran side by side — Figma, Framer, then code</span>
               </div>
             </div>
           </div>
-          <div class="cs-video">
-            <iframe src="https://www.youtube-nocookie.com/embed/D4sobKwuXtU?rel=0" title="Payment Pages redesign — demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
-          </div>
         </section>
 
-        <div class="cs-divider" aria-hidden="true"><img src="/assets/common/separator.svg" alt="" /></div>
+        <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csc-intro">
-          <h2>About Cosmofeed</h2>
-          <p>Cosmofeed is a Forbes recognised startup that allows creators to build, manage, and monetize their online business. It has processed earnings of Rs 100 crore for over 5,000 creators in FY23.</p>
-          <h2>Introduction to Payment Pages</h2>
-          <p>Cosmofeed Payment Pages is a tool designed to help creators &amp; small businesses create and customize payment pages and sell digital products.</p>
-          <span class="cs-frame cs-frame--flush" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/cosmo-intro.svg" alt="The Payment Pages single-checkout builder with a live page preview" data-caption="Old version: Payment Pages" /></span>
-          <p>It was designed and implemented within the span of 1 week to learn from the market and iterate. In just 6 months, the product became the <strong>highest-revenue-driving tool</strong> for Cosmofeed, despite lacking a good experience!</p>
-          <div class="cs-stats">
-            <img src="/assets/case-study-cosmofeed/cosmo-stat-1.svg" alt="38K pages created" />
-            <img src="/assets/case-study-cosmofeed/cosmo-stat-2.svg" alt="Rs. 700M payments processed" />
-            <img src="/assets/case-study-cosmofeed/cosmo-stat-3.svg" alt="10K earning creators" />
-          </div>
+        <section class="cs-section" id="csc-context">
+          <h2>Project context &amp; business goals</h2>
+          <p>Edmingle is an online teaching platform that helps institutions and educators deliver courses at scale. As the product evolved — especially with new AI-powered features — the website became a bottleneck.</p>
+          <p>The core business goal was clear: <strong>redesign edmingle.com to stay competitive with the product&rsquo;s new feature set</strong>, with the AI page as the centrepiece of the revamp.</p>
+          <blockquote>The product had moved forward. The website needed to catch up — and lead with AI.</blockquote>
+          <span class="cs-frame cs-frame--flush" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/cosmo-intro.svg" alt="The previous Edmingle homepage — creator-focused and visually busy" data-caption="Before: creator-focused website" /></span>
         </section>
 
-        <div class="cs-divider" aria-hidden="true"><img src="/assets/common/separator.svg" alt="" /></div>
+        <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csc-goals">
-          <h2>Redesign was required because&hellip;</h2>
+        <section class="cs-section" id="csc-stakeholders">
+          <h2>Stakeholder alignment &amp; brief</h2>
+          <p>The founders were fully aligned on the need for a revamp. They understood that the site wasn&rsquo;t reflecting where the product was headed — and that enterprise buyers were the audience that mattered most going forward.</p>
+          <p>They gave us a <strong>one-month window</strong> to deliver. That tight timeline shaped every decision: ship the hero first, iterate on core pages, and save deeper content pillars for phase two.</p>
           <ol>
-            <li>We were receiving <strong>majority of the support tickets</strong> for this product.</li>
-            <li>The product became the <strong>priority for business growth</strong> and there were a lot of gaps in its experience and flow!</li>
+            <li>Reposition Edmingle from creator tool to enterprise-ready platform</li>
+            <li>Make AI the headline feature across the site</li>
+            <li>Ship fast — MVP hero in week one, full revamp by month end</li>
           </ol>
-          <h3>Product Goals to achieve through redesign&hellip;</h3>
-          <ol>
-            <li>Improve navigation and layout</li>
-            <li>Rethink certain use cases and features and optimize the experience for our target audience</li>
-            <li>Make the design scalable for the future</li>
-            <li>Redesign the UI elements to fit the new branding</li>
-          </ol>
-          <blockquote>Main goal of the users: To <strong>sell products and make money online</strong> by creating highly convertible payment pages.</blockquote>
         </section>
 
-        <div class="cs-divider" aria-hidden="true"><img src="/assets/common/separator.svg" alt="" /></div>
+        <div class="cs-divider" aria-hidden="true">***********</div>
 
         <section class="cs-section" id="csc-research">
-          <h2>Research</h2>
-          <p>Due to a time crunch, I relied mainly on internal research: I spoke to Business Development and Customer Support team, checked out existing Payment Pages and did Competitive Analysis.</p>
-          <h3>What did we find after all?</h3>
+          <h2>Audience research &amp; competitive analysis</h2>
+          <p>Before touching a single frame, we looked at what competitors were doing — and the pattern was unmistakable.</p>
+          <p>Edtech players who had started with colourful, creator-focused marketing sites were <strong>replacing them with clean, org-focused experiences</strong>. Less noise, clearer value props, and messaging built for decision-makers rather than solo educators.</p>
+          <h3>What we learned</h3>
           <ol>
-            <li><strong>Several features were not being used at all</strong> or were being misunderstood &mdash; like goal tracker, activate sales, etc.</li>
-            <li>There was a <strong>steep rise in the number of frauds</strong> due to unfulfilled orders.</li>
-            <li>Payment Page became an easy tool to <strong>sell illegal stuff.</strong></li>
-            <li>Catalog &mdash; a feature that allowed users to list multiple products on a single page (like an e-store), was not being used as much as we expected.</li>
-            <li>There was a <strong>lack of customization</strong> in the look &amp; feel of the page and the content it presents.</li>
+            <li>Enterprise buyers expect simplicity and credibility — not playful gradients and feature dumps</li>
+            <li>AI capabilities need dedicated, prominent real estate — not buried in a features dropdown</li>
+            <li>Competitors were winning on clarity of message, not visual complexity</li>
+          </ol>
+          <div class="cs-stats">
+            <img src="/assets/case-study-cosmofeed/cosmo-stat-1.svg" alt="Competitive audit across 8 edtech players" />
+            <img src="/assets/case-study-cosmofeed/cosmo-stat-2.svg" alt="Shift from creator to org-focused positioning" />
+            <img src="/assets/case-study-cosmofeed/cosmo-stat-3.svg" alt="AI page as primary conversion driver" />
+          </div>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csc-content">
+          <h2>Content strategy &amp; information architecture</h2>
+          <p>Content was handled directly by the founders — they knew the product and the market better than anyone. Together, we structured the site around a clear narrative.</p>
+          <p>The centrepiece of the content strategy was the <strong>Four Pillars of Teaching Online</strong> — a framework that mapped Edmingle&rsquo;s capabilities to the real workflows institutions care about:</p>
+          <ol>
+            <li><strong>Create</strong> — build and structure courses</li>
+            <li><strong>Deliver</strong> — run live and async sessions at scale</li>
+            <li><strong>Engage</strong> — keep learners active and accountable</li>
+            <li><strong>Grow</strong> — measure outcomes and expand reach</li>
+          </ol>
+          <p>This framework gave us a scalable IA: every product feature could slot into a pillar, making the site easier to navigate and easier to update as new capabilities shipped.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csc-designs">
+          <h2>Key page designs</h2>
+          <p>With a one-month timeline, we phased the work deliberately — highest-impact pages first, deeper content second.</p>
+
+          <h3>Phase 1 — Hero &amp; core pages</h3>
+          <p>The <strong>hero shipped as an MVP in the first week</strong>. It established the new visual language — cleaner typography, org-focused messaging, and AI as the lead story — so we could validate direction before committing to the full site.</p>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/1.svg" alt="The new Edmingle hero — AI-forward, clean and enterprise-ready" data-caption="New hero — week one MVP" /></span>
+          <p>Once the hero was approved, we rolled the new styles across the main pages: Features, Pricing, and the dedicated AI page.</p>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/2.svg" alt="Redesigned Features page with clearer hierarchy and AI highlights" data-caption="Features page" /></span>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/3.svg" alt="Pricing page redesigned for enterprise decision-makers" data-caption="Pricing page" /></span>
+
+          <h3>Phase 2 — Four Pillars pages</h3>
+          <p>The Four Pillars content pages were scoped for phase two — deeper storytelling for each pillar, with case studies and use-case walkthroughs. The IA was built in phase one so these pages could slot in without restructuring the site.</p>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/4.svg" alt="Four Pillars framework — Create, Deliver, Engage, Grow" data-caption="Four Pillars — phase two" /></span>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csc-conversion">
+          <h2>Conversion &amp; UX considerations</h2>
+          <p>Beyond the main site, we also built <strong>dedicated landing pages for paid ad campaigns</strong> — each focused on a single conversion goal with minimal navigation and a clear CTA.</p>
+          <p>For performance, we chose the <strong>Astra theme</strong> on WordPress. It gave us the simplicity and speed we needed without sacrificing layout flexibility — critical when page load score directly affects ad quality and organic ranking.</p>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/5.svg" alt="Ad landing page — single CTA, fast load, minimal chrome" data-caption="Ad landing page" /></span>
+          <ol>
+            <li>Lightweight theme for strong Core Web Vitals scores</li>
+            <li>Separate landing pages per campaign — no shared nav to leak traffic</li>
+            <li>AI page optimised as the primary enterprise conversion path</li>
           </ol>
         </section>
 
-        <div class="cs-divider" aria-hidden="true"><img src="/assets/common/separator.svg" alt="" /></div>
+        <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csc-addressing">
-          <h2>Addressing the concerns</h2>
-
-          <h3>1. Optimizing as per User Goals</h3>
-          <p>Payment Pages was trying to cover several use cases without optimizing it for the direct target audience.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/1.svg" alt="Goal Tracker was removed because it served non-profit orgs, not our target audience" data-caption="Old version: Goal Tracker" /></span>
-          <p>For the redesigned version, we went back to the basics and adjusted our product strategy to focus on our direct users first.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/2.svg" alt="Introduced a 'Boost Sales' segment with an Exit Intent popup to lift conversions" data-caption="New version: Boost Sales" /></span>
-          <p>Currently, it includes only Exit Intent popup feature, but in the next few months, we will be adding new features such as bump offer, cross-sell/upsell and countdown.</p>
-
-          <h3>2. Addressing Unethical Activities</h3>
-          <p class="cs-bullet">Frauds:</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/3.svg" alt="Most frauds came from unfulfilled orders of physical goods Cosmofeed couldn't track" data-caption="Old version: Physical Products" /></span>
-          <p>That&rsquo;s why we decided to discontinue physical products as a type until we integrate a shipping service solution.</p>
-          <p class="cs-bullet">Product Policies:</p>
-          <p>Entering product policies was an important step while creating a Payment Page. It helped in maintaining transparency between the creators and the buyers and thus, reduced the frauds.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/4.svg" alt="Before: the product-policy popup had low visibility and was hard to edit" data-caption="Old version: Product Policies" /></span>
-          <p>We increased the visibility of entering product policies so that buyers can learn about refunds and fulfilment directly from the creators.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/5.svg" alt="After: product policies given easy access and an 'Important' tag" data-caption="New version: Product Policies" /></span>
-          <p class="cs-bullet">Sale of illegal items:</p>
-          <p>Another major concern was the sale of illegal stuff. To deal with this, we made our Terms and Conditions clearer and gave creators easier access to them.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/6.svg" alt="Creators must now agree to the updated Terms &amp; Conditions before publishing a page" data-caption="New version: T&amp;Cs" /></span>
-          <p>We also talked to the support team to strictly review the pages and suspend them if needed.</p>
-
-          <h3>3. Promoting Customisation &amp; Flexibility</h3>
-          <p>Earlier, the only customisation that Payment Pages allowed was change in color and dark theme.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/7.svg" alt="Before: only a colour picker and dark theme, which caused choice paralysis" data-caption="Old version: Color Customisation" /></span>
-          <p>With the revamped version, we aim to make Payment Pages more flexible in terms of color, aesthetics, content and layout.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/8.svg" alt="Introduced a Sections feature for FAQs, testimonials and social links" data-caption="New version: Sections" /></span>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/9.svg" alt="Defined preset colours plus a colour picker, with more themes planned" data-caption="New version: Colors &amp; Themes" /></span>
-
-          <h3>4. Dealing with Catalog</h3>
-          <p>This feature was introduced in March 2023 when the team felt a demand for the ability to list multiple products on a single payment page. However, it fell short of our expectations.</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/10.svg" alt="Catalog had low usage and discoverability and was not optimized" data-caption="Old version: Catalog" /></span>
-          <p>Due to these reasons, we decided to discontinue the Catalog feature in our revamped creation flow.</p>
-          <p>We gave it a separate entry point in the pre-creation process and will test how the feature performs for some time. Depending on its performance, we may either remove it entirely from the Payment Page or consider its inclusion in the future.</p>
-
-          <h3>5. Improving Layout and making Design Scalable for the future</h3>
-          <p>From what I learned through the research, creators found it difficult to navigate the creation flow. One had to explore the entire flow several times to get the hang of where features are located!</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/11.svg" alt="Before: low tab discoverability, a hard-to-reach publish button and complex uploads" data-caption="Old version: Layout issues" /></span>
-          <p>With the revamped version, the goal was to simplify the flow &amp; IA and make sure the design is highly-extensive for future updates!</p>
-          <p>This is what we ended up with!</p>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/12.svg" alt="After: a simplified, guided creation flow with a live preview" data-caption="New version: Payment Pages" /></span>
+        <section class="cs-section" id="csc-handoff">
+          <h2>Final designs &amp; handoff</h2>
+          <p>Design and development ran in parallel throughout the month — there was no room for a traditional waterfall handoff.</p>
+          <p>We used <strong>Figma for high-fidelity designs</strong> and <strong>Framer for interactive prototypes</strong>, then converted approved frames directly to code. This kept feedback loops tight and let dev start building pages while design was still iterating on others.</p>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/6.svg" alt="Figma designs alongside Framer prototypes and live code" data-caption="Figma → Framer → code" /></span>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/7.svg" alt="The final Edmingle.com homepage — clean, AI-forward, enterprise-ready" data-caption="Final homepage" /></span>
         </section>
 
-        <div class="cs-divider" aria-hidden="true"><img src="/assets/common/separator.svg" alt="" /></div>
+        <div class="cs-divider" aria-hidden="true">***********</div>
 
         <section class="cs-section" id="csc-impact">
-          <h2>Now let&rsquo;s talk numbers!</h2>
-          <p>The redesigned version was launched in August 2023, and we tracked the product performance for 2&ndash;3 months.</p>
+          <h2>Performance results</h2>
+          <p>Within weeks of the new site going live, the shift in audience was measurable.</p>
           <ol>
-            <li><strong>No. of transactions:</strong> In just 2 months, Payment Pages transactions increased from <strong>28,000/month to 150,000/month, which is almost a 4.3x increase</strong>.</li>
-            <li><strong>Amount transacted on Payment Pages:</strong> Amount transacted on Payment Pages by the users increased by <strong>8x in 2 months</strong>!</li>
-            <li><strong>Support tickets:</strong> Number of support tickets for Payment Pages declined <strong>substantially by 70%.</strong></li>
+            <li><strong>Enterprise AI demand:</strong> We saw a <strong>35% increase in enterprise consumers who specifically reached out demanding AI features</strong> — validating that leading with AI on the website was the right call.</li>
+            <li><strong>Positioning shift:</strong> Inbound conversations moved from &lsquo;can I use this for my course?&rsquo; to &lsquo;how does your AI work for our institution?&rsquo;</li>
+            <li><strong>Speed to ship:</strong> The one-month timeline held — hero in week one, core pages live by week three, ad landing pages running alongside.</li>
           </ol>
-          <h3>Feedback received from the team</h3>
-          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/cosmo-feedback.svg" alt="A team message praising the redesigned checkout pages going live" data-caption="~ Vijai Kanth, Head of Product &amp; Design" /></span>
-          <blockquote>&lsquo;After the redesign, we have seen people coming on Payment Pages organically a lot, which was not the case earlier&rsquo;<cite>~ Creator Acquisition Specialist</cite></blockquote>
-          <h3>Major Platform Update</h3>
-          <p>Stakeholders and the team loved the layout and UI of the redesigned version so much that we have now decided to make this <strong>creation flows&rsquo; layout common for all 5 of our products</strong> (Events, Courses, 1-on-1, etc.).</p>
-          <p>I think I can safely say that this project was a big hit for Cosmofeed and I :) Payment Pages has also maintained its position as the highest-revenue driving tool for us! (as of Dec. 2023)</p>
-        </section>
-
-        <div class="cs-divider" aria-hidden="true"><img src="/assets/common/separator.svg" alt="" /></div>
-
-        <section class="cs-section" id="csc-reflection">
-          <h2>Reflection</h2>
-          <p>Revamping Payment Pages was a very special and important project for me &amp; Cosmofeed. It feels like the onset of a new journey!</p>
-          <p>I have learned the nuances of the product design industry and how creating a product is such a collaborative process. It can never be done in isolation, and how I needed to communicate and align/realign with all the stakeholders at every step of the way!</p>
-          <p>I also understood the importance of delivering designs at speed for a startup. In a perfect world, I would have conducted usability testing, or launched for beta testing, or gone out and talked to people first, but oh well, I wish timelines were favourable for the same!</p>
+          <span class="cs-frame" data-cursor-icon="expand"><img class="cs-fig cs-zoom" src="/assets/case-study-cosmofeed/cosmo-feedback.svg" alt="Team feedback on the Edmingle website going live" data-caption="Post-launch feedback" /></span>
+          <blockquote>The website finally told the same story the product did — and enterprise buyers noticed.</blockquote>
         </section>
 
         <footer class="cs-footer">
           <div class="footer-illo-wrap">
-            <img class="footer-illo" src="/assets/common/footer-illustration.svg" alt="" aria-hidden="true" />
-            <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-30px;--r:-32deg;--s:0.52;--d:0ms" />
-            <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-20px;--r:-20deg;--s:0.68;--d:90ms" />
-            <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-6px;--r:0deg;--s:0.9;--d:180ms" />
-            <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:-2px;--r:2deg;--s:0.6;--d:270ms" />
-            <img class="sprout" src="/assets/common/flower-sprout.svg" alt="" aria-hidden="true" style="--x:10px;--r:12deg;--s:0.6;--d:360ms" />
+            <canvas class="footer-lottie" width="200" height="200" aria-hidden="true"></canvas>
           </div>
           <p class="footer-note">Thanks for scrolling till the end :)</p>
           <nav class="social" aria-label="Social links">
             <a href="mailto:sugandhajain0312@gmail.com" aria-label="Email">
-              <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.94 1.47C0.44 0.81 0.86 0.56 1.52 0.64L13.51 0.72C14.17 0.72 14.5 1.06 14.34 1.72L14 9.79C13.96 10.38 13.59 10.63 12.92 10.54L1.61 10.63C0.86 10.63 0.53 10.21 0.65 9.54L0.94 1.47Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1.19 1.39C3.47 3.16 5.55 4.72 7.43 6.05C9.37 4.72 11.45 3.14 13.67 1.31" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <img src="/assets/nav/email.svg" alt="" width="18" height="18" />
+            </a>
+            <a href="https://www.instagram.com/sugandhaa_art/" target="_blank" rel="noopener" aria-label="Instagram">
+              <img src="/assets/nav/instagram.svg" alt="" width="18" height="18" />
             </a>
             <a href="https://www.linkedin.com/in/sugandhajain-/" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.37 2.74C2.13 2.74 2.74 2.13 2.74 1.37C2.74 0.61 2.13 0 1.37 0C0.61 0 0 0.61 0 1.37C0 2.13 0.61 2.74 1.37 2.74Z" fill="currentColor"/>
-                <path d="M1.37 4.37L1.33 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M5.66 12L5.61 4.54M5.61 7.2C5.91 4.89 9.94 4.54 10.29 7.37C10.37 8.14 10.33 8.91 10.33 9.43V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <a href="https://x.com/Sugandhx_" target="_blank" rel="noopener" aria-label="X">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.83 1.06C3.57 3.45 6.96 6.6 10.98 10.52" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10.9 0.75C8.15 3.6 4.77 6.93 0.75 10.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <img src="/assets/nav/linkedin.svg" alt="" width="18" height="18" />
             </a>
           </nav>
         </footer>
+        </div>
       </article>
     </div>
   </div>

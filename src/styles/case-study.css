@@ -226,14 +226,20 @@
        Unify, About + Introduction on Cosmofeed). The second heading gets a 32px
        gap from the first block, matching the design. */
     #cs-phase1 p + h2, #csc-intro p + h2 { margin-top: 32px; }
-    /* every section heading is 16px / 30px Medium (from the design) */
-    .cs-section h2,
+    /* every section heading: h2 is 20px, h3 is 16px / 30px Medium (from the design) */
+    .cs-section h2 {
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
     .cs-section h3 {
       font-size: 16px;
       line-height: 30px;
-      font-weight: 500;   /* Helvetica Neue Medium */
+      font-weight: 500;
       color: var(--text);
-      margin-bottom: 4px;   /* heading sits close to its body text (from the design) */
+      margin-bottom: 4px;
     }
     .cs-section h3 { margin-top: 24px; margin-bottom: 4px; }
     /* a "hero" image directly under a heading: 16px above, 32px below (design) */
@@ -299,8 +305,18 @@
     .cs-subtitle { font-weight: 400; font-size: 15px; color: var(--muted); margin-left: 10px; }
     /* subtle centred separator between sections (from the design) — sits in the
        60px section gap, centred (60px above from the section, 60px below) */
-    .cs-divider { display: flex; justify-content: center; margin: 0 0 60px; }
-    .cs-divider img { display: block; width: 200px; height: auto; }
+    .cs-divider {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 0 60px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .cs-divider img { display: none; }
     /* case-study footer: flower illustration + note + socials, centred at the
        end of the column (reuses the landing-page footer illustration + socials) */
     .cs-footer {
@@ -312,6 +328,16 @@
       text-align: center;
     }
     .cs-footer .social { justify-content: center; }
+    .footer-illo-wrap {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+    .footer-lottie {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
     .cs-section p {
       font-size: 15px;
       line-height: 26px;
@@ -1423,13 +1449,137 @@
       [data-reveal]:not(.revealed) { opacity: 1; transform: none; }
     }
 
+    /* Hero intro — large title anchored to the bottom, scales down on scroll
+       (inspired by shedsgns.me/taste). Used on the Edmingle case study. */
+    [data-hero-intro] .cs-content {
+      padding-top: 0;
+      overflow-x: visible;
+    }
+
+    [data-hero-intro] .cs-hero {
+      height: 100dvh;
+      max-height: 100dvh;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: clamp(16px, 3vh, 40px) 0 clamp(12px, 2vh, 20px);
+      overflow: visible;
+      position: relative;
+    }
+
+    [data-hero-intro] .cs-hero .site-header {
+      flex: none;
+      width: 100%;
+      max-width: none;
+      margin: 0 0 clamp(8px, 2vh, 20px);
+      padding: 0;
+    }
+
+    [data-hero-intro] .cs-hero-fill {
+      flex: 1 1 0;
+      min-height: 0;
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    [data-hero-intro] .cs-hero-shader {
+      width: auto;
+      height: auto;
+      max-width: min(800px, 100%);
+      max-height: 100%;
+      aspect-ratio: 800 / 342;
+      flex: none;
+      background: var(--paper-bg);
+      pointer-events: auto;
+    }
+
+    [data-hero-intro] .cs-title-row {
+      flex: none;
+      margin-top: clamp(8px, 2vh, 16px);
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+      min-height: 0;
+    }
+
+    [data-hero-intro] .cs-title {
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: clamp(8px, 1.5vh, 16px);
+      will-change: transform;
+      transform-origin: left bottom;
+      overflow: visible;
+    }
+
+    [data-hero-intro] .cs-title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    [data-hero-intro] .cs-hero .cs-meta {
+      flex: none;
+      position: relative;
+      z-index: 1;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: calc(8px * 1.3);
+      padding-bottom: calc(24px * 1.3);
+      gap: clamp(8px, 1.5vh, 16px) 24px;
+    }
+
+    [data-hero-intro]:not(.cs-hero-scrolled) .cs-nav,
+    [data-hero-intro]:not(.cs-hero-scrolled) .cs-back {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    [data-hero-intro].cs-hero-scrolled .cs-nav {
+      opacity: 1;
+    }
+
+    [data-hero-intro].cs-hero-scrolled .cs-back {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    [data-hero-intro] .cs-hero .site-nav {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px 20px;
+    }
+
+    @media (max-width: 768px) {
+      [data-hero-intro] .cs-hero .site-header {
+        margin-bottom: clamp(6px, 1.5vh, 12px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-hero-intro] .cs-hero {
+        min-height: 0;
+        padding-bottom: 0;
+      }
+      [data-hero-intro] .cs-hero-fill { display: none; }
+      [data-hero-intro] .cs-title {
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 24px;
+      }
+      [data-hero-intro] .cs-content { padding-top: 80px; }
+    }
+
 /* --- Emil design-eng polish (local recreate) --- */
 :root {
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.social a {
-  transition: transform 160ms var(--ease-out-strong), background-color 160ms ease, color 160ms ease;
 }
 
 .social a:active {

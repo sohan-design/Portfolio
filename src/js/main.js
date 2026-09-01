@@ -1,10 +1,19 @@
+import { createHeroShader, disposeHeroShader, snapHeroShaderSize } from './heroShader.js';
+import { initFooterLotties } from './footerLottie.js';
+
 (function () {
+  // Strip any legacy separator.svg images from case-study dividers.
+  Array.prototype.forEach.call(document.querySelectorAll('.cs-divider img'), function (img) {
+    img.remove();
+  });
+
   // Nav active state from URL
   (function () {
     var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
     var view =
       path === '/' ? 'home' :
       path.indexOf('/more-work') === 0 ? 'works' :
+      path.indexOf('/work/') === 0 ? 'works' :
       path.indexOf('/about') === 0 ? 'about' : null;
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-nav]'), function (item) {
@@ -19,17 +28,30 @@
     var header = nav.closest('.site-header');
     if (!header) return;
 
+    var studyPanel = document.body.hasAttribute('data-study')
+      ? document.querySelector('.cs-overlay .cs-panel')
+      : null;
+
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var gate = 0;
-    var last = window.scrollY;
+    var last = studyPanel ? studyPanel.scrollTop : window.scrollY;
     var ticking = false;
     var showRaf = 0;
+
+    function scrollY() {
+      return studyPanel ? studyPanel.scrollTop : window.scrollY;
+    }
 
     function measure() {
       header.classList.remove('is-reserved');
       nav.classList.remove('floating', 'is-visible');
       header.style.setProperty('--nav-reserve', nav.offsetHeight + 'px');
-      gate = header.offsetTop + nav.offsetHeight + 120;
+      if (studyPanel) {
+        gate = header.getBoundingClientRect().top - studyPanel.getBoundingClientRect().top
+          + studyPanel.scrollTop + nav.offsetHeight + 120;
+      } else {
+        gate = header.offsetTop + nav.offsetHeight + 120;
+      }
     }
 
     function hideFloating() {
@@ -58,7 +80,7 @@
 
     function update() {
       ticking = false;
-      var y = window.scrollY;
+      var y = scrollY();
       var delta = y - last;
       if (Math.abs(delta) < 4) return;
       last = y;
@@ -69,13 +91,15 @@
       showFloating();
     }
 
-    measure();
-    update();
-    window.addEventListener('scroll', function () {
+    function onScroll() {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(update);
-    }, { passive: true });
+    }
+
+    measure();
+    update();
+    (studyPanel || window).addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', function () {
       measure();
       update();
@@ -166,6 +190,118 @@
         var revealList = [];
         var suppressSpy = false;   // muted while a nav-click glide is running
         var scrollRAF = null;
+        var heroIntro = overlay.hasAttribute('data-hero-intro');
+        var heroTitle = heroIntro ? overlay.querySelector('.cs-title') : null;
+        var heroShaderEl = heroIntro ? overlay.querySelector('[data-hero-shader]') : null;
+        var heroShaderMount = null;
+        var heroRevealStarted = false;
+        var heroTitleBaseSize = 64;
+        var heroFitTimer = null;
+
+        function initHeroShaderMount() {
+          if (!heroShaderEl || heroShaderMount) return;
+          snapHeroShaderSize(heroShaderEl);
+          heroShaderMount = createHeroShader(heroShaderEl);
+        }
+
+        function resizeHeroShader() {
+          if (!heroShaderEl) return;
+          snapHeroShaderSize(heroShaderEl);
+        }
+
+        function resetHeroShaderMount() {
+          if (!heroShaderMount) return;
+          disposeHeroShader(heroShaderMount);
+          heroShaderMount = null;
+        }
+
+        function heroScrollRange() {
+          var spacer = Math.min(400, Math.max(200, panel.clientHeight * 0.38));
+          return Math.max(1, spacer + panel.clientHeight * 0.3);
+        }
+
+        function fitHeroTitle() {
+          if (!heroTitle) return;
+          heroTitle.style.fontSize = '';
+          var lines = heroTitle.querySelectorAll('.cs-title-line');
+          if (!lines.length) lines = [heroTitle];
+
+          var column = heroTitle.closest('.cs-content') || panel;
+          var columnRect = column.getBoundingClientRect();
+          var panelRect = panel.getBoundingClientRect();
+          // Maximize to the panel's right edge (16px inset) — only shrink when a line would clip.
+          var targetRight = panelRect.right - 16;
+          if (targetRight < columnRect.left + 1) targetRight = columnRect.right - 16;
+          if (targetRight < 1) return;
+
+          var minSize = 24;
+          var maxSize = 160;
+          var best = minSize;
+          var lo = minSize;
+          var hi = maxSize;
+
+          while (lo <= hi + 0.01) {
+            var mid = Math.round(((lo + hi) / 2) * 4) / 4;
+            heroTitle.style.fontSize = mid + 'px';
+            var widestRight = 0;
+            for (var i = 0; i < lines.length; i++) {
+              widestRight = Math.max(widestRight, lines[i].getBoundingClientRect().right);
+            }
+            if (widestRight <= targetRight + 0.5) {
+              best = mid;
+              lo = mid + 0.25;
+            } else {
+              hi = mid - 0.25;
+            }
+          }
+
+          heroTitle.style.fontSize = best + 'px';
+          heroTitleBaseSize = best;
+        }
+
+        function scheduleHeroTitleFit(done) {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              fitHeroTitle();
+              resizeHeroShader();
+              if (done) done();
+            });
+          });
+        }
+
+        function resetHero() {
+          overlay.classList.remove('cs-hero-scrolled');
+          if (heroTitle) {
+            heroTitle.style.transform = '';
+            heroTitle.style.marginBottom = '';
+            heroTitle.style.fontSize = '';
+            heroTitleBaseSize = 64;
+          }
+        }
+
+        function updateHeroScroll() {
+          if (!heroIntro || reduceMotion || !heroTitle) return;
+          var range = heroScrollRange();
+          var progress = Math.min(1, Math.max(0, panel.scrollTop / range));
+          var eased = 1 - Math.pow(1 - progress, 2.5);
+          var minScale = 24 / heroTitleBaseSize;
+          var scale = 1 - eased * (1 - minScale);
+
+          heroTitle.style.transform = 'scale(' + scale + ')';
+          heroTitle.style.transformOrigin = 'left bottom';
+          heroTitle.style.marginBottom = '';
+
+          var showChrome = progress > 0.35;
+          overlay.classList.toggle('cs-hero-scrolled', showChrome);
+
+          if (showChrome && !overlay.classList.contains('text-in')) {
+            overlay.classList.add('text-in');
+          }
+          if (panel.scrollTop > 60 && !heroRevealStarted) {
+            heroRevealStarted = true;
+            startReveal();
+          }
+        }
 
         function setActive(id) {
           Array.prototype.forEach.call(navItems, function (a) {
@@ -218,10 +354,26 @@
           clearTimeout(closeTimer);
           clearTimeout(revealTimer);
           resetReveal();
-          // the nav + the first content reveal ~0.45s later, once the cover has
-          // zoomed in; from there content keeps revealing as the user scrolls.
-          if (reduceMotion) { overlay.classList.add('text-in'); startReveal(); }
-          else revealTimer = setTimeout(function () { overlay.classList.add('text-in'); startReveal(); }, 450);
+          heroRevealStarted = false;
+          if (heroIntro) {
+            resetHero();
+            overlay.classList.remove('text-in');
+            heroRevealStarted = false;
+            initHeroShaderMount();
+            scheduleHeroTitleFit(function () {
+              if (reduceMotion) {
+                overlay.classList.add('text-in');
+                startReveal();
+              } else {
+                updateHeroScroll();
+              }
+            });
+          } else {
+            // the nav + the first content reveal ~0.45s later, once the cover has
+            // zoomed in; from there content keeps revealing as the user scrolls.
+            if (reduceMotion) { overlay.classList.add('text-in'); startReveal(); }
+            else revealTimer = setTimeout(function () { overlay.classList.add('text-in'); startReveal(); }, 450);
+          }
           // Move focus into the dialog for keyboard / screen-reader users, but
           // target the dialog container — not the back button — so no focus ring
           // flashes on the button when the study auto-opens on page load.
@@ -240,6 +392,7 @@
           }
           overlay.classList.remove('text-in');       // text fades out
           overlay.classList.remove('open');          // paper + image fade out
+          resetHeroShaderMount();
           stopReveal();
           clearTimeout(closeTimer);
           clearTimeout(revealTimer);
@@ -272,6 +425,17 @@
           setActive(current);
         }
         panel.addEventListener('scroll', syncActive, { passive: true });
+        if (heroIntro) {
+          panel.addEventListener('scroll', updateHeroScroll, { passive: true });
+          window.addEventListener('resize', function () {
+            if (!overlay.classList.contains('open')) return;
+            clearTimeout(heroFitTimer);
+            heroFitTimer = setTimeout(function () {
+              resizeHeroShader();
+              scheduleHeroTitleFit(updateHeroScroll);
+            }, 100);
+          });
+        }
 
         // custom eased scroll for the panel — a single consistent 620ms glide
         // (native smooth scroll can stutter inside a nested scroll container).
@@ -583,5 +747,7 @@
         resizeRAF = requestAnimationFrame(function () { resizeRAF = null; render(); });
       }, { passive: true });
     })();
+
+  initFooterLotties();
 
 })();
