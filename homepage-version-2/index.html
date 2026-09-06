@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sohan Bhute · Senior Product Designer</title>
-  <meta name="description" content="Sohan Bhute — Senior Product Designer and researcher with 4+ years building intuitive product experiences, now moving into design engineering." />
-  <meta property="og:title" content="Sohan Bhute · Senior Product Designer" />
-  <meta property="og:description" content="Sohan Bhute — Senior Product Designer and researcher with 4+ years building intuitive product experiences, now moving into design engineering." />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <title>Homepage Version 2 · Sohan Bhute</title>
+  <meta name="description" content="Experimental homepage — same layout, new paper shader accents." />
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
   <script>
     (function () {
       try {
@@ -23,60 +21,25 @@
     })();
   </script>
 </head>
-<body>
-  <!-- Intro loader -->
-  <div class="intro-loader" id="introLoader" aria-hidden="true">
-    <div class="intro-loader-inner">
-      <div class="intro-icons">
-        <div class="intro-icon"><img src="/assets/loader/cursor-ai.svg" alt="" width="52" height="52" /></div>
-        <div class="intro-icon"><img src="/assets/loader/figma.svg" alt="" width="44" height="44" /></div>
-        <div class="intro-icon"><img src="/assets/loader/claude.svg" alt="" width="52" height="52" /></div>
-        <div class="intro-icon"><img src="/assets/loader/paper-design.svg" alt="" width="44" height="44" /></div>
-        <div class="intro-icon"><img src="/assets/loader/framer.svg" alt="" width="28" height="42" /></div>
-        <div class="intro-icon intro-icon--profile">
-          <div class="intro-profile-photo"><img src="/assets/loader/profile.png" alt="" width="56" height="56" /></div>
-          <img class="intro-profile-accent" src="/assets/loader/profile-accent.svg" alt="" width="20" height="2" />
-        </div>
-      </div>
-      <div class="intro-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <div class="intro-progress-bar"></div>
-      </div>
-    </div>
+<body class="hp2-exp">
+  <div class="hp2-bg" aria-hidden="true">
+    <div class="hp2-shader hp2-shader--page" data-hp2="page-noise" data-paper-src="https://app.paper.design/file/01KZRC38WB4SSNG5SJQ61KG6JZ/01K4GP58P8JRM8PGBP0586VKYV/9R-0"></div>
   </div>
-
-  <script>
-    (function () {
-      var el = document.getElementById('introLoader');
-      if (!el) return;
-      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) { el.remove(); return; }
-      var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
-      var type = nav ? nav.type : 'navigate';
-      var seen = false;
-      try { seen = sessionStorage.getItem('introLoaderSeen') === '1'; } catch (e) {}
-      // Play on hard reload, or first visit in this tab. Skip in-app navigations.
-      if (!(type === 'reload' || (type === 'navigate' && !seen))) {
-        el.remove();
-        return;
-      }
-      try { sessionStorage.setItem('introLoaderSeen', '1'); } catch (e) {}
-      document.body.classList.add('intro-loading');
-    })();
-  </script>
 
   <div class="site">
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
         <div class="nav-links">
-          <a class="nav-link is-active" href="/" data-nav="home">Home</a>
+          <a class="nav-link" href="/" data-nav="home">Home</a>
           <a class="nav-link" href="/more-work" data-nav="works">Works</a>
           <a class="nav-link" href="/about" data-nav="about">About</a>
+          <span class="nav-link hp2-nav-tag" aria-current="page">V2</span>
         </div>
         <div class="nav-social" aria-label="Social links">
           <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
             <span class="theme-toggle-icons" aria-hidden="true">
               <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2 12h2.2M19.8 12H22M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-              <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.2 14.2A7.6 7.6 0 0 1 9.8 3.8 7.8 7.8 0 1 0 20.2 14.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+              <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.2 14.2A7.6 7.6 0 0 1 9.8 3.8 7.8 0 1 0 20.2 14.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
             </span>
           </button>
           <a href="mailto:sugandhajain0312@gmail.com" aria-label="Email">
@@ -92,8 +55,11 @@
       </nav>
     </header>
 
-    <main class="page" id="page-home">
+    <main class="page" id="page-home-v2">
       <section class="hero" data-reveal data-reveal-lead>
+        <div class="hp2-hero-wash" aria-hidden="true">
+          <div class="hp2-shader hp2-shader--hero" data-hp2="hero-grain"></div>
+        </div>
         <div class="hero-top">
           <div class="hero-avatar">
             <div class="hero-avatar-photo">
@@ -110,42 +76,98 @@
         </div>
       </section>
 
-      <section class="projects" id="work">
+      <figure class="hp2-pixel-frame hp2-pixel-frame--hero" data-hp2-pixel-frame data-reveal>
+        <img src="/assets/homepage-v2/hero-people.png" alt="Friends running across a grassy hill under a clear sky" width="1500" height="840" />
+        <canvas class="hp2-pixel-mask" aria-hidden="true"></canvas>
+      </figure>
+
+      <section class="projects hp2-projects" id="work">
         <h2 class="section-label" data-reveal>Best Projects</h2>
-        <div class="project-grid">
-          <article class="project-card project" data-project="cosmo" data-reveal tabindex="0" role="button" aria-label="Read case study: How did redesigning Edmingle.com unlock 35% more enterprise AI demand?">
-            <div class="project-thumb">
-              <img src="/assets/home/thumb-cosmo.svg" alt="Edmingle.com website redesign" />
+        <div class="project-grid hp2-pcard-grid">
+          <article class="hp2-pcard project" data-project="cosmo" data-reveal tabindex="0" role="button" aria-label="Read case study: How did redesigning Edmingle.com unlock 35% more enterprise AI demand?">
+            <div class="hp2-pcard-media">
+              <img src="/assets/homepage-v2/card-best-projects.jpg" alt="Course product card over a progressive blur background" loading="lazy" width="1200" height="960" />
             </div>
-            <p class="project-title">How did redesigning Edmingle.com unlock <strong>35% more enterprise AI demand</strong>?</p>
+            <h3 class="hp2-pcard-title">How did redesigning Edmingle.com unlock <strong>35% more</strong> enterprise AI demand?</h3>
           </article>
-          <article class="project-card project" data-project="whitelabel" data-reveal tabindex="0" role="button" aria-label="Read case study: How did a white-label learner dashboard unlock 40% more sales?">
-            <div class="project-thumb">
-              <img src="/assets/home/thumb-whitelabel.svg" alt="White-label learner dashboard" />
+
+          <article class="hp2-pcard project" data-project="whitelabel" data-reveal tabindex="0" role="button" aria-label="Read case study: How did a white-label learner dashboard unlock 40% more sales?">
+            <div class="hp2-pcard-media">
+              <img src="/assets/homepage-v2/card-best-projects.jpg" alt="Course product card over a progressive blur background" loading="lazy" width="1200" height="960" />
             </div>
-            <p class="project-title">How did a white-label learner dashboard unlock <strong>40% more sales</strong>?</p>
+            <h3 class="hp2-pcard-title">How did a white-label learner dashboard unlock <strong>40% more sales</strong>?</h3>
           </article>
-          <article class="project-card project" data-project="trainer" data-reveal tabindex="0" role="button" aria-label="Read case study: How did a B2B trainer dashboard unlock 40% more sales?">
-            <div class="project-thumb">
-              <img src="/assets/home/thumb-trainer.svg" alt="B2B trainer admin dashboard" />
+
+          <article class="hp2-pcard project" data-project="trainer" data-reveal tabindex="0" role="button" aria-label="Read case study: How did a B2B trainer dashboard unlock 40% more sales?">
+            <div class="hp2-pcard-media">
+              <img src="/assets/homepage-v2/card-best-projects.jpg" alt="Course product card over a progressive blur background" loading="lazy" width="1200" height="960" />
             </div>
-            <p class="project-title">How did a B2B trainer dashboard unlock <strong>40% more sales</strong>?</p>
+            <h3 class="hp2-pcard-title">How did a B2B trainer dashboard unlock <strong>40% more sales</strong>?</h3>
           </article>
         </div>
       </section>
 
-      <section class="more-preview">
+      <section class="more-preview hp2-more">
         <div class="section-head" data-reveal>
           <h2 class="section-label">More Work</h2>
           <a class="view-all" href="/more-work">View all</a>
         </div>
-        <div class="mw-carousel" data-carousel data-reveal>
-          <div class="mw-carousel-track" data-carousel-track>
-            <figure class="mw-carousel-card"><img class="cs-zoom" src="/assets/more-work/marketing-dashboard.svg" alt="Marketing analytics dashboard" loading="lazy" /><span class="mw-carousel-scrim" aria-hidden="true"></span></figure>
-            <figure class="mw-carousel-card"><img class="cs-zoom" src="/assets/more-work/app-build-history.svg" alt="Build activity history with an AI chat assistant" loading="lazy" /><span class="mw-carousel-scrim" aria-hidden="true"></span></figure>
-            <figure class="mw-carousel-card"><img class="cs-zoom" src="/assets/more-work/loan-decisions.svg" alt="AI-generated UI review with code view" loading="lazy" /><span class="mw-carousel-scrim" aria-hidden="true"></span></figure>
-            <figure class="mw-carousel-card"><img class="cs-zoom" src="/assets/more-work/agent-trace-view.svg" alt="Agent session trace with steps and JSON output" loading="lazy" /><span class="mw-carousel-scrim" aria-hidden="true"></span></figure>
-            <figure class="mw-carousel-card"><img class="cs-zoom" src="/assets/more-work/agent-graph-view.svg" alt="Knowledge graph" loading="lazy" /><span class="mw-carousel-scrim" aria-hidden="true"></span></figure>
+
+        <div class="hp2-shelf" data-hp2-shelf data-reveal>
+          <div class="hp2-shelf-rail" data-hp2-shelf-rail tabindex="0" aria-label="More work carousel">
+            <figure class="hp2-shelf-card">
+              <img class="cs-zoom hp2-shelf-img" src="/assets/homepage-v2/shelf-progressive.jpg" alt="Marketing analytics dashboard" loading="lazy" />
+              <img class="hp2-shelf-img hp2-shelf-img--blur" src="/assets/homepage-v2/shelf-progressive.jpg" alt="" aria-hidden="true" loading="lazy" />
+              <div class="hp2-shelf-progressive" aria-hidden="true"></div>
+              <figcaption class="hp2-shelf-cap">
+                <span class="hp2-shelf-eyebrow">Product</span>
+                <span class="hp2-shelf-title">Marketing dashboard</span>
+              </figcaption>
+            </figure>
+            <figure class="hp2-shelf-card">
+              <img class="cs-zoom hp2-shelf-img" src="/assets/more-work/app-build-history.svg" alt="Build activity history with an AI chat assistant" loading="lazy" />
+              <img class="hp2-shelf-img hp2-shelf-img--blur" src="/assets/more-work/app-build-history.svg" alt="" aria-hidden="true" loading="lazy" />
+              <div class="hp2-shelf-progressive" aria-hidden="true"></div>
+              <figcaption class="hp2-shelf-cap">
+                <span class="hp2-shelf-eyebrow">AI</span>
+                <span class="hp2-shelf-title">Build history</span>
+              </figcaption>
+            </figure>
+            <figure class="hp2-shelf-card">
+              <img class="cs-zoom hp2-shelf-img" src="/assets/more-work/loan-decisions.svg" alt="AI-generated UI review with code view" loading="lazy" />
+              <img class="hp2-shelf-img hp2-shelf-img--blur" src="/assets/more-work/loan-decisions.svg" alt="" aria-hidden="true" loading="lazy" />
+              <div class="hp2-shelf-progressive" aria-hidden="true"></div>
+              <figcaption class="hp2-shelf-cap">
+                <span class="hp2-shelf-eyebrow">Systems</span>
+                <span class="hp2-shelf-title">UI review + code</span>
+              </figcaption>
+            </figure>
+            <figure class="hp2-shelf-card">
+              <img class="cs-zoom hp2-shelf-img" src="/assets/more-work/agent-trace-view.svg" alt="Agent session trace with steps and JSON output" loading="lazy" />
+              <img class="hp2-shelf-img hp2-shelf-img--blur" src="/assets/more-work/agent-trace-view.svg" alt="" aria-hidden="true" loading="lazy" />
+              <div class="hp2-shelf-progressive" aria-hidden="true"></div>
+              <figcaption class="hp2-shelf-cap">
+                <span class="hp2-shelf-eyebrow">Agents</span>
+                <span class="hp2-shelf-title">Session trace</span>
+              </figcaption>
+            </figure>
+            <figure class="hp2-shelf-card">
+              <img class="cs-zoom hp2-shelf-img" src="/assets/more-work/agent-graph-view.svg" alt="Knowledge graph" loading="lazy" />
+              <img class="hp2-shelf-img hp2-shelf-img--blur" src="/assets/more-work/agent-graph-view.svg" alt="" aria-hidden="true" loading="lazy" />
+              <div class="hp2-shelf-progressive" aria-hidden="true"></div>
+              <figcaption class="hp2-shelf-cap">
+                <span class="hp2-shelf-eyebrow">Graph</span>
+                <span class="hp2-shelf-title">Knowledge map</span>
+              </figcaption>
+            </figure>
+          </div>
+          <div class="hp2-shelf-controls" aria-hidden="false">
+            <button type="button" class="hp2-shelf-btn" data-hp2-shelf-prev aria-label="Previous">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.5 2.5L4 6l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="hp2-shelf-btn" data-hp2-shelf-next aria-label="Next">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.5 2.5L8 6 4.5 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
           </div>
         </div>
 
@@ -208,5 +230,6 @@
   </div>
 
   <script type="module" src="/src/js/main.js"></script>
+  <script type="module" src="/src/js/homepageV2.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 const MPA_ROUTES = [
   '/about',
   '/more-work',
+  '/homepage-version-2',
   '/work/redesigned-payment-pages',
   '/work/white-label-evolution',
   '/work/b2b-trainer-dashboard',
@@ -61,6 +62,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about/index.html'),
         moreWork: resolve(__dirname, 'more-work/index.html'),
+        homepageV2: resolve(__dirname, 'homepage-version-2/index.html'),
         cosmo: resolve(__dirname, 'work/redesigned-payment-pages/index.html'),
         whitelabel: resolve(__dirname, 'work/white-label-evolution/index.html'),
         trainer: resolve(__dirname, 'work/b2b-trainer-dashboard/index.html'),

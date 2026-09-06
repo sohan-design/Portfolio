@@ -1,7 +1,10 @@
 import { createHeroShader, disposeHeroShader, snapHeroShaderSize } from './heroShader.js';
 import { initFooterLotties } from './footerLottie.js';
+import { initThemeToggle } from './theme.js';
 
 (function () {
+  initThemeToggle();
+
   // ---------- Intro loader ----------
   (function () {
     var loader = document.getElementById('introLoader');

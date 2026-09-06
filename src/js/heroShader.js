@@ -27,9 +27,18 @@ const HERO_SHADER_DEFAULTS = {
   scale: 1,
 };
 
+var activeMounts = [];
+
 function evenPx(value) {
   var n = Math.max(2, Math.floor(value));
   return n % 2 === 0 ? n : n - 1;
+}
+
+function pageBackgroundColor() {
+  return (
+    getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() ||
+    '#f0f0f0'
+  );
 }
 
 /** Snap shader container to even width/height, fitting the available hero fill area. */
@@ -52,6 +61,18 @@ export function snapHeroShaderSize(parentElement) {
   parentElement.style.height = h + 'px';
 }
 
+/** Keep shader back color in sync with the page --bg (light / dark). */
+export function syncHeroShaderBackgrounds() {
+  var pageBg = pageBackgroundColor();
+  var color = getShaderColorFromString(pageBg);
+  for (var i = 0; i < activeMounts.length; i++) {
+    var mount = activeMounts[i];
+    if (mount && typeof mount.setUniforms === 'function') {
+      mount.setUniforms({ u_colorBack: color });
+    }
+  }
+}
+
 export function createHeroShader(parentElement, options) {
   if (!parentElement) return null;
   options = options || {};
@@ -60,9 +81,7 @@ export function createHeroShader(parentElement, options) {
 
   var reduceMotion =
     window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var pageBg =
-    getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() ||
-    '#f0f0f0';
+  var pageBg = pageBackgroundColor();
   var colorFront =
     options.colorFront ||
     parentElement.getAttribute('data-shader-color') ||
@@ -85,7 +104,7 @@ export function createHeroShader(parentElement, options) {
     u_worldHeight: defaultObjectSizing.worldHeight,
   };
 
-  return new ShaderMount(
+  var mount = new ShaderMount(
     parentElement,
     ditheringFragmentShader,
     uniforms,
@@ -93,10 +112,15 @@ export function createHeroShader(parentElement, options) {
     reduceMotion ? 0 : HERO_SHADER_DEFAULTS.speed,
     HERO_SHADER_DEFAULTS.frame
   );
+  activeMounts.push(mount);
+  return mount;
 }
 
 export function disposeHeroShader(mount) {
-  if (mount && typeof mount.dispose === 'function') {
+  if (!mount) return;
+  var idx = activeMounts.indexOf(mount);
+  if (idx !== -1) activeMounts.splice(idx, 1);
+  if (typeof mount.dispose === 'function') {
     mount.dispose();
   }
 }

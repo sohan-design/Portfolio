@@ -1,0 +1,362 @@
+/* Homepage V2 — portfolio layout + Figma/Apple experiments */
+
+.hp2-exp {
+  position: relative;
+  background: #ffffff;
+}
+
+html[data-theme='dark'] .hp2-exp {
+  background: #000000;
+}
+
+.hp2-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+html[data-theme='dark'] .hp2-bg {
+  background: #000000;
+}
+
+.hp2-exp .site {
+  position: relative;
+  z-index: 1;
+}
+
+.hp2-shader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hp2-shader canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hp2-shader--page {
+  opacity: 0.5;
+}
+
+html[data-theme='dark'] .hp2-shader--page {
+  opacity: 0.85;
+}
+
+.hp2-nav-tag {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: default;
+}
+
+.hero {
+  position: relative;
+}
+
+.hp2-hero-wash {
+  position: absolute;
+  inset: -12% -8% auto auto;
+  width: min(420px, 55vw);
+  height: min(280px, 40vw);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
+}
+
+.hero-top,
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+/* ----- Static pixel-edge image (Figma) ----- */
+.hp2-pixel-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.hp2-pixel-frame--hero {
+  margin: 48px 0 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.hp2-pixel-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hp2-pixel-mask {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ----- Best Projects cards (Figma pixel-frame) ----- */
+.hp2-projects {
+  padding-top: 48px;
+}
+
+.hp2-pcard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.hp2-pcard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: transform 0.35s var(--ease, ease);
+}
+
+.hp2-pcard:hover {
+  transform: translateY(-3px);
+}
+
+.hp2-pcard:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
+.hp2-pcard-media {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--bg);
+  border-radius: 6px;
+}
+
+.hp2-pcard-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hp2-pcard-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.004em;
+  color: var(--text, #000);
+}
+
+.hp2-pcard-title strong {
+  font-weight: 600;
+}
+
+.hp2-pcard-grid .hp2-pcard:nth-child(3) {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 24px);
+}
+
+/* ----- Apple-style full-bleed More Work shelf ----- */
+.hp2-more .section-head {
+  position: relative;
+  z-index: 2;
+}
+
+.hp2-shelf {
+  --hp2-shelf-pad: max(24px, calc((100vw - min(100vw, calc(837px + var(--page-pad, 24px) * 2))) / 2 + var(--page-pad, 24px)));
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  margin-left: -50vw;
+  margin-top: 8px;
+}
+
+.hp2-shelf-rail {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--hp2-shelf-pad);
+  padding: 8px var(--hp2-shelf-pad) 28px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.hp2-shelf-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.hp2-shelf-card {
+  position: relative;
+  flex: 0 0 min(520px, 72vw);
+  width: min(520px, 72vw);
+  aspect-ratio: 16 / 10;
+  height: auto;
+  margin: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 12px 36px rgba(0, 0, 0, 0.06);
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+
+html[data-theme='dark'] .hp2-shelf-card {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+}
+
+.hp2-shelf-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Progressive blur — stronger toward the bottom (text zone) */
+.hp2-shelf-img--blur {
+  filter: blur(10px);
+  transform: scale(1.08);
+  transform-origin: center bottom;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    to top,
+    #000 0%,
+    #000 18%,
+    rgba(0, 0, 0, 0.7) 38%,
+    rgba(0, 0, 0, 0.25) 58%,
+    transparent 78%
+  );
+  mask-image: linear-gradient(
+    to top,
+    #000 0%,
+    #000 18%,
+    rgba(0, 0, 0, 0.7) 38%,
+    rgba(0, 0, 0, 0.25) 58%,
+    transparent 78%
+  );
+}
+
+.hp2-shelf-progressive {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.18) 28%,
+    transparent 58%
+  );
+}
+
+.hp2-shelf-cap {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 28px 28px;
+  z-index: 2;
+}
+
+.hp2-shelf-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.hp2-shelf-title {
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.28);
+}
+
+.hp2-shelf-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 0 var(--hp2-shelf-pad) 4px;
+}
+
+.hp2-shelf-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+html[data-theme='dark'] .hp2-shelf-btn {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hp2-shelf-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+html[data-theme='dark'] .hp2-shelf-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hp2-shelf-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (max-width: 720px) {
+  .hp2-pcard-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .hp2-pcard-grid .hp2-pcard:nth-child(3) {
+    grid-column: auto;
+    max-width: none;
+  }
+
+  .hp2-shelf-card {
+    flex-basis: min(340px, 86vw);
+    width: min(340px, 86vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp2-pcard {
+    transition: none;
+  }
+}
