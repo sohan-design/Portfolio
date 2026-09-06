@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#1A1A1A"/>
+  <rect x="80" y="80" width="1040" height="515" rx="24" fill="#2A2A2A"/>
+  <rect x="120" y="140" width="280" height="24" rx="6" fill="#3D3D3D"/>
+  <rect x="120" y="190" width="480" height="16" rx="4" fill="#333"/>
+  <rect x="120" y="230" width="420" height="16" rx="4" fill="#333"/>
+  <rect x="120" y="320" width="960" height="200" rx="16" fill="#222"/>
+  <rect x="160" y="360" width="200" height="120" rx="12" fill="#34A853" opacity="0.85"/>
+  <rect x="400" y="360" width="200" height="120" rx="12" fill="#4285F4" opacity="0.55"/>
+  <rect x="640" y="360" width="200" height="120" rx="12" fill="#FBBC05" opacity="0.45"/>
+  <rect x="880" y="360" width="160" height="120" rx="12" fill="#EA4335" opacity="0.35"/>
+  <text x="120" y="120" fill="#fff" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="600">Learner dashboard — white-label evolution</text>
+</svg>

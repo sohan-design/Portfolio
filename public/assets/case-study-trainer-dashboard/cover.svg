@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#1B1F3B"/>
+  <rect x="80" y="80" width="1040" height="515" rx="24" fill="#252A4A"/>
+  <rect x="120" y="140" width="220" height="400" rx="16" fill="#2F3558"/>
+  <rect x="140" y="170" width="140" height="12" rx="3" fill="#5C6BC0"/>
+  <rect x="140" y="210" width="180" height="10" rx="3" fill="#3D4468"/>
+  <rect x="140" y="240" width="160" height="10" rx="3" fill="#3D4468"/>
+  <rect x="140" y="270" width="170" height="10" rx="3" fill="#3D4468"/>
+  <rect x="370" y="140" width="710" height="80" rx="12" fill="#2F3558"/>
+  <rect x="390" y="165" width="200" height="14" rx="3" fill="#FF6F00"/>
+  <rect x="390" y="190" width="320" height="10" rx="3" fill="#3D4468"/>
+  <rect x="370" y="250" width="340" height="200" rx="12" fill="#2F3558"/>
+  <rect x="740" y="250" width="340" height="200" rx="12" fill="#2F3558"/>
+  <rect x="370" y="480" width="710" height="60" rx="12" fill="#2F3558"/>
+  <text x="120" y="115" fill="#fff" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="600">B2B trainer admin dashboard</text>
+</svg>

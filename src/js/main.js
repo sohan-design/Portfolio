@@ -20,11 +20,21 @@ import { initFooterLotties } from './footerLottie.js';
     }
 
     var icons = Array.prototype.slice.call(loader.querySelectorAll('.intro-icon'));
+    var progressEl = loader.querySelector('.intro-progress');
+    var progressBar = loader.querySelector('.intro-progress-bar');
     var current = 0;
     var loopsDone = 0;
     var totalLoops = 2;
     var iconDelay = 200;
     var holdLast = 300;
+    var step = 0;
+    var totalSteps = icons.length * totalLoops;
+
+    function setProgress(value) {
+      var pct = Math.max(0, Math.min(100, value));
+      if (progressBar) progressBar.style.width = pct + '%';
+      if (progressEl) progressEl.setAttribute('aria-valuenow', String(Math.round(pct)));
+    }
 
     function showNext() {
       if (current > 0) {
@@ -38,6 +48,7 @@ import { initFooterLotties } from './footerLottie.js';
       if (current >= icons.length) {
         loopsDone++;
         if (loopsDone >= totalLoops) {
+          setProgress(100);
           setTimeout(exitLoader, holdLast);
           return;
         }
@@ -47,11 +58,14 @@ import { initFooterLotties } from './footerLottie.js';
       var icon = icons[current];
       icon.classList.remove('is-leaving');
       icon.classList.add('is-active');
+      step++;
+      setProgress((step / totalSteps) * 100);
       current++;
       setTimeout(showNext, iconDelay);
     }
 
     function exitLoader() {
+      setProgress(100);
       loader.classList.add('is-exiting');
       document.body.classList.remove('intro-loading');
 
@@ -61,6 +75,7 @@ import { initFooterLotties } from './footerLottie.js';
       });
     }
 
+    setProgress(0);
     setTimeout(function () { showNext(); }, 150);
   })();
 
@@ -593,8 +608,9 @@ import { initFooterLotties } from './footerLottie.js';
       });
       // Each project's dedicated case-study page.
       var STUDY_URLS = {
-        unify: '/work/redesigned-ai-agents',
-        cosmo: '/work/redesigned-payment-pages'
+        cosmo: '/work/redesigned-payment-pages',
+        whitelabel: '/work/white-label-evolution',
+        trainer: '/work/b2b-trainer-dashboard'
       };
       var modals = {};
       Array.prototype.forEach.call(document.querySelectorAll('.pm-overlay'), function (m) {
