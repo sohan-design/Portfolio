@@ -1,10 +1,10 @@
-/* Portfolio v3 — Figma layout + abatisamuel.pro minimal style */
+/* Portfolio v3 — Figma layout + Inter Display */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('./case-study.css');
 
 :root {
-  --bg: #f0f0f0;
+  --bg: #ffffff;
   --surface: #ffffff;
   --text: #0a0a0a;
   --text-secondary: #5d5d5d;
@@ -53,6 +53,7 @@ html[data-theme="dark"] {
 
 *, *::before, *::after {
   box-sizing: border-box;
+  font-optical-sizing: none;
   font-variation-settings: 'opsz' var(--opsz-display);
 }
 
@@ -127,7 +128,7 @@ html.theme-animating .site-nav {
 body {
   margin: 0;
   font-family: var(--font);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.4;
   letter-spacing: -0.075px;
   color: var(--text);
@@ -591,16 +592,16 @@ html[data-theme="dark"] .site-nav.floating {
   margin: 0;
   max-width: 760px;
   font-size: 18px;
-  line-height: 28.8px;
-  letter-spacing: -0.5px;
+  line-height: 1.4;
+  letter-spacing: -0.075px;
   color: var(--text-secondary);
 }
 
 .hero-note {
   margin: 0;
   font-size: 18px;
-  line-height: 28.8px;
-  letter-spacing: -0.5px;
+  line-height: 1.4;
+  letter-spacing: -0.075px;
   color: var(--text);
 }
 
@@ -653,7 +654,7 @@ html[data-theme="dark"] .site-nav.floating {
 
 .project-title {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.4;
   letter-spacing: -0.075px;
   color: var(--text);
@@ -737,19 +738,19 @@ html[data-theme="dark"] .site-nav.floating {
 }
 
 .exp-company {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.075px;
 }
 
 .exp-date {
-  font-size: 17px;
+  font-size: 18px;
   color: var(--text-faint);
 }
 
 .exp-desc {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.4;
   color: var(--text);
 }
@@ -904,7 +905,7 @@ html[data-theme="dark"] .site-nav.floating {
 
 .about-copy,
 .about-more {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.55;
   color: var(--text);
 }

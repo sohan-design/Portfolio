@@ -23,13 +23,17 @@
       inset: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      background-color: var(--paper-bg);
+      background-color: #ffffff;
       background-image: var(--paper-image);
       background-repeat: repeat;
       background-size: var(--paper-size);
       background-blend-mode: var(--paper-blend);
       opacity: 0;
       transition: opacity 0.28s ease;
+    }
+
+    html[data-theme='dark'] .cs-panel {
+      background-color: #000000;
     }
     .cs-overlay.open .cs-panel { opacity: 1; }
 
@@ -1495,8 +1499,12 @@
       max-height: 100%;
       aspect-ratio: 800 / 342;
       flex: none;
-      background: var(--paper-bg);
+      background: #ffffff;
       pointer-events: auto;
+    }
+
+    html[data-theme='dark'] [data-hero-intro] .cs-hero-shader {
+      background: #000000;
     }
 
     [data-hero-intro] .cs-title-row {

@@ -685,16 +685,16 @@ import { initThemeToggle } from './theme.js';
         var fig = figs[current];
         imgEl.setAttribute('src', fig.getAttribute('src'));
         imgEl.setAttribute('alt', fig.getAttribute('alt') || '');
-        var isMw = !!(fig.closest && (fig.closest('.mw-card') || fig.closest('.tile')));
+        var isMw = !!(fig.closest && (fig.closest('.mw-card') || fig.closest('.tile') || fig.closest('.hp2-shelf-card')));
         var isCarousel = !!(fig.closest && fig.closest('.mw-carousel-card'));
         if (isMw || isCarousel) {
           // More-work previews: crop to the SAME ratio as the on-page card
-          // (590:400 grid card, 8:5 home carousel card) so every image in the
+          // (590:400 grid card, 8:5 home carousel / shelf card) so every image in the
           // section frames consistently, however tall/empty its own source
           // canvas is — instead of each showing its own native aspect ratio.
           imgEl.style.maxWidth = '';
           imgEl.style.width = 'min(900px, 88vw)';
-          imgEl.style.aspectRatio = isCarousel ? '440 / 290' : '59 / 40';
+          imgEl.style.aspectRatio = isCarousel ? '440 / 290' : '16 / 10';
           imgEl.style.objectFit = 'cover';
         } else {
           // Never upscale beyond the source's native width — a small image shows
@@ -711,7 +711,7 @@ import { initThemeToggle } from './theme.js';
         // radius. This keeps the two projects distinct automatically — UnifyApps
         // figures bake their own mat into the PNG (frame padding 0 → no mat added
         // here), Cosmofeed framed figures use a 6px CSS mat, flush cards use none.
-        var frame = fig.closest && (fig.closest('.cs-frame') || fig.closest('.mw-card') || fig.closest('.mw-carousel-card') || fig.closest('.tile'));
+        var frame = fig.closest && (fig.closest('.cs-frame') || fig.closest('.mw-card') || fig.closest('.mw-carousel-card') || fig.closest('.hp2-shelf-card') || fig.closest('.tile'));
         var fcs = frame ? getComputedStyle(frame) : null;
         var hasMat = fcs ? (parseFloat(fcs.paddingLeft) || 0) > 0 : false;
         imgEl.style.padding = fcs ? fcs.padding : '0';

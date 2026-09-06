@@ -1,6 +1,5 @@
 /**
- * Homepage V2 experiments — paper shaders layered onto the existing layout.
- * Does not alter home page behavior; mounts decorative canvases only.
+ * Homepage paper shaders + pixel frame + more-work shelf.
  */
 import {
   ShaderMount,
@@ -45,7 +44,7 @@ function cssVar(name, fallback) {
 }
 
 function pageBg() {
-  return cssVar('--bg', '#f0f0f0');
+  return cssVar('--bg', '#ffffff');
 }
 
 function isDark() {
@@ -368,7 +367,7 @@ function boot() {
     mountAll();
   }
 
-  var root = document.getElementById('page-home-v2') || document.body;
+  var root = document.getElementById('page-home') || document.body;
   initPixelFrame(root);
   initShelf(root);
 

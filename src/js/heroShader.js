@@ -35,10 +35,10 @@ function evenPx(value) {
 }
 
 function pageBackgroundColor() {
-  return (
-    getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() ||
-    '#f0f0f0'
-  );
+  if (document.documentElement.getAttribute('data-theme') === 'dark') {
+    return '#000000';
+  }
+  return '#ffffff';
 }
 
 /** Snap shader container to even width/height, fitting the available hero fill area. */

@@ -2,10 +2,14 @@
 
 .hp2-exp {
   position: relative;
+  --bg: #ffffff;
+  --paper-bg: #ffffff;
   background: #ffffff;
 }
 
 html[data-theme='dark'] .hp2-exp {
+  --bg: #000000;
+  --paper-bg: #000000;
   background: #000000;
 }
 
@@ -48,12 +52,6 @@ html[data-theme='dark'] .hp2-shader--page {
   opacity: 0.85;
 }
 
-.hp2-nav-tag {
-  opacity: 0.45;
-  pointer-events: none;
-  cursor: default;
-}
-
 .hero {
   position: relative;
 }
@@ -80,7 +78,13 @@ html[data-theme='dark'] .hp2-shader--page {
 .hp2-pixel-frame {
   position: relative;
   overflow: hidden;
-  background: var(--bg);
+  background: #ffffff;
+  border: 0;
+  border-radius: 6px;
+}
+
+html[data-theme='dark'] .hp2-pixel-frame {
+  background: #000000;
 }
 
 .hp2-pixel-frame--hero {
@@ -94,6 +98,8 @@ html[data-theme='dark'] .hp2-shader--page {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: 0;
+  border-radius: 6px;
 }
 
 .hp2-pixel-mask {
@@ -147,8 +153,13 @@ html[data-theme='dark'] .hp2-shader--page {
   aspect-ratio: 16 / 10;
   flex-shrink: 0;
   overflow: hidden;
-  background: var(--bg);
+  background: #ffffff;
+  border: 0;
   border-radius: 6px;
+}
+
+html[data-theme='dark'] .hp2-pcard-media {
+  background: #000000;
 }
 
 .hp2-pcard-media img {
@@ -156,14 +167,16 @@ html[data-theme='dark'] .hp2-shader--page {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: 0;
+  border-radius: 6px;
 }
 
 .hp2-pcard-title {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.4;
-  letter-spacing: -0.004em;
+  letter-spacing: -0.075px;
   color: var(--text, #000);
 }
 
@@ -215,7 +228,8 @@ html[data-theme='dark'] .hp2-shader--page {
   aspect-ratio: 16 / 10;
   height: auto;
   margin: 0;
-  border-radius: 8px;
+  border: 0;
+  border-radius: 6px;
   overflow: hidden;
   background: #1a1a1a;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 12px 36px rgba(0, 0, 0, 0.06);
