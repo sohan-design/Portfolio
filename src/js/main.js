@@ -2,6 +2,68 @@ import { createHeroShader, disposeHeroShader, snapHeroShaderSize } from './heroS
 import { initFooterLotties } from './footerLottie.js';
 
 (function () {
+  // ---------- Intro loader ----------
+  (function () {
+    var loader = document.getElementById('introLoader');
+    if (!loader) return;
+
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      document.body.classList.remove('intro-loading');
+      loader.remove();
+      return;
+    }
+
+    // Gate already applied by inline script (session + nav type). Just animate.
+    if (!document.body.classList.contains('intro-loading')) {
+      document.body.classList.add('intro-loading');
+    }
+
+    var icons = Array.prototype.slice.call(loader.querySelectorAll('.intro-icon'));
+    var current = 0;
+    var loopsDone = 0;
+    var totalLoops = 2;
+    var iconDelay = 200;
+    var holdLast = 300;
+
+    function showNext() {
+      if (current > 0) {
+        icons[current - 1].classList.remove('is-active');
+        icons[current - 1].classList.add('is-leaving');
+      } else if (loopsDone > 0) {
+        icons[icons.length - 1].classList.remove('is-active');
+        icons[icons.length - 1].classList.add('is-leaving');
+      }
+
+      if (current >= icons.length) {
+        loopsDone++;
+        if (loopsDone >= totalLoops) {
+          setTimeout(exitLoader, holdLast);
+          return;
+        }
+        current = 0;
+      }
+
+      var icon = icons[current];
+      icon.classList.remove('is-leaving');
+      icon.classList.add('is-active');
+      current++;
+      setTimeout(showNext, iconDelay);
+    }
+
+    function exitLoader() {
+      loader.classList.add('is-exiting');
+      document.body.classList.remove('intro-loading');
+
+      loader.addEventListener('animationend', function () {
+        loader.classList.add('is-done');
+        loader.remove();
+      });
+    }
+
+    setTimeout(function () { showNext(); }, 150);
+  })();
+
   // Strip any legacy separator.svg images from case-study dividers.
   Array.prototype.forEach.call(document.querySelectorAll('.cs-divider img'), function (img) {
     img.remove();

@@ -8,6 +8,41 @@
   <link rel="stylesheet" href="/src/styles/main.css" />
 </head>
 <body>
+  <!-- Intro loader -->
+  <div class="intro-loader" id="introLoader" aria-hidden="true">
+    <div class="intro-icons">
+      <div class="intro-icon"><img src="/assets/loader/cursor-ai.svg" alt="" width="52" height="52" /></div>
+      <div class="intro-icon"><img src="/assets/loader/figma.svg" alt="" width="44" height="44" /></div>
+      <div class="intro-icon"><img src="/assets/loader/claude.svg" alt="" width="52" height="52" /></div>
+      <div class="intro-icon"><img src="/assets/loader/paper-design.svg" alt="" width="44" height="44" /></div>
+      <div class="intro-icon"><img src="/assets/loader/framer.svg" alt="" width="28" height="42" /></div>
+      <div class="intro-icon intro-icon--profile">
+        <div class="intro-profile-photo"><img src="/assets/loader/profile.png" alt="" width="56" height="56" /></div>
+        <img class="intro-profile-accent" src="/assets/loader/profile-accent.svg" alt="" width="20" height="2" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var el = document.getElementById('introLoader');
+      if (!el) return;
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { el.remove(); return; }
+      var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      var type = nav ? nav.type : 'navigate';
+      var seen = false;
+      try { seen = sessionStorage.getItem('introLoaderSeen') === '1'; } catch (e) {}
+      // Play on hard reload, or first visit in this tab. Skip in-app navigations.
+      if (!(type === 'reload' || (type === 'navigate' && !seen))) {
+        el.remove();
+        return;
+      }
+      try { sessionStorage.setItem('introLoaderSeen', '1'); } catch (e) {}
+      document.body.classList.add('intro-loading');
+    })();
+  </script>
+
   <div class="site">
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
