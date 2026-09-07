@@ -29,6 +29,7 @@ html[data-theme='dark'] .hp2-bg {
 .hp2-exp .site {
   position: relative;
   z-index: 1;
+  padding-bottom: 0;
 }
 
 .hp2-shader {
@@ -74,6 +75,68 @@ html[data-theme='dark'] .hp2-shader--page {
   z-index: 1;
 }
 
+/* Dia pixel icons — own row in the header, never over the copy */
+.hero-floats {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  margin-right: 18px;
+  order: 1;
+  flex: 0 0 auto;
+}
+
+.hero-top .hero-avatar {
+  order: 0;
+}
+
+.hero-top .site-clock {
+  order: 2;
+}
+
+.hero-float {
+  display: block;
+  width: 36px;
+  height: 36px;
+  color: var(--text);
+  line-height: 0;
+}
+
+.hero-float svg {
+  display: block;
+  width: 36px;
+  height: 36px;
+  transform-origin: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-float:hover svg {
+    animation: hero-wiggle 480ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+@keyframes hero-wiggle {
+  0%,
+  100% { transform: rotate(0deg); }
+  40% { transform: rotate(-2.5deg); }
+  70% { transform: rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-float:hover svg {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-floats {
+    order: 3;
+    width: 100%;
+    margin: 10px 0 0;
+    justify-content: flex-start;
+  }
+}
+
 /* ----- Static pixel-edge image (Figma) ----- */
 .hp2-pixel-frame {
   position: relative;
@@ -91,6 +154,15 @@ html[data-theme='dark'] .hp2-pixel-frame {
   margin: 48px 0 0;
   width: 100%;
   aspect-ratio: 16 / 9;
+  background: transparent;
+}
+
+html[data-theme='dark'] .hp2-pixel-frame--hero {
+  background: transparent;
+}
+
+.hp2-pixel-frame--hero.is-cut img {
+  opacity: 0;
 }
 
 .hp2-pixel-frame img {

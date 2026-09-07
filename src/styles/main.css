@@ -538,6 +538,16 @@ html[data-theme="dark"] .site-nav.floating {
   align-items: center;
   width: 44px;
   flex: none;
+  transform: rotate(0deg);
+  transform-origin: center center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+
+.hero-avatar:hover,
+.hero-avatar:focus-visible {
+  transform: rotate(-8deg);
+  outline: none;
 }
 
 .hero-avatar-photo {
@@ -553,6 +563,7 @@ html[data-theme="dark"] .site-nav.floating {
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  pointer-events: none;
 }
 
 .hero-avatar-accent {
@@ -560,13 +571,90 @@ html[data-theme="dark"] .site-nav.floating {
   width: 24px;
   height: 2px;
   margin-top: 3px;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-avatar {
+    transition: none;
+  }
+}
+
+/* Custom cursor badge — only while hovering the avatar */
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 24px;
+  width: max-content;
+  max-width: 220px;
+  padding: 4px 8px;
+  background: var(--surface, #fff);
+  border: 0.5px solid var(--hairline);
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
+  font-family: var(--font);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text);
+  text-align: left;
+  white-space: normal;
+  pointer-events: none;
+  will-change: transform;
+}
+
+#cursor.show {
+  display: inline-flex;
+}
+
+#cursor .cursor-text {
+  display: none;
+}
+
+#cursor .cursor-text.has {
+  display: inline;
+}
+
+/* Pixel cursor trail — thebrowser.company #0C50FF, 5px rectangles */
+.pixel-trail {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 900;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .pixel-trail {
+    display: none;
+  }
+}
+.hero-avatar.avatar-cursor-active {
+  cursor: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  #cursor {
+    display: none !important;
+  }
+
+  .hero-avatar.avatar-cursor-active {
+    cursor: pointer;
+  }
 }
 
 .site-clock {
   font-size: 13px;
   line-height: 20.8px;
   letter-spacing: -0.5px;
-  color: rgba(10, 10, 10, 0.5);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
@@ -755,7 +843,7 @@ html[data-theme="dark"] .site-nav.floating {
   color: var(--text);
 }
 
-/* ---------- CTA footer ---------- */
+/* ---------- CTA footer (dark pixel wave) ---------- */
 .site-cta {
   display: flex;
   flex-direction: column;
@@ -763,6 +851,32 @@ html[data-theme="dark"] .site-nav.floating {
   gap: 40px;
   text-align: center;
   padding-top: 24px;
+}
+
+.site-cta--pixel {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  margin-left: -50vw;
+  margin-top: clamp(48px, 8vw, 96px);
+  padding: clamp(72px, 10vw, 120px) var(--page-pad, 24px) 0;
+  gap: 0;
+  background: transparent;
+  color: var(--text);
+  overflow: hidden;
+  min-height: clamp(380px, 52vw, 520px);
+}
+
+.site-cta--pixel .cta-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 560px;
+  margin: 0 auto;
+  padding-bottom: clamp(120px, 22vw, 200px);
 }
 
 .cta-signature {
@@ -780,12 +894,20 @@ html[data-theme="dark"] .site-nav.floating {
   color: var(--text);
 }
 
+.site-cta--pixel .cta-title {
+  color: var(--text);
+}
+
 .cta-sub {
   margin: 0;
   max-width: 403px;
   font-size: 18px;
   line-height: 28.8px;
   letter-spacing: -0.09px;
+  color: var(--text-secondary);
+}
+
+.site-cta--pixel .cta-sub {
   color: var(--text-secondary);
 }
 
@@ -806,6 +928,19 @@ html[data-theme="dark"] .site-nav.floating {
   transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
 }
 
+.site-cta--pixel .btn-primary {
+  margin-top: 12px;
+}
+
+html[data-theme='dark'] .site-cta--pixel .btn-primary {
+  background: #ffffff;
+  color: #000000;
+}
+
+html[data-theme='dark'] .site-cta--pixel .btn-primary img {
+  filter: invert(1);
+}
+
 .btn-primary:hover {
   transform: scale(1.02);
   opacity: 0.92;
@@ -816,6 +951,50 @@ html[data-theme="dark"] .site-nav.floating {
 .btn-primary img {
   width: 11px;
   height: 7px;
+}
+
+.cta-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.cta-social a {
+  opacity: 0.45;
+  transition: opacity 0.2s var(--ease);
+}
+
+.cta-social a:hover {
+  opacity: 0.9;
+}
+
+.cta-social img {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+html[data-theme='dark'] .cta-social img {
+  filter: invert(1);
+}
+
+.cta-pixel-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(160px, 32vw, 280px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-cta--pixel .btn-primary:hover {
+    transform: none;
+  }
 }
 
 /* ---------- More work page ---------- */

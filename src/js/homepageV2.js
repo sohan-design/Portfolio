@@ -226,7 +226,7 @@ function hash2(x, y) {
   return n - Math.floor(n);
 }
 
-/** Static white-square pixel edges (hero + project cards). */
+/** Pixel border: knock out edge squares so the page shader shows through. */
 function initPixelFrame(root) {
   var frames = root.querySelectorAll('[data-hp2-pixel-frame]');
   if (!frames.length) return;
@@ -239,6 +239,16 @@ function initPixelFrame(root) {
     if (!canvas || !img) return;
     var ctx = canvas.getContext('2d');
 
+    function coverImage(w, h) {
+      var iw = img.naturalWidth || img.width;
+      var ih = img.naturalHeight || img.height;
+      if (!iw || !ih) return;
+      var scale = Math.max(w / iw, h / ih);
+      var dw = iw * scale;
+      var dh = ih * scale;
+      ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    }
+
     function paint() {
       var w = frame.clientWidth;
       var h = frame.clientHeight;
@@ -250,31 +260,42 @@ function initPixelFrame(root) {
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = 1;
+      coverImage(w, h);
 
       var cell = Math.max(10, Math.round(w / 48));
       var cols = Math.ceil(w / cell);
       var rows = Math.ceil(h / cell);
-      var fill = isDark() ? '#000000' : '#ffffff';
-      ctx.fillStyle = fill;
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = '#000';
 
       for (var r = 0; r < rows; r++) {
         for (var c = 0; c < cols; c++) {
+          var nx = c / cols;
           var ny = r / rows;
-          var topBand = ny < 0.28;
-          var botBand = ny > 0.78;
-          if (!topBand && !botBand) continue;
-          var dens = topBand ? 1 - ny / 0.28 : (ny - 0.78) / 0.22;
-          dens = Math.max(0, Math.min(1, dens));
+          var top = ny < 0.16 ? 1 - ny / 0.16 : 0;
+          var bot = ny > 0.84 ? (ny - 0.84) / 0.16 : 0;
+          var left = nx < 0.1 ? 1 - nx / 0.1 : 0;
+          var right = nx > 0.9 ? (nx - 0.9) / 0.1 : 0;
+          var dens = Math.max(top, bot, left, right);
+          if (dens <= 0) continue;
           if (hash2(c, r) > dens * 0.92) continue;
-          if (dens < 0.35 && hash2(c + 3, r + 5) > 0.35) continue;
+          if (dens < 0.4 && hash2(c + 3, r + 5) > 0.4) continue;
+          ctx.globalAlpha = 1;
           ctx.fillRect(c * cell, r * cell, cell, cell);
         }
       }
+
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+      frame.classList.add('is-cut');
     }
 
     painters.push(paint);
 
-    if (img.complete) paint();
+    if (img.complete && img.naturalWidth) paint();
     else img.addEventListener('load', paint, { once: true });
   });
 
@@ -294,6 +315,436 @@ function initPixelFrame(root) {
   obs.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['data-theme'],
+  });
+}
+
+/**
+ * Pixel cursor trail (thebrowser.company): 5px rectangles in #0C50FF.
+ * Native pointer stays visible.
+ */
+function initPixelTrail() {
+  document.documentElement.classList.remove('pixel-cursor');
+
+  var fine =
+    window.matchMedia &&
+    matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var reduce =
+    window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || reduce) return;
+
+  var canvas = document.querySelector('[data-pixel-trail]');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var cell = 5;
+  var fade = 500;
+  var maxStamps = 96;
+  var color = '#0C50FF';
+  var stamps = [];
+  var seen = Object.create(null);
+  var lastX = null;
+  var lastY = null;
+  var cursorX = null;
+  var cursorY = null;
+  var raf = 0;
+  var running = false;
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.height = Math.floor(window.innerHeight * dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+  }
+
+  function stampCell(sx, sy, now) {
+    var key = sx + ':' + sy;
+    if (seen[key]) return;
+    seen[key] = 1;
+    stamps.push({ x: sx, y: sy, t: now });
+    if (stamps.length > maxStamps) {
+      var dropped = stamps.shift();
+      delete seen[dropped.x + ':' + dropped.y];
+    }
+  }
+
+  function stamp(x, y) {
+    var now = performance.now();
+    var sx = Math.floor(x / cell) * cell;
+    var sy = Math.floor(y / cell) * cell;
+    cursorX = sx;
+    cursorY = sy;
+
+    if (lastX == null) {
+      stampCell(sx, sy, now);
+      lastX = sx;
+      lastY = sy;
+      return;
+    }
+
+    var dx = sx - lastX;
+    var dy = sy - lastY;
+    var steps = Math.max(Math.abs(dx), Math.abs(dy)) / cell;
+    if (steps < 1) {
+      stampCell(sx, sy, now);
+    } else {
+      for (var i = 1; i <= steps; i++) {
+        var px = Math.round(lastX + (dx * i) / steps);
+        var py = Math.round(lastY + (dy * i) / steps);
+        stampCell(Math.floor(px / cell) * cell, Math.floor(py / cell) * cell, now);
+      }
+    }
+
+    lastX = sx;
+    lastY = sy;
+  }
+
+  function draw(now) {
+    raf = 0;
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    var alive = [];
+    ctx.fillStyle = color;
+    for (var i = 0; i < stamps.length; i++) {
+      var s = stamps[i];
+      var age = now - s.t;
+      if (age >= fade) {
+        delete seen[s.x + ':' + s.y];
+        continue;
+      }
+      var a = 1 - age / fade;
+      ctx.globalAlpha = a * a;
+      ctx.fillRect(s.x, s.y, cell, cell);
+      alive.push(s);
+    }
+    ctx.globalAlpha = 1;
+    if (cursorX != null) {
+      ctx.fillStyle = color;
+      ctx.fillRect(cursorX, cursorY, cell, cell);
+    }
+    stamps = alive;
+    if (alive.length || cursorX != null) {
+      running = true;
+      raf = requestAnimationFrame(draw);
+    } else {
+      running = false;
+    }
+  }
+
+  function kick() {
+    if (!running) {
+      running = true;
+      raf = requestAnimationFrame(draw);
+    }
+  }
+
+  document.addEventListener(
+    'mousemove',
+    function (e) {
+      stamp(e.clientX, e.clientY);
+      kick();
+    },
+    { passive: true }
+  );
+
+  document.addEventListener('mouseleave', function () {
+    lastX = null;
+    lastY = null;
+    cursorX = null;
+    cursorY = null;
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+}
+
+/**
+ * Avatar hover: starts straight, tilts on hover + cycling cursor badge.
+ */
+function initAvatarCursor() {
+  var fine =
+    window.matchMedia &&
+    matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!fine) return;
+
+  var cursor = document.getElementById('cursor');
+  var avatar = document.querySelector('.hero-avatar[data-cursor-cycle], .avatar[data-cursor-cycle]');
+  if (!cursor || !avatar) return;
+
+  var textEl = cursor.querySelector('.cursor-text');
+  if (!textEl) return;
+
+  var MSGS = [
+    'Hi.',
+    "I'm from Nagpur.",
+    'Oranges? Not my client.',
+    'Still hovering? Scroll down.',
+    'Thought you were bored?',
+    'Dare you. Hover again.',
+  ];
+  var idx = 0;
+  var mx = 0;
+  var my = 0;
+  var raf = 0;
+
+  function place() {
+    raf = 0;
+    var x = mx - cursor.offsetWidth / 2;
+    var y = my - cursor.offsetHeight / 2;
+    cursor.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+  }
+
+  document.addEventListener(
+    'mousemove',
+    function (e) {
+      mx = e.clientX;
+      my = e.clientY;
+      if (cursor.classList.contains('show') && !raf) {
+        raf = requestAnimationFrame(place);
+      }
+    },
+    { passive: true }
+  );
+
+  function showMsg() {
+    var txt = MSGS[idx];
+    idx = (idx + 1) % MSGS.length;
+    textEl.textContent = '';
+    String(txt)
+      .split('|')
+      .forEach(function (part, i) {
+        if (i) textEl.appendChild(document.createElement('br'));
+        textEl.appendChild(document.createTextNode(part));
+      });
+    textEl.classList.add('has');
+    avatar.classList.add('avatar-cursor-active');
+    cursor.classList.add('show');
+    place();
+  }
+
+  function hide() {
+    cursor.classList.remove('show');
+    avatar.classList.remove('avatar-cursor-active');
+  }
+
+  avatar.addEventListener('mouseenter', showMsg);
+  avatar.addEventListener('mouseleave', hide);
+  avatar.addEventListener('focus', showMsg);
+  avatar.addEventListener('blur', hide);
+}
+
+/** Dark CTA pixel wave — static valley, scratches on scroll then settles. */
+function initCtaPixelWave(root) {
+  var section = root.querySelector('.site-cta--pixel');
+  var canvas = root.querySelector('[data-cta-wave]');
+  if (!section || !canvas) return;
+
+  var ctx = canvas.getContext('2d');
+  var reduce =
+    window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Same blues in light and dark: statue field + cursor trail #0C50FF. */
+  var COLORS = ['#0C50FF', '#1A4ADF', '#3D74FF', '#0A38C4', '#6A96FF'];
+  var ghost = 'rgba(12, 80, 255, 0.22)';
+  var cell = 10;
+  var cols = 0;
+  var rows = 0;
+  var base = null; // Int8: 0 empty, 1–5 color index
+  var scratch = null; // Float32 offsets 0..1 decay
+  var scratchEnergy = 0;
+  var lastY = window.scrollY || 0;
+  var raf = 0;
+  var settling = false;
+
+  function hash(x, y) {
+    var n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+    return n - Math.floor(n);
+  }
+
+  function waveHeight(nx) {
+    // Valley in the center, taller on the sides (concave from above)
+    var edge = Math.pow(Math.abs(nx - 0.5) * 2, 1.35);
+    return 0.28 + edge * 0.62;
+  }
+
+  function buildBase() {
+    var w = section.clientWidth;
+    var h = canvas.clientHeight || Math.round(w * 0.28);
+    if (w < 2 || h < 2) return;
+
+    cell = Math.max(8, Math.round(w / 110));
+    cols = Math.ceil(w / cell);
+    rows = Math.ceil(h / cell);
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    base = new Int8Array(cols * rows);
+    scratch = new Float32Array(cols * rows);
+
+    for (var c = 0; c < cols; c++) {
+      var nx = cols <= 1 ? 0.5 : c / (cols - 1);
+      var fill = waveHeight(nx);
+      var fillRows = Math.floor(fill * rows);
+
+      for (var r = 0; r < rows; r++) {
+        var i = r * cols + c;
+        var fromBottom = rows - 1 - r;
+
+        if (fromBottom < fillRows) {
+          // Solid body of the wave — bottom edge is always filled
+          var dens = fromBottom < 2 ? 1 : 0.92 - (fromBottom / Math.max(1, fillRows)) * 0.18;
+          if (hash(c, r) < dens) {
+            base[i] = 1 + Math.floor(hash(c + 9, r + 3) * COLORS.length);
+          }
+        } else if (fromBottom < fillRows + 4) {
+          // Sparse spray / ghost dots above the crest
+          var spray = 0.18 * (1 - (fromBottom - fillRows) / 4);
+          if (hash(c + 2, r + 7) < spray) {
+            base[i] = 1 + Math.floor(hash(c + 4, r) * 3);
+          }
+        } else if (fromBottom < fillRows + 10 && hash(c * 3, r * 5) < 0.045) {
+          // faint grid dots higher up
+          base[i] = -1; // draw as muted grey
+        }
+      }
+    }
+  }
+
+  function pulse(i, now) {
+    if (reduce) return 1;
+    var phase = (i % 23) * 0.55;
+    var wave = 0.5 + 0.5 * Math.sin(now * 0.00115 + phase);
+    return 0.38 + 0.62 * wave;
+  }
+
+  function paint(now) {
+    if (!base) return;
+    var w = canvas.clientWidth;
+    var h = canvas.clientHeight;
+    var t = now || performance.now();
+    ctx.clearRect(0, 0, w, h);
+
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var i = r * cols + c;
+        var v = base[i];
+        if (!v) continue;
+
+        var s = scratch ? scratch[i] : 0;
+        var dx = s ? s * cell * 2.4 : 0;
+        var dy = s ? -s * cell * 0.35 : 0;
+        var x = c * cell + dx;
+        var y = r * cell + dy;
+        var dim = pulse(i, t);
+
+        if (v < 0) {
+          ctx.globalAlpha = 0.55 * dim;
+          ctx.fillStyle = ghost;
+          ctx.fillRect(x + cell * 0.35, y + cell * 0.35, Math.max(1, cell * 0.3), Math.max(1, cell * 0.3));
+        } else {
+          ctx.fillStyle = COLORS[(v - 1) % COLORS.length];
+          ctx.globalAlpha = dim * (s ? 0.72 + 0.28 * (1 - Math.min(1, s)) : 1);
+          ctx.fillRect(x, y, cell - 0.5, cell - 0.5);
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // Scratch only — wave stays flush to the footer edge (no lift / gap).
+  function applyRise() {}
+
+  function loop(now) {
+    raf = 0;
+    var max = 0;
+    if (scratch) {
+      for (var i = 0; i < scratch.length; i++) {
+        if (scratch[i] !== 0) {
+          scratch[i] *= 0.82;
+          if (Math.abs(scratch[i]) < 0.03) scratch[i] = 0;
+          if (Math.abs(scratch[i]) > max) max = Math.abs(scratch[i]);
+        }
+      }
+    }
+    paint(now);
+    applyRise();
+    if (max <= 0.03) settling = false;
+    if (!reduce) raf = requestAnimationFrame(loop);
+  }
+
+  function kick() {
+    if (!raf && !reduce) raf = requestAnimationFrame(loop);
+  }
+
+  function scratchBand(dy, dir) {
+    if (reduce || !scratch || !base || !cols) return;
+    var rect = section.getBoundingClientRect();
+    if (rect.top > window.innerHeight || rect.bottom < 0) return;
+
+    var strength = Math.min(1, Math.abs(dy) / 48);
+    if (strength < 0.04) return;
+
+    // Band walks across the wave with scroll, then the pixels slide and fall back.
+    var progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+    var center = Math.floor(progress * (cols - 1));
+    var half = Math.max(3, Math.floor(cols * (0.06 + strength * 0.1)));
+    var push = dir * strength;
+
+    for (var c = Math.max(0, center - half); c <= Math.min(cols - 1, center + half); c++) {
+      var falloff = 1 - Math.abs(c - center) / half;
+      for (var r = 0; r < rows; r++) {
+        var i = r * cols + c;
+        if (!base[i]) continue;
+        var fromBottom = (rows - 1 - r) / rows;
+        if (fromBottom > 0.92) continue;
+        scratch[i] = Math.max(-1.2, Math.min(1.2, scratch[i] + push * falloff));
+      }
+    }
+
+    if (!settling) {
+      settling = true;
+      kick();
+    }
+  }
+
+  var scrollT = 0;
+  function onScroll() {
+    var y = window.scrollY || 0;
+    var dy = y - lastY;
+    lastY = y;
+    applyRise();
+    if (Math.abs(dy) < 1) return;
+    scratchBand(dy, dy > 0 ? 1 : -1);
+    clearTimeout(scrollT);
+    scrollT = setTimeout(function () {
+      if (!settling && scratch) {
+        settling = true;
+        kick();
+      }
+    }, 90);
+  }
+
+  function resize() {
+    buildBase();
+    if (scratch) scratch.fill(0);
+    settling = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    paint(performance.now());
+    applyRise();
+    kick();
+  }
+
+  resize();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () {
+    clearTimeout(section._ctaWaveT);
+    section._ctaWaveT = setTimeout(resize, 120);
   });
 }
 
@@ -370,6 +821,9 @@ function boot() {
   var root = document.getElementById('page-home') || document.body;
   initPixelFrame(root);
   initShelf(root);
+  initPixelTrail();
+  initAvatarCursor();
+  initCtaPixelWave(root);
 
   var obs = new MutationObserver(function () {
     requestAnimationFrame(syncAll);
