@@ -230,11 +230,11 @@
        Unify, About + Introduction on Cosmofeed). The second heading gets a 32px
        gap from the first block, matching the design. */
     #cs-phase1 p + h2, #csc-intro p + h2 { margin-top: 32px; }
-    /* every section heading: h2 is 20px, h3 is 16px / 30px Medium (from the design) */
+    /* every section heading: h2 is 24px / light, h3 is 16px / 30px Medium */
     .cs-section h2 {
-      font-size: 20px;
-      line-height: 30px;
-      font-weight: 500;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 300;
       color: var(--text);
       margin-bottom: 4px;
     }
@@ -343,13 +343,13 @@
       height: 100%;
     }
     .cs-section p {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 26px;
       color: var(--text);
     }
     .cs-section p + p { margin-top: 12px; }
     .cs-section ul, .cs-section ol { margin: 12px 0; padding-left: 22px; }
-    .cs-section li { font-size: 15px; line-height: 26px; color: var(--text); margin-bottom: 6px; }
+    .cs-section li { font-size: 16px; line-height: 26px; color: var(--text); margin-bottom: 6px; }
     .cs-section blockquote {
       margin: 24px 0;
       padding-left: 16px;

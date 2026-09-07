@@ -524,6 +524,10 @@ html[data-theme="dark"] .btn-primary {
   color: var(--text-muted);
 }
 
+#work .section-label {
+  padding-top: 32px;
+}
+
 .section-head {
   display: flex;
   align-items: center;
