@@ -49,10 +49,18 @@ function syncToggles(theme) {
 
 function setThemeFromPoint(theme, x, y) {
   var root = document.documentElement;
-  if (typeof x === 'number' && typeof y === 'number') {
-    root.style.setProperty('--theme-x', x + 'px');
-    root.style.setProperty('--theme-y', y + 'px');
-  }
+  var originX = typeof x === 'number' ? x : window.innerWidth / 2;
+  var originY = typeof y === 'number' ? y : window.innerHeight / 2;
+  var radius = Math.hypot(
+    Math.max(originX, window.innerWidth - originX),
+    Math.max(originY, window.innerHeight - originY)
+  );
+
+  root.style.setProperty('--theme-origin-x', originX + 'px');
+  root.style.setProperty('--theme-origin-y', originY + 'px');
+  root.style.setProperty('--theme-radius', Math.ceil(radius) + 'px');
+  root.style.setProperty('--theme-x', originX + 'px');
+  root.style.setProperty('--theme-y', originY + 'px');
 
   var reduce =
     window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -62,22 +70,22 @@ function setThemeFromPoint(theme, x, y) {
     storeTheme(theme);
   };
 
+  function clearFlags() {
+    root.removeAttribute('data-theme-transition');
+    root.removeAttribute('data-theme-animating');
+    root.classList.remove('theme-animating');
+  }
+
   if (!reduce && typeof document.startViewTransition === 'function') {
+    root.setAttribute('data-theme-transition', theme);
+    root.setAttribute('data-theme-animating', '');
     root.classList.add('theme-animating');
     var transition = document.startViewTransition(run);
-    Promise.resolve(transition.finished).then(function () {
-      root.classList.remove('theme-animating');
-    }, function () {
-      root.classList.remove('theme-animating');
-    });
+    Promise.resolve(transition.finished).then(clearFlags, clearFlags);
     return;
   }
 
-  root.classList.add('theme-animating');
   run();
-  window.setTimeout(function () {
-    root.classList.remove('theme-animating');
-  }, 420);
 }
 
 export function initThemeToggle() {

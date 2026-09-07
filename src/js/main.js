@@ -1,6 +1,8 @@
 import { createHeroShader, disposeHeroShader, snapHeroShaderSize } from './heroShader.js';
 import { initFooterLotties } from './footerLottie.js';
 import { initThemeToggle } from './theme.js';
+import { initCtaPixelWave } from './ctaWave.js';
+import { mountSiteFooter } from './siteFooter.js';
 
 (function () {
   initThemeToggle();
@@ -72,7 +74,8 @@ import { initThemeToggle } from './theme.js';
       loader.classList.add('is-exiting');
       document.body.classList.remove('intro-loading');
 
-      loader.addEventListener('animationend', function () {
+      loader.addEventListener('animationend', function (e) {
+        if (e.target !== loader) return;
         loader.classList.add('is-done');
         loader.remove();
       });
@@ -98,91 +101,6 @@ import { initThemeToggle } from './theme.js';
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-nav]'), function (item) {
       item.classList.toggle('is-active', view && item.getAttribute('data-nav') === view);
-    });
-  })();
-
-  // Floating nav on scroll-up (static at top, hidden on scroll down, pill on scroll up)
-  (function () {
-    var nav = document.querySelector('.site-nav');
-    if (!nav) return;
-    var header = nav.closest('.site-header');
-    if (!header) return;
-
-    var studyPanel = document.body.hasAttribute('data-study')
-      ? document.querySelector('.cs-overlay .cs-panel')
-      : null;
-
-    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var gate = 0;
-    var last = studyPanel ? studyPanel.scrollTop : window.scrollY;
-    var ticking = false;
-    var showRaf = 0;
-
-    function scrollY() {
-      return studyPanel ? studyPanel.scrollTop : window.scrollY;
-    }
-
-    function measure() {
-      header.classList.remove('is-reserved');
-      nav.classList.remove('floating', 'is-visible');
-      header.style.setProperty('--nav-reserve', nav.offsetHeight + 'px');
-      if (studyPanel) {
-        gate = header.getBoundingClientRect().top - studyPanel.getBoundingClientRect().top
-          + studyPanel.scrollTop + nav.offsetHeight + 120;
-      } else {
-        gate = header.offsetTop + nav.offsetHeight + 120;
-      }
-    }
-
-    function hideFloating() {
-      if (showRaf) {
-        cancelAnimationFrame(showRaf);
-        showRaf = 0;
-      }
-      nav.classList.remove('is-visible', 'floating');
-      header.classList.remove('is-reserved');
-    }
-
-    function showFloating() {
-      if (nav.classList.contains('floating') && nav.classList.contains('is-visible')) return;
-      hideFloating();
-      nav.classList.add('floating');
-      header.classList.add('is-reserved');
-      if (reduce) {
-        nav.classList.add('is-visible');
-        return;
-      }
-      showRaf = requestAnimationFrame(function () {
-        showRaf = 0;
-        nav.classList.add('is-visible');
-      });
-    }
-
-    function update() {
-      ticking = false;
-      var y = scrollY();
-      var delta = y - last;
-      if (Math.abs(delta) < 4) return;
-      last = y;
-      if (y <= gate || delta > 0) {
-        hideFloating();
-        return;
-      }
-      showFloating();
-    }
-
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-
-    measure();
-    update();
-    (studyPanel || window).addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function () {
-      measure();
-      update();
     });
   })();
 
@@ -726,7 +644,7 @@ import { initThemeToggle } from './theme.js';
         show(figs.indexOf(fig));
         box.classList.add('open');
         box.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('cs-lightbox-open');   // hides the floating dock
+        document.body.classList.add('cs-lightbox-open');
       }
       function closeBox() {
         if (!box.classList.contains('open')) return;
@@ -830,5 +748,7 @@ import { initThemeToggle } from './theme.js';
     })();
 
   initFooterLotties();
+  mountSiteFooter();
+  initCtaPixelWave(document);
 
 })();
