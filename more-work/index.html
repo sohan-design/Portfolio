@@ -6,6 +6,7 @@
   <title>More work · Sugandha</title>
   <meta name="description" content="More work — a few more things Sugandha has shipped and tinkered with on the side." />
   <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
   <script>
     (function () {
       try {
@@ -19,7 +20,7 @@
     })();
   </script>
 </head>
-<body>
+<body class="hp2-exp">
   <!-- Intro loader -->
   <div class="intro-loader" id="introLoader" aria-hidden="true">
     <div class="intro-loader-inner">
@@ -59,6 +60,10 @@
       document.body.classList.add('intro-loading');
     })();
   </script>
+
+  <div class="hp2-bg" aria-hidden="true">
+    <div class="hp2-shader hp2-shader--page" data-hp2="page-noise" data-paper-src="https://app.paper.design/file/01KZRC38WB4SSNG5SJQ61KG6JZ/01K4GP58P8JRM8PGBP0586VKYV/9R-0"></div>
+  </div>
 
   <div class="site">
     <header class="site-header">
@@ -100,6 +105,16 @@
       <p class="page-desc" data-reveal>A few more things I&rsquo;ve shipped or tinkered with.</p>
 
       <div class="mw-grid">
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/dashboard-v2.webp" alt="Dashboard v2" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/skyview.webp" alt="Skyview" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/mobile-app-design.webp" alt="Mobile app design" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/ai-insights.webp" alt="AI Insights" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/checkout-for-students.webp" alt="Checkout for Students" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/create.webp" alt="Create" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/crypto-pg-dashboard.webp" alt="Crypto PG Dashboard" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/events-details.webp" alt="Events details page" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/sign-in.webp" alt="Sign in" loading="lazy" /></figure>
+        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/404.webp" alt="404" loading="lazy" /></figure>
         <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/creator-tools.svg" alt="Info cards" loading="lazy" /></figure>
         <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/app-build-history.svg" alt="Build activity history with an AI chat assistant" loading="lazy" /></figure>
         <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/marketing-dashboard.svg" alt="Marketing analytics dashboard" loading="lazy" /></figure>
@@ -127,5 +142,6 @@
   </div>
 
   <script type="module" src="/src/js/main.js"></script>
+  <script type="module" src="/src/js/homepageV2.js"></script>
 </body>
 </html>

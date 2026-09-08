@@ -560,7 +560,10 @@ import { mountSiteFooter } from './siteFooter.js';
         else if (proj && STUDY_URLS[proj]) activate = function () { location.href = STUDY_URLS[proj]; };
         else if (href) activate = function () { window.open(href, '_blank', 'noopener'); };
         if (!activate) return;
-        card.addEventListener('click', activate);
+        card.addEventListener('click', function (e) {
+          e.stopPropagation();
+          activate();
+        });
         card.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
         });
@@ -583,18 +586,35 @@ import { mountSiteFooter } from './siteFooter.js';
       var box = document.getElementById('csLightbox');
       if (!box) return;
       var imgEl = document.getElementById('csLightboxImg');
+      var frameEl = imgEl.closest('.cs-lightbox-frame');
+      if (!frameEl) {
+        frameEl = document.createElement('div');
+        frameEl.className = 'cs-lightbox-frame';
+        imgEl.parentNode.insertBefore(frameEl, imgEl);
+        frameEl.appendChild(imgEl);
+      }
+      var clipEl = frameEl.querySelector('.cs-lightbox-clip');
+      if (!clipEl) {
+        clipEl = document.createElement('div');
+        clipEl.className = 'cs-lightbox-clip';
+        frameEl.appendChild(clipEl);
+        clipEl.appendChild(imgEl);
+      }
       var capEl = document.getElementById('csLightboxCaption');
       var prevBtn = document.getElementById('csLightboxPrev');
       var nextBtn = document.getElementById('csLightboxNext');
 
-      // ordered list of every zoomable figure in the OPEN study, in document
-      // order (scoped so two studies' figures never mix)
+      // ordered list of zoomable figures in the same preview group (scoped so
+      // Best Projects, more-work, and an open case study never mix)
+      var groupRoot = null;
       function figures() {
+        if (groupRoot) return Array.prototype.slice.call(groupRoot.querySelectorAll('img.cs-zoom'));
         var openPanel = document.querySelector('.cs-overlay.open .cs-panel');
         var scope = openPanel || document;
         return Array.prototype.slice.call(scope.querySelectorAll('img.cs-zoom'));
       }
       var current = 0;
+      show.fitToken = 0;
 
       function show(i) {
         var figs = figures();
@@ -603,43 +623,76 @@ import { mountSiteFooter } from './siteFooter.js';
         var fig = figs[current];
         imgEl.setAttribute('src', fig.getAttribute('src'));
         imgEl.setAttribute('alt', fig.getAttribute('alt') || '');
-        var isMw = !!(fig.closest && (fig.closest('.mw-card') || fig.closest('.tile') || fig.closest('.hp2-shelf-card')));
-        var isCarousel = !!(fig.closest && fig.closest('.mw-carousel-card'));
-        if (isMw || isCarousel) {
-          // More-work previews: crop to the SAME ratio as the on-page card
-          // (590:400 grid card, 8:5 home carousel / shelf card) so every image in the
-          // section frames consistently, however tall/empty its own source
-          // canvas is — instead of each showing its own native aspect ratio.
-          imgEl.style.maxWidth = '';
-          imgEl.style.width = 'min(900px, 88vw)';
-          imgEl.style.aspectRatio = isCarousel ? '440 / 290' : '16 / 10';
-          imgEl.style.objectFit = 'cover';
-        } else {
-          // Never upscale beyond the source's native width — a small image shows
-          // smaller but crisp instead of stretched-and-blurry. (Large images keep
-          // the 900px / 88vw design cap from CSS.)
-          var nat = fig.naturalWidth || 0;
-          imgEl.style.maxWidth = (nat && nat < 900) ? 'min(' + nat + 'px, 88vw)' : '';
-          imgEl.style.width = '';
-          imgEl.style.aspectRatio = '';
-          imgEl.style.objectFit = '';
+        // Always show the full image. The frame follows that image's own shape
+        // (square stays square) and only shrinks to fit the viewport.
+        imgEl.style.width = '';
+        imgEl.style.height = '';
+        imgEl.style.maxWidth = 'none';
+        imgEl.style.maxHeight = 'none';
+        imgEl.style.aspectRatio = '';
+        imgEl.style.objectFit = 'contain';
+        frameEl.style.maxWidth = 'none';
+        frameEl.style.maxHeight = 'none';
+        frameEl.style.width = 'fit-content';
+        frameEl.style.height = '';
+        frameEl.style.aspectRatio = '';
+        clipEl.style.width = '';
+        clipEl.style.height = '';
+        var fitToken = ++show.fitToken;
+        function fitToImage() {
+          if (fitToken !== show.fitToken) return;
+          var nw = fig.naturalWidth || imgEl.naturalWidth || 0;
+          var nh = fig.naturalHeight || imgEl.naturalHeight || 0;
+          if (!nw || !nh) return;
+          var border = 16;
+          var maxW = Math.min(1170, window.innerWidth * 0.96) - border;
+          var maxH = window.innerHeight * 0.92 - border;
+          // Portrait frames match the height of a 16:10 horizontal preview so
+          // they don't run edge-to-edge or cover the caption.
+          if (nh > nw) maxH = Math.min(maxH, maxW * (10 / 16));
+          var scale = Math.min(1, maxW / nw, maxH / nh);
+          var w = Math.max(1, Math.round(nw * scale));
+          var h = Math.max(1, Math.round(nh * scale));
+          frameEl.style.width = (w + border) + 'px';
+          frameEl.style.height = (h + border) + 'px';
+          frameEl.style.aspectRatio = nw + ' / ' + nh;
+          clipEl.style.width = w + 'px';
+          clipEl.style.height = h + 'px';
+          imgEl.style.width = w + 'px';
+          imgEl.style.height = h + 'px';
         }
-        // Mirror the on-page figure's framing so the preview matches it exactly:
-        // copy the source frame's mat (padding + white background) and corner
-        // radius. This keeps the two projects distinct automatically — UnifyApps
-        // figures bake their own mat into the PNG (frame padding 0 → no mat added
-        // here), Cosmofeed framed figures use a 6px CSS mat, flush cards use none.
-        var frame = fig.closest && (fig.closest('.cs-frame') || fig.closest('.mw-card') || fig.closest('.mw-carousel-card') || fig.closest('.hp2-shelf-card') || fig.closest('.tile'));
-        var fcs = frame ? getComputedStyle(frame) : null;
-        var hasMat = fcs ? (parseFloat(fcs.paddingLeft) || 0) > 0 : false;
-        imgEl.style.padding = fcs ? fcs.padding : '0';
-        imgEl.style.background = hasMat ? '#fff' : 'none';
-        imgEl.style.borderRadius = fcs ? fcs.borderRadius : '0';
-        imgEl.style.border = fcs ? (fcs.borderWidth + ' ' + fcs.borderStyle + ' ' + fcs.borderColor) : 'none';
-        // caption = explicit data-caption (display copy), falling back to alt
-        capEl.textContent = fig.getAttribute('data-caption') || fig.getAttribute('alt') || '';
+        if ((fig.complete && fig.naturalWidth) || (imgEl.complete && imgEl.naturalWidth)) fitToImage();
+        else imgEl.addEventListener('load', fitToImage, { once: true });
+        // The 8px border sits on the frame. A separate clip rounds the photo to 4px
+        // — a border as wide as the frame radius would otherwise square the image.
+        frameEl.style.padding = '0';
+        frameEl.style.background = 'none';
+        frameEl.style.border = '8px solid rgba(255, 255, 255, 0.15)';
+        // 8px border + 4px image radius — otherwise the inner corner is square.
+        frameEl.style.borderRadius = '12px';
+        frameEl.style.overflow = 'hidden';
+        clipEl.style.borderRadius = '4px';
+        clipEl.style.overflow = 'hidden';
+        clipEl.style.clipPath = 'inset(0 round 4px)';
+        clipEl.style.display = 'block';
+        clipEl.style.lineHeight = '0';
+        imgEl.style.padding = '0';
+        imgEl.style.background = 'none';
+        imgEl.style.border = 'none';
+        imgEl.style.borderRadius = '0';
+        imgEl.style.overflow = 'hidden';
+        imgEl.style.clipPath = 'none';
+        imgEl.style.display = 'block';
+        var cardTitle = fig.closest && fig.closest('.hp2-pcard') && fig.closest('.hp2-pcard').querySelector('.hp2-pcard-title');
+        capEl.textContent = fig.getAttribute('data-caption') || (cardTitle && cardTitle.textContent.replace(/\s+/g, ' ').trim()) || fig.getAttribute('alt') || '';
       }
       function openBox(fig) {
+        groupRoot = (fig.closest && (
+          fig.closest('.hp2-pcard-grid') ||
+          fig.closest('.hp2-shelf') ||
+          fig.closest('.mw-grid') ||
+          fig.closest('.cs-panel')
+        )) || null;
         var figs = figures();
         show(figs.indexOf(fig));
         box.classList.add('open');
@@ -656,11 +709,11 @@ import { mountSiteFooter } from './siteFooter.js';
       // delegate: any zoomable figure opens the preview
       document.addEventListener('click', function (e) {
         var fig = e.target.closest && e.target.closest('img.cs-zoom');
-        if (fig) openBox(fig);
+        if (fig && !(fig.closest && fig.closest('.hp2-pcard'))) openBox(fig);
       });
       // click the backdrop (not the image or arrows) to dismiss
       box.addEventListener('click', function (e) {
-        if (e.target === imgEl || (e.target.closest && e.target.closest('.cs-lightbox-nav'))) return;
+        if (e.target === imgEl || e.target === frameEl || e.target === clipEl || (e.target.closest && e.target.closest('.cs-lightbox-nav'))) return;
         closeBox();
       });
       prevBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current - 1); });

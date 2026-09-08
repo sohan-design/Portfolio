@@ -479,10 +479,10 @@
     .cs-metric {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      padding: 16px 20px;
+      gap: 40px;
+      padding: 16px;
       background: var(--card-bg);
-      border: 0.5px solid var(--hairline);
+      border: none;
       border-radius: 6px;
       box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.05);
     }
@@ -491,10 +491,10 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: var(--accent);
+      color: color-mix(in srgb, var(--text) 33%, transparent);
     }
-    .cs-metric-text { display: flex; flex-direction: column; gap: 2px; }
-    .cs-metric-title { font-family: var(--sans); font-size: 14px; line-height: 24px; font-weight: 500; color: var(--text); }
+    .cs-metric-text { display: flex; flex-direction: column; gap: 12px; }
+    .cs-metric-title { font-family: var(--sans); font-size: 32px; line-height: 24px; font-weight: 500; color: #00BBFF; }
     .cs-metric-desc { font-family: var(--sans); font-size: 14px; line-height: 22px; color: var(--quote-muted); }
 
     /* Embedded demo video (Canva) — the grey placeholder in the design. */
@@ -558,17 +558,34 @@
       transition: opacity 0.28s ease, visibility 0.28s ease;
     }
     .cs-lightbox.open { opacity: 1; visibility: visible; }
+    .cs-lightbox-frame {
+      display: inline-block;
+      width: fit-content;
+      border: 8px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      box-sizing: border-box;
+      overflow: hidden;
+      max-width: min(1170px, 96vw);
+      max-height: 92vh;
+    }
+    .cs-lightbox-clip {
+      display: block;
+      border-radius: 4px;
+      overflow: hidden;
+      clip-path: inset(0 round 4px);
+      line-height: 0;
+    }
     .cs-lightbox img.cs-lightbox-img {
       display: block;
       width: auto;
       height: auto;
-      max-width: min(900px, 88vw);            /* design image width: 900px */
-      max-height: 78vh;
-      /* mat (padding + background) and radius are set inline per-image in JS to
-         mirror the on-page figure exactly; these are just sane fallbacks. */
-      background: var(--card-bg);
-      padding: 6px;
-      border-radius: 4px;
+      max-width: min(1170px, 96vw);
+      max-height: 92vh;
+      object-fit: contain;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
     }
     .cs-lightbox figcaption {
       font-family: var(--sans);
@@ -576,7 +593,7 @@
       line-height: 26px;                      /* design caption line-height */
       color: rgba(255, 255, 255, 0.85);       /* design: white 85% */
       text-align: center;
-      max-width: 900px;
+      max-width: 1170px;
     }
     /* prev / next navigators (design: 32px circle, black 80%, edge-anchored) */
     .cs-lightbox-nav {
@@ -1069,7 +1086,7 @@
       padding: 5px;                    /* white mat around the screenshot */
       background: var(--card-bg);
       border: 0.5px solid var(--hairline);
-      border-radius: 4px;
+      border-radius: 6px;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08),
                   0 6px 16px rgba(0, 0, 0, 0.05);
       cursor: pointer;
@@ -1085,7 +1102,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 3px;
+      border-radius: 4px;
       background: var(--thumb-fill);
     }
     @media (prefers-reduced-motion: reduce) { .mw-card { transition: none; } }
@@ -1370,13 +1387,6 @@
     .am-detours { display: flex; flex-direction: column; gap: 16px; }
     .am-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
     .am-step { position: relative; display: flex; gap: 16px; align-items: flex-start; }
-    .am-step:not(:last-child)::before {   /* thin (0.5px) hand-drawn wavy rail between badges */
-      content: "";
-      position: absolute;
-      left: 6px; top: 22px; bottom: -18px;   /* 8px box centred on the 20px badge */
-      width: 8px;
-      background: url("/assets/common/rail-line.svg") center top / 8px 40px repeat-y;
-    }
     .am-num {
       flex: none;
       width: 20px; height: 20px;

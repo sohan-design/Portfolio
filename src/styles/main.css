@@ -319,13 +319,15 @@ body:has([data-site-footer]) {
   padding-bottom: 0;
 }
 
-/* Works page uses the homepage surface color, without the page shader. */
-body:has(#page-work) {
+/* Works and About use the homepage surface color. */
+body:has(#page-work),
+body:has(#page-about) {
   --bg: #ffffff;
   background: #ffffff;
 }
 
-html[data-theme='dark'] body:has(#page-work) {
+html[data-theme='dark'] body:has(#page-work),
+html[data-theme='dark'] body:has(#page-about) {
   --bg: #000000;
   background: #000000;
 }
@@ -948,7 +950,7 @@ html[data-theme="dark"] .btn-primary {
 }
 
 .btn-primary {
-  --cta-green: #4b8050;
+  --cta-green: #1892E9;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1095,7 +1097,7 @@ html[data-theme="dark"] .btn-primary {
   margin: 0;
   aspect-ratio: 59 / 40;
   background: var(--surface);
-  border-radius: var(--radius-card);
+  border-radius: 6px;
   overflow: hidden;
   cursor: zoom-in;
   transition: transform 0.35s var(--ease);
@@ -1272,10 +1274,34 @@ html[data-theme="dark"] .btn-primary {
   pointer-events: auto;
 }
 
-.cs-lightbox-img {
-  max-width: min(900px, 88vw);
-  max-height: 80vh;
+.cs-lightbox-frame {
+  display: inline-block;
+  width: fit-content;
+  border: 8px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-width: min(1170px, 96vw);
+  max-height: 92vh;
+}
+
+.cs-lightbox-clip {
+  display: block;
+  border-radius: 4px;
+  overflow: hidden;
+  clip-path: inset(0 round 4px);
+  line-height: 0;
+}
+
+.cs-lightbox-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(1170px, 96vw);
+  max-height: 92vh;
+  object-fit: contain;
+  border: none;
+  border-radius: 0;
 }
 
 .cs-lightbox-nav {

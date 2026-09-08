@@ -604,11 +604,13 @@ function boot() {
     mountAll();
   }
 
-  var root = document.getElementById('page-home') || document.body;
-  initPixelFrame(root);
-  initShelf(root);
-  initPixelTrail();
-  initAvatarCursor();
+  var home = document.getElementById('page-home');
+  if (home) {
+    initPixelFrame(home);
+    initShelf(home);
+    initPixelTrail();
+    initAvatarCursor();
+  }
 
   var obs = new MutationObserver(function () {
     requestAnimationFrame(syncAll);
