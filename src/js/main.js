@@ -646,7 +646,7 @@ import { mountSiteFooter } from './siteFooter.js';
           if (!nw || !nh) return;
           var border = 16;
           var maxW = Math.min(1170, window.innerWidth * 0.96) - border;
-          var maxH = window.innerHeight * 0.92 - border;
+          var maxH = window.innerHeight * 0.8 - border;
           // Portrait frames match the height of a 16:10 horizontal preview so
           // they don't run edge-to-edge or cover the caption.
           if (nh > nw) maxH = Math.min(maxH, maxW * (10 / 16));

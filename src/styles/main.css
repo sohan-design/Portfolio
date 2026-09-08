@@ -1282,7 +1282,7 @@ html[data-theme="dark"] .btn-primary {
   box-sizing: border-box;
   overflow: hidden;
   max-width: min(1170px, 96vw);
-  max-height: 92vh;
+  max-height: 80vh;
 }
 
 .cs-lightbox-clip {
@@ -1298,7 +1298,7 @@ html[data-theme="dark"] .btn-primary {
   width: auto;
   height: auto;
   max-width: min(1170px, 96vw);
-  max-height: 92vh;
+  max-height: 80vh;
   object-fit: contain;
   border: none;
   border-radius: 0;
