@@ -1,8 +1,12 @@
+import { inject } from '@vercel/analytics';
 import { createHeroShader, disposeHeroShader, snapHeroShaderSize } from './heroShader.js';
 import { initFooterLotties } from './footerLottie.js';
 import { initThemeToggle } from './theme.js';
 import { initCtaPixelWave } from './ctaWave.js';
 import { mountSiteFooter } from './siteFooter.js';
+
+// Initialize Vercel Analytics
+inject();
 
 (function () {
   initThemeToggle();

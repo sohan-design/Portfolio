@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@lottiefiles/dotlottie-web": "^0.80.0",
-    "@paper-design/shaders": "^0.0.80"
+    "@paper-design/shaders": "^0.0.80",
+    "@vercel/analytics": "^2.0.1"
   }
 }
