@@ -1,0 +1,18 @@
+@import "./styles/foundation.css";
+@import "./styles/sidebar-nav.css";
+@import "./styles/veda-theme.css";
+
+@theme inline {
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-face: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
