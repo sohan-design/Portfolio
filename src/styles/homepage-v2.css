@@ -98,18 +98,20 @@ html[data-theme='dark'] .hp2-shader--page {
   display: block;
   width: 36px;
   height: 36px;
-  color: var(--text);
   line-height: 0;
 }
 
+.hero-float img,
 .hero-float svg {
   display: block;
   width: 36px;
   height: 36px;
   transform-origin: center;
+  image-rendering: pixelated;
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .hero-float:hover img,
   .hero-float:hover svg {
     animation: hero-wiggle 480ms cubic-bezier(0.23, 1, 0.32, 1);
   }
@@ -123,6 +125,7 @@ html[data-theme='dark'] .hp2-shader--page {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-float:hover img,
   .hero-float:hover svg {
     animation: none;
   }
