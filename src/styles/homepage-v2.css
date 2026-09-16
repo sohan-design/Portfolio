@@ -259,11 +259,6 @@ html[data-theme='dark'] .hp2-pcard-media {
   font-weight: 600;
 }
 
-.hp2-pcard-grid .hp2-pcard:nth-child(3) {
-  grid-column: 1 / -1;
-  max-width: calc(50% - 24px);
-}
-
 /* ----- Apple-style full-bleed More Work shelf ----- */
 .hp2-more .section-head {
   position: relative;
@@ -367,11 +362,6 @@ html[data-theme='dark'] .hp2-shelf-btn:hover:not(:disabled) {
   .hp2-pcard-grid {
     grid-template-columns: 1fr;
     gap: 24px;
-  }
-
-  .hp2-pcard-grid .hp2-pcard:nth-child(3) {
-    grid-column: auto;
-    max-width: none;
   }
 
   .hp2-shelf-card {

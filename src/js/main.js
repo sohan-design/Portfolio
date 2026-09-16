@@ -535,7 +535,8 @@ inject();
       var STUDY_URLS = {
         cosmo: '/work/redesigned-payment-pages',
         whitelabel: '/work/white-label-evolution',
-        trainer: '/work/b2b-trainer-dashboard'
+        trainer: '/work/b2b-trainer-dashboard',
+        ios: '/work/putting-common-sense-back-into-ios'
       };
       var modals = {};
       Array.prototype.forEach.call(document.querySelectorAll('.pm-overlay'), function (m) {

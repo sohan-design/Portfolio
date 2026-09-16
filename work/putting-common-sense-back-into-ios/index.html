@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Putting Common Sense Back Into iOS · Sohan Bhute</title>
+  <meta name="description" content="A UX critique of everyday iOS friction — alarms, notifications, navigation, keyboards — and why common sense still beats AI." />
+
+  <meta property="og:title" content="Putting Common Sense Back Into iOS · Sohan Bhute" />
+  <meta property="og:description" content="A UX critique of everyday iOS friction — alarms, notifications, navigation, keyboards — and why common sense still beats AI." />
+  <meta property="og:image" content="/assets/articles/ios-common-sense/cover.jpg" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Putting Common Sense Back Into iOS · Sohan Bhute" />
+  <meta name="twitter:description" content="A UX critique of everyday iOS friction — and why common sense still beats AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio-theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.style.colorScheme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-study="ios">
+  <div class="cs-overlay" id="caseStudyIos" data-project="ios" data-hero-intro role="dialog" aria-modal="true" aria-labelledby="csi-title" aria-hidden="true">
+    <nav class="cs-nav" aria-label="Article sections">
+      <a class="cs-nav-item" href="#csi-intro">Intro</a>
+      <a class="cs-nav-item" href="#csi-waking">Waking up</a>
+      <a class="cs-nav-item" href="#csi-notifications">Notifications</a>
+      <a class="cs-nav-item" href="#csi-flashlight">Flashlight</a>
+      <a class="cs-nav-item" href="#csi-text">Text selection</a>
+      <a class="cs-nav-item" href="#csi-navigation">Navigation</a>
+      <a class="cs-nav-item" href="#csi-keyboard">Keyboard</a>
+      <a class="cs-nav-item" href="#csi-context">Context</a>
+      <a class="cs-nav-item" href="#csi-else">Everything else</a>
+      <a class="cs-nav-item" href="#csi-close">Common sense</a>
+    </nav>
+
+    <div class="cs-panel">
+      <article class="cs-content">
+        <div class="cs-hero">
+          <header class="site-header">
+            <nav class="site-nav" aria-label="Primary">
+              <div class="nav-links">
+                <a class="nav-link" href="/" data-nav="home">Home</a>
+                <a class="nav-link" href="/more-work" data-nav="works">Works</a>
+                <a class="nav-link" href="/about" data-nav="about">About</a>
+              </div>
+              <div class="nav-social">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
+                  <span class="theme-toggle-icons" aria-hidden="true">
+                    <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+                    <svg class="theme-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
+                  </span>
+                </button>
+                <div class="nav-actions">
+                  <a class="btn-primary selection-control" href="https://www.linkedin.com/in/sugandhajain-/" target="_blank" rel="noopener">
+                    <span class="action-content">
+                      <span class="action-label">LinkedIn</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
+                    </span>
+                    <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </a>
+                  <a class="btn-primary selection-control" href="mailto:sugandhajain0312@gmail.com">
+                    <span class="action-content">
+                      <span class="action-label">Email</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
+                    </span>
+                    <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <div class="cs-hero-fill" aria-hidden="true">
+            <div class="cs-hero-shader" data-hero-shader data-shader-color="#007AFF"></div>
+          </div>
+          <div class="cs-title-row">
+            <button class="cs-back" type="button" aria-label="Back to work" data-cs-close>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <h1 class="cs-title" id="csi-title">
+              <span class="cs-title-line">Putting common sense</span>
+              <span class="cs-title-line">back into iOS</span>
+            </h1>
+          </div>
+          <div class="cs-meta">
+            <div><span class="cs-meta-label">Type</span><span class="cs-meta-val">Essay</span></div>
+            <div><span class="cs-meta-label">Published</span><span class="cs-meta-val">Jun 2026</span></div>
+            <div><span class="cs-meta-label">Topics</span><span class="cs-meta-val">iOS · UX · Product</span></div>
+          </div>
+        </div>
+
+        <div class="cs-body">
+        <div class="cs-cover" id="csi-cover">
+          <img class="cs-zoom" src="/assets/articles/ios-common-sense/cover.jpg" alt="A frustrated iOS user" data-caption="Cover" />
+        </div>
+
+        <section class="cs-section cs-intro" id="csi-intro">
+          <p>It’s not about what phone, OS, or device you use every day. It’s 2026, and with or without AI, technology should make life easier and smoother in every moment.</p>
+          <p>I used a Google Pixel for years. Regardless of what hardware you can buy at any price point, Pixel’s hardware was never its USP. The software was.</p>
+          <p>It was so good and so effortless to use that it simply got out of your way. You didn’t think about it. You just flowed with it. It was like breathing, completely involuntary.</p>
+          <p>And the best part?</p>
+          <blockquote>Most of that experience had nothing to do with AI.</blockquote>
+          <p>Some of the things I’ll talk about in this article come from different operating systems, Android skins, brands, and apps that I’ve used over the years. They’re small experiences that stayed with me because they solved real problems with simple thinking.</p>
+          <p>This year, I gifted myself an iPhone.</p>
+          <p>And honestly, I’ve never been less happy with a phone purchase.</p>
+          <p>I’m a UX designer by profession, and seeing such beautiful interfaces paired with such frustrating user experiences finally pushed me to write this article.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-common">
+          <h2>Common sense things</h2>
+          <p>Let’s start chronologically with my day.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-waking">
+          <h2>Waking up</h2>
+          <p>I wake up around 8 AM.</p>
+          <p>For context, I set multiple alarms because I like to snooze. But I also want to wake up eventually. Usually, I wake up by the second or third alarm. Sometimes I even wake up before the alarm goes off.</p>
+          <blockquote>Now, for any sane smartphone, it should understand one simple thing. If I’m actively using my phone, I’m awake.</blockquote>
+          <p>This doesn’t require state-of-the-art AI. It doesn’t require an LLM. It’s common sense. An A18 chip, or even a child’s brain, could figure this out.</p>
+          <p>A simple “Dismiss All Remaining Alarms” CTA after the first alarm would solve the problem instantly. Instead, the phone happily continues ringing every backup alarm I’ve ever set, even though I’m already brushing my teeth.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-notifications">
+          <h2>Notification Center</h2>
+          <p>Now I unlock my phone. There are 50 notifications waiting for me.</p>
+          <blockquote>I’ve been using an iPhone for six months, and I can honestly say I’ve opened Notification Center fewer than ten times. It’s that bad.</blockquote>
+          <p>Notifications feel endless, poorly grouped, and difficult to process. Ironically, I do notice notifications in real time when they arrive. But the moment I’m inactive for a while, they pile up into a giant wall of information that I simply ignore.</p>
+          <p>I’ve never ignored a notification center before.</p>
+          <p>A combination of better grouping by app, smarter categorization, and modern prioritization could solve most of this. And somehow, in 2026, iOS still doesn’t support notification channels.</p>
+          <p>It’s surprising because notifications are one of the most important interactions on a smartphone.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-flashlight">
+          <h2>The flashlight incident</h2>
+          <p>Then I ride my bike to the office. About thirty minutes into my commute, I feel warmth in my pocket. My phone is getting hot. Really hot. I pull it out and realize the flashlight is on. How? No idea.</p>
+          <p>At some point, it got activated accidentally and stayed on long enough to turn my pocket into a portable oven. I had to stop in traffic, unlock my phone, and manually turn it off.</p>
+          <p>Physical discomfort caused by a flashlight shouldn’t be a thing. A simple auto-turn-off after five minutes would save battery, prevent overheating, and probably save a lot of thighs.</p>
+          <p>And before anyone says this is a rare issue, I regularly see people on public transport with their flashlight accidentally turned on.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-text">
+          <h2>Let me select text</h2>
+          <p>Later, I’m scrolling through social media. I find a useful link buried in the comments. My phone has clearly rendered the text. It can display it. It knows it’s text. Yet I can’t select it.</p>
+          <p>I miss desktops.</p>
+          <p>Global text selection feels like such a simple feature, but only a few companies do it well. Being able to select text from anywhere — images, recent apps, screenshots, social feeds — sounds small until you’ve used it. Then it becomes difficult to live without.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-navigation">
+          <h2>Navigation shouldn’t be a puzzle</h2>
+          <p>Have you ever used iOS and thought: “Wow, this looks beautiful.” Followed immediately by: “How do I go back?”</p>
+          <p>Sometimes the back button sits all the way in the top-left corner, miles away from your thumb. Then there are gesture-based navigation patterns that work only some of the time. And occasionally, the only reliable way out is to go back to the home screen and start over.</p>
+          <p>How is this still a thing?</p>
+          <p>You’re a trillion-dollar company. Surely we can agree that users shouldn’t have to guess how to navigate between screens. A platform should have a universal navigation language.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-keyboard">
+          <h2>The keyboard</h2>
+          <p>I’ve installed Gboard on my iPhone. That alone should tell you everything.</p>
+          <p>I don’t want to spend too much time criticizing Apple’s keyboard, but it’s genuinely frustrating to use. The autocorrect is aggressive, inconsistent, and often feels like it’s working against me.</p>
+          <p>More importantly, it doesn’t seem to learn. I’ve typed some of my friends’ names hundreds of times. Why am I still correcting the same mistakes?</p>
+          <p>We’re carrying incredibly powerful mobile processors in our pockets. Remembering a frequently used name shouldn’t be a challenge.</p>
+          <p>And while we’re here: Where is the number row?</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-context">
+          <h2>Context matters</h2>
+          <p>Remember those alarms I mentioned earlier? I often forget whether they’re still enabled. When is my next alarm? Did I turn it off? Did I accidentally disable tomorrow’s wake-up alarm? So I open the Clock app just to check. Again. And again. And again.</p>
+          <p>The thing is, I always look at my lock screen before sleeping. That’s where context should live. Imagine if iOS simply showed:</p>
+          <blockquote>“Next alarm: 7:00 AM.” Done.</blockquote>
+          <p>No taps. No app launches. No mental effort. The same idea extends far beyond alarms.</p>
+          <p>Let’s say I have a flight in 18 hours.</p>
+          <p>A small contextual widget could remind me about it, show airport information, estimate when I should leave, and surface useful details exactly when I need them.</p>
+          <p>This idea is heavily inspired by Google’s At a Glance feature. It’s one of those features that’s so good that once you’ve experienced it, you want it everywhere.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-else">
+          <h2>And then there’s everything else</h2>
+          <p>There are plenty of other things to complain about.</p>
+          <ul>
+            <li>The lack of a built-in clipboard manager</li>
+            <li>The fact that WhatsApp on iOS feels like a collection of UX compromises</li>
+            <li>A closed ecosystem that turns storage into a forced iCloud upsell</li>
+          </ul>
+          <p>Take WhatsApp backups, for example. On iOS, you’re effectively tied to iCloud. If you run out of storage, your solution is simple: buy more iCloud storage. That’s it.</p>
+          <p>In a world full of cloud providers and storage options, users are still pushed toward a single ecosystem. It feels less like a user-first decision and more like a business one.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-close">
+          <h2>Intelligence doesn’t need AI</h2>
+          <p>The irony is that most of these problems don’t require artificial intelligence to solve.</p>
+          <p>They require common sense.</p>
+          <p>The smartest products I’ve used weren’t necessarily the most advanced. They were the ones that understood context, reduced friction, and respected my time. That’s the kind of intelligence I want from my phone.</p>
+          <blockquote>Not another chatbot. Just pure common sense.</blockquote>
+          <p><a href="https://medium.com/@sohan.bhute21/putting-common-sense-back-into-ios-97bfd87c670a" target="_blank" rel="noopener">Read the original on Medium ↗</a></p>
+        </section>
+
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="cs-lightbox" id="csLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="cs-lightbox-nav prev" id="csLightboxPrev" type="button" aria-label="Previous image">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="cs-lightbox-nav next" id="csLightboxNext" type="button" aria-label="Next image">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <figure style="margin:0; display:contents;">
+      <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
+      <figcaption id="csLightboxCaption"></figcaption>
+    </figure>
+  </div>
+
+  <div id="cursor" aria-hidden="true">
+    <span class="cursor-icon"></span>
+    <span class="cursor-text"></span>
+    <span class="cursor-icon-after"></span>
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
