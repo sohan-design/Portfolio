@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import GlideMenu from "@/components/primitives/GlideMenu";
+import { PixelLoader } from "@/components/primitives/LoadingState";
 
 function Icon({ children, size = 18, className = "" }: { children: ReactNode; size?: number; className?: string }) {
   return (
@@ -71,6 +72,8 @@ type SidebarNavProps = {
   recents?: SidebarRecent[];
   variant?: string;
   themeToggle?: ReactNode;
+  /** Thread ids that are currently thinking or streaming */
+  busyIds?: string[];
 };
 
 const SIDEBAR_MOTION = {
@@ -218,6 +221,7 @@ export default function SidebarNav({
   onNavigate,
   recents = DEFAULT_RECENTS,
   themeToggle,
+  busyIds = [],
 }: SidebarNavProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [internalNav, setInternalNav] = useState("chats");
@@ -325,6 +329,14 @@ export default function SidebarNav({
           >
             {I.sidebar(18, "rotate-180")}
           </button>
+          {busyIds.length > 0 && collapsed && (
+            <span
+              className="absolute left-2.5 top-[3.25rem] flex size-7 items-center justify-center"
+              aria-label="Generating reply"
+            >
+              <PixelLoader variant="Dots" size="sm" />
+            </span>
+          )}
         </div>
 
         <GlideGroup>
@@ -431,6 +443,14 @@ export default function SidebarNav({
                   <span className={`sidebar-copy min-w-0 flex-1 truncate text-[14px] font-medium ${active ? "text-ink" : "text-ink-2"}`}>
                     {item.label}
                   </span>
+                  {busyIds.includes(item.id) && (
+                    <span
+                      className="ml-1 flex size-6 shrink-0 items-center justify-center"
+                      aria-label="Generating reply"
+                    >
+                      <PixelLoader variant="Dots" size="sm" />
+                    </span>
+                  )}
                 </button>
               );
             })}

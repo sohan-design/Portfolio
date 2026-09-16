@@ -35,22 +35,39 @@ const PATTERNS: Record<string, { delays: (number | null)[]; dur: number; round: 
   Orbit: { delays: orbit, dur: 950, round: false },
 };
 
+const PIXEL_SIZES = {
+  md: { cell: 4, gap: 1.5 },
+  sm: { cell: 3, gap: 1 },
+} as const;
+
 function LoaderGrid({
   delays,
   dur,
   round,
+  size = "md",
 }: {
   delays: (number | null)[];
   dur: number;
   round: boolean;
+  size?: keyof typeof PIXEL_SIZES;
 }) {
+  const { cell, gap } = PIXEL_SIZES[size];
   return (
-    <span aria-hidden className="grid shrink-0 grid-cols-[repeat(3,4px)] gap-[1.5px]">
+    <span
+      aria-hidden
+      className="grid shrink-0"
+      style={{
+        gridTemplateColumns: `repeat(3, ${cell}px)`,
+        gap: `${gap}px`,
+      }}
+    >
       {delays.map((delay, index) => (
         <span
           key={index}
-          className={`size-[4px] bg-ink ${round ? "rounded-full" : "rounded-[1px]"}`}
+          className={`bg-ink ${round ? "rounded-full" : "rounded-[0.5px]"}`}
           style={{
+            width: cell,
+            height: cell,
             opacity: delay === null ? 0.07 : 0.15,
             animation: delay === null ? "none" : `pixel-on ${dur}ms ease-in-out ${delay}ms infinite`,
           }}
@@ -58,6 +75,18 @@ function LoaderGrid({
       ))}
     </span>
   );
+}
+
+/** Compact 3×3 pixel/dot matrix used by Thinking + sidebar busy indicators. */
+export function PixelLoader({
+  variant = "Dots",
+  size = "md",
+}: {
+  variant?: keyof typeof PATTERNS;
+  size?: keyof typeof PIXEL_SIZES;
+}) {
+  const pattern = PATTERNS[variant] ?? PATTERNS.Dots;
+  return <LoaderGrid {...pattern} size={size} />;
 }
 
 function useElapsed() {
@@ -112,7 +141,6 @@ export default function LoadingState({
           {elapsedEl}
         </div>
 
-        {/* the context card follows the status text it is illustrating */}
         <div
           className="mt-2 w-56 overflow-hidden rounded-[10px] shadow-overlay"
           style={{ animation: "pop-in 200ms cubic-bezier(0.16,1,0.3,1) both", transformOrigin: "top left" }}

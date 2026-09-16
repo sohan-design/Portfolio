@@ -31,6 +31,7 @@ export const SEARCH_ITEMS = [
 export const SIDEBAR_RECENTS: { id: string; label: string; prompt: string }[] = [
   { id: "mint", label: "Mint chip vs last summer", prompt: "Compare mint chip to last summer" },
   { id: "suppliers", label: "Supplier records", prompt: "Find waffle cone suppliers" },
+  { id: "competitors", label: "Competitor analysis", prompt: "Analyze our competitors" },
   { id: "todos", label: "Urgent to-dos this morning", prompt: "What should I tackle first today?" },
   { id: "flavor", label: "Flavor page ticket", prompt: "Draft flavor launch plan" },
   { id: "workload", label: "Workload summary", prompt: "Summarize this week's creamery workload" },
@@ -95,7 +96,7 @@ export const REPLIES: DummyReply[] = [
     id: "demand",
     label: "Forecast summer demand",
     prompt: "Forecast summer demand",
-    thinkingVariant: "Steps",
+    thinkingVariant: "Coding",
     tokens: words(
       "Summer demand should concentrate on pistachio and mint chip, especially July weekends. Based on last year’s curve plus this spring’s early heat, expect roughly +18% cone inventory need and stronger bowl upgrades after 4pm. Vanilla stays stable as a mixer; rocky road continues to lag and is a candidate to retire if weekly scoops stay under forty.",
     ).concat(

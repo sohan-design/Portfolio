@@ -161,6 +161,25 @@ html[data-theme="dark"] .gpt-main,
   background: rgba(255, 255, 255, 0.75);
 }
 
+/* Empty-state prompt suggestions — muted list, text-only hover */
+.gpt-empty-suggest {
+  color: rgba(26, 26, 26, 0.38);
+  background: transparent;
+}
+
+.gpt-empty-suggest:hover .gpt-empty-suggest-label,
+.gpt-empty-suggest:focus-visible .gpt-empty-suggest-label,
+.gpt-empty-suggest:hover .gpt-empty-suggest-icon,
+.gpt-empty-suggest:focus-visible .gpt-empty-suggest-icon {
+  color: #1a1a1a;
+}
+
+.gpt-empty-suggest-label,
+.gpt-empty-suggest-icon {
+  color: inherit;
+  transition: color 150ms ease;
+}
+
 html[data-theme="dark"] .gpt-empty-heading,
 .dark .gpt-empty-heading {
   color: #f5f5f5;
@@ -186,6 +205,23 @@ html[data-theme="dark"] .gpt-empty-chip,
 html[data-theme="dark"] .gpt-empty-chip:hover,
 .dark .gpt-empty-chip:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+
+html[data-theme="dark"] .gpt-empty-suggest,
+.dark .gpt-empty-suggest {
+  color: rgba(255, 255, 255, 0.38);
+  background: transparent;
+}
+
+html[data-theme="dark"] .gpt-empty-suggest:hover .gpt-empty-suggest-label,
+.dark .gpt-empty-suggest:hover .gpt-empty-suggest-label,
+html[data-theme="dark"] .gpt-empty-suggest:focus-visible .gpt-empty-suggest-label,
+.dark .gpt-empty-suggest:focus-visible .gpt-empty-suggest-label,
+html[data-theme="dark"] .gpt-empty-suggest:hover .gpt-empty-suggest-icon,
+.dark .gpt-empty-suggest:hover .gpt-empty-suggest-icon,
+html[data-theme="dark"] .gpt-empty-suggest:focus-visible .gpt-empty-suggest-icon,
+.dark .gpt-empty-suggest:focus-visible .gpt-empty-suggest-icon {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .gpt-composer-dock {

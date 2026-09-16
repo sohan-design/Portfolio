@@ -1,6 +1,5 @@
-"use client";
-
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { PixelLoader } from "@/components/primitives/LoadingState";
 
 /* ─────────────────────────────────────────────────────────
  * THINKING — expandable agent trace, four variants
@@ -11,9 +10,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
  *   Coding     tool trace: files read, edits, commands
  *
  * The trace runs once, settles, and remains expandable.
+ * Parent icon: dot-matrix for 2s, then spinner, then star.
  * ───────────────────────────────────────────────────────── */
 
 const STAGES = [1400, 1600, 2000, 2000, 800];
+const MATRIX_MS = 2000;
 
 function useSequence(steps: number[]) {
   const [stage, setStage] = useState(0);
@@ -23,6 +24,18 @@ function useSequence(steps: number[]) {
     return () => clearTimeout(t);
   }, [stage, steps]);
   return stage;
+}
+
+function useElapsedSeconds() {
+  const [seconds, setSeconds] = useState(1);
+  useEffect(() => {
+    const started = Date.now();
+    const t = setInterval(() => {
+      setSeconds(Math.max(1, Math.round((Date.now() - started) / 1000)));
+    }, 200);
+    return () => clearInterval(t);
+  }, []);
+  return seconds;
 }
 
 type Row = {
@@ -36,11 +49,11 @@ type Row = {
 
 const VARIANTS: Record<
   string,
-  { active: string; done: string; rows: Row[]; query?: string }
+  { active: string; done: (seconds: number) => string; rows: Row[]; query?: string }
 > = {
   Steps: {
     active: "Thinking",
-    done: "Thought for 7 seconds",
+    done: (seconds) => `Thought for ${seconds}s`,
     rows: [
       { primary: "Reading flavor briefs" },
       { primary: "Scanning supplier lists" },
@@ -50,7 +63,7 @@ const VARIANTS: Record<
   },
   Reasoning: {
     active: "Thinking",
-    done: "Thought for 7 seconds",
+    done: (seconds) => `Thought for ${seconds}s`,
     rows: [
       { primary: "Summer demand spikes for stone-fruit flavors — peach and apricot lead." },
       { primary: "I should check cone inventory before promoting a waffle-bowl special." },
@@ -58,17 +71,17 @@ const VARIANTS: Record<
   },
   Search: {
     active: "Searching the web",
-    done: "Searched the web",
+    done: () => "Searched the web",
     query: "best waffle cone supplier",
     rows: [
       { primary: "Joy Cone", secondary: "joycone.com", href: "https://joycone.com/fs_products/waffle-cones/" },
       { primary: "WebstaurantStore", secondary: "webstaurantstore.com", href: "https://www.webstaurantstore.com/ice-cream-shop-supplies.html" },
-      { primary: "The Konery", secondary: "thekonery.com", href: "https://www.thekonery.com/" },
+      { primary: "The Konery", secondary: "thekonery.com", href: "https://thekonery.com/" },
     ],
   },
   Coding: {
     active: "Running tools",
-    done: "Ran 3 tools",
+    done: () => "Ran 3 tools",
     rows: [
       { primary: "Read", secondary: "flavors.ts", mono: true },
       { primary: "Edit", secondary: "ChurnSchedule.tsx", mono: true, add: 74, del: 41 },
@@ -94,35 +107,61 @@ export default function ThinkingState({
   variant = "Steps",
   fill = false,
   onDone,
+  /** Freeze as the settled "Thought for Xs" row (no run animation) */
+  settled = false,
 }: {
   variant?: string;
   fill?: boolean;
   onDone?: () => void;
+  settled?: boolean;
 }) {
   const stage = useSequence(STAGES);
-  const [manualExpanded, setManualExpanded] = useState<boolean | null>(null);
+  const elapsed = useElapsedSeconds();
+  const settledSeconds = useRef<number | null>(settled ? 3 : null);
+  const [manualExpanded, setManualExpanded] = useState<boolean | null>(settled ? false : null);
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
+  const [showMatrix, setShowMatrix] = useState(!settled);
   const v = VARIANTS[variant] ?? VARIANTS.Steps;
-  const autoExpanded = stage >= 1 && stage < 4;
+  const autoExpanded = !settled && stage >= 1 && stage < 4;
   const expanded = manualExpanded ?? autoExpanded;
-  const working = stage < 3;
-  const visible = stage < 2 ? 0 : stage === 2 ? Math.min(2, v.rows.length) : v.rows.length;
+  const working = !settled && stage < 3;
+  const visible = settled
+    ? v.rows.length
+    : stage < 2
+      ? 0
+      : stage === 2
+        ? Math.min(2, v.rows.length)
+        : v.rows.length;
   const traceRef = useRef<HTMLDivElement>(null);
   const [lineHeight, setLineHeight] = useState(0);
+
+  useEffect(() => {
+    if (settled) {
+      setShowMatrix(false);
+      return;
+    }
+    const t = setTimeout(() => setShowMatrix(false), MATRIX_MS);
+    return () => clearTimeout(t);
+  }, [settled]);
+
+  if (!working && settledSeconds.current === null) {
+    settledSeconds.current = elapsed;
+  }
+  const doneLabel = v.done(settledSeconds.current ?? elapsed);
+
   useLayoutEffect(() => {
     if (traceRef.current) setLineHeight(traceRef.current.offsetHeight);
   }, [visible, expanded, variant, stage]);
 
   useEffect(() => {
-    if (stage < STAGES.length - 1) return;
+    if (settled || stage < STAGES.length - 1) return;
     onDone?.();
     // intentionally once when the sequence settles
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage]);
+  }, [stage, settled]);
 
   return (
     <div key={variant} className={`flex w-full flex-col ${fill ? "" : "min-h-[176px] max-w-95"}`}>
-      {/* header — shared across variants */}
       <button
         type="button"
         aria-expanded={expanded}
@@ -130,27 +169,44 @@ export default function ThinkingState({
         className="-mx-1.5 flex w-fit items-center gap-2 rounded-control px-1.5 py-1
           transition-colors duration-100 hover:bg-hover-2"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill={working ? "var(--ink-2)" : "var(--ink-3)"}>
-          <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z" />
-        </svg>
         {working ? (
-          <span
-            className="bg-clip-text text-[13px] font-medium whitespace-nowrap text-transparent"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, var(--ink-3) 35%, var(--ink) 50%, var(--ink-3) 65%)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer-text 1.4s linear infinite",
-            }}
-          >
-            {v.active}
-          </span>
+          showMatrix ? (
+            <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden>
+              <PixelLoader variant="Dots" />
+            </span>
+          ) : (
+            <span
+              className="size-3.5 shrink-0 rounded-full border-[1.5px] border-line-strong border-t-ink-2"
+              style={{ animation: "spin 700ms linear infinite" }}
+              aria-hidden
+            />
+          )
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--ink-3)">
+            <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z" />
+          </svg>
+        )}
+        {working ? (
+          <>
+            <span
+              className="bg-clip-text text-[13px] font-medium whitespace-nowrap text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, var(--ink-3) 35%, var(--ink) 50%, var(--ink-3) 65%)",
+                backgroundSize: "200% 100%",
+                animation: "shimmer-text 1.4s linear infinite",
+              }}
+            >
+              {v.active}
+            </span>
+            <span className="font-mono text-[12px] text-ink-3 tabular-nums">{elapsed}s</span>
+          </>
         ) : (
           <span
             className="text-[13px] font-medium whitespace-nowrap text-ink-2"
             style={{ animation: "fade-in 350ms ease-out both" }}
           >
-            {v.done}
+            {doneLabel}
           </span>
         )}
         <svg
@@ -162,7 +218,6 @@ export default function ThinkingState({
         </svg>
       </button>
 
-      {/* expandable trace */}
       <div
         className="grid transition-[grid-template-rows,opacity] duration-400"
         style={{
@@ -189,17 +244,21 @@ export default function ThinkingState({
               </div>
             )}
             {v.rows.slice(0, visible).map((row, i) => {
+              const showCheck = i < visible - 1 || !working;
+              const spinner = (
+                <span className="size-3 shrink-0 rounded-full border-[1.5px] border-line-strong border-t-ink-2" style={{ animation: "spin 700ms linear infinite" }} />
+              );
+              const check = (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              );
               const content = (
                 <>
                 {variant === "Search" && <Dot tone={TONES[i % 3]} />}
-                {variant === "Steps" && (
-                  i < visible - 1 || !working ? (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                  ) : (
-                    <span className="size-3 shrink-0 rounded-full border-[1.5px] border-line-strong border-t-ink-2" style={{ animation: "spin 700ms linear infinite" }} />
-                  )
+                {(variant === "Steps" || variant === "Coding") && (showCheck ? check : spinner)}
+                {variant === "Reasoning" && (
+                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-ink-3" />
                 )}
                 <span className={`min-w-0 truncate text-[12.5px] ${variant === "Reasoning" ? "whitespace-normal leading-relaxed text-ink-2" : "font-medium text-ink"} ${variant === "Search" ? "animated-underline" : ""}`}>
                   {row.primary}
