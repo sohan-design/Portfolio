@@ -108,11 +108,92 @@ body {
 }
 
 .gpt-main {
-  background: var(--page);
+  background-image: radial-gradient(
+    125% 125% at 50% 101%,
+    rgba(245, 87, 2, 1) 10.5%,
+    rgba(245, 120, 2, 1) 16%,
+    rgba(245, 140, 2, 1) 17.5%,
+    rgba(245, 170, 100, 1) 25%,
+    rgba(238, 174, 202, 1) 40%,
+    rgba(202, 179, 214, 1) 65%,
+    rgba(148, 201, 233, 1) 100%
+  );
+  background-color: transparent;
+}
+
+/* Empty panel is transparent — canvas lives on .gpt-main */
+.gpt-empty-state {
+  background: transparent;
+}
+
+html[data-theme="dark"] .gpt-main,
+.dark .gpt-main {
+  background-image: radial-gradient(
+    150% 120% at 50% 125%,
+    rgba(255, 110, 30, 1) 0%,
+    rgba(200, 70, 20, 0.7) 10%,
+    rgba(90, 40, 35, 0.55) 22%,
+    rgba(32, 28, 34, 1) 40%,
+    rgba(20, 20, 22, 1) 68%,
+    rgba(18, 18, 20, 1) 100%
+  );
+}
+
+.gpt-empty-heading {
+  color: #1a1a1a;
+}
+
+.gpt-empty-sub {
+  color: rgba(26, 26, 26, 0.7);
+}
+
+.gpt-empty-footnote {
+  color: rgba(26, 26, 26, 0.55);
+}
+
+.gpt-empty-chip {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.55);
+  color: #1a1a1a;
+}
+
+.gpt-empty-chip:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+html[data-theme="dark"] .gpt-empty-heading,
+.dark .gpt-empty-heading {
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] .gpt-empty-sub,
+.dark .gpt-empty-sub {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+html[data-theme="dark"] .gpt-empty-footnote,
+.dark .gpt-empty-footnote {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+html[data-theme="dark"] .gpt-empty-chip,
+.dark .gpt-empty-chip {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme="dark"] .gpt-empty-chip:hover,
+.dark .gpt-empty-chip:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .gpt-composer-dock {
-  background: linear-gradient(to top, var(--page) 55%, transparent);
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--page) 72%, transparent) 35%,
+    transparent
+  );
 }
 
 .gpt-user-bubble {

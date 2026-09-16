@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import LoadingState from "@/components/primitives/LoadingState";
 import StreamingText from "@/components/primitives/StreamingText";
-import PromptBar from "@/components/primitives/PromptBar";
 import { PromptInputBox } from "@/components/ui/ai-prompt-box";
 import { replyForPrompt, type DummyReply } from "@/lib/dummyReplies";
 
@@ -19,9 +18,6 @@ type ChatWorkspaceProps = {
   seedPrompt?: string | null;
   resetToken?: number;
 };
-
-const EMPTY_GRADIENT =
-  "radial-gradient(125% 125% at 50% 101%, rgba(245,87,2,1) 10.5%, rgba(245,120,2,1) 16%, rgba(245,140,2,1) 17.5%, rgba(245,170,100,1) 25%, rgba(238,174,202,1) 40%, rgba(202,179,214,1) 65%, rgba(148,201,233,1) 100%)";
 
 export default function ChatWorkspace({
   seedPrompt = null,
@@ -92,22 +88,26 @@ export default function ChatWorkspace({
   };
 
   const empty = turns.length === 0;
+  const queryRunning = turns.some(
+    (turn) => turn.phase === "loading" || turn.phase === "streaming",
+  );
+
+  const handleSend = (message: string) => {
+    if (message.trim()) startTurn(message.trim());
+  };
 
   return (
     <div className="gpt-main flex h-full min-w-0 flex-1 flex-col">
       {empty ? (
-        <div
-          className="relative flex min-h-0 flex-1 w-full items-center justify-center overflow-hidden px-4"
-          style={{ backgroundImage: EMPTY_GRADIENT }}
-        >
+        <div className="gpt-empty-state relative flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden px-4">
           <div
             className="relative z-10 flex w-full max-w-[500px] flex-col items-center"
             style={{ animation: "fade-up 350ms cubic-bezier(0.23,1,0.32,1) both" }}
           >
-            <h1 className="mb-3 text-center text-[28px] font-medium tracking-[-0.02em] text-[#1a1a1a] sm:text-[32px]">
+            <h1 className="gpt-empty-heading mb-3 text-center text-[28px] font-medium tracking-[-0.02em] sm:text-[32px]">
               What&apos;s on your mind today?
             </h1>
-            <p className="mb-8 max-w-md text-center text-[14px] leading-relaxed text-[#1a1a1a]/70">
+            <p className="gpt-empty-sub mb-8 max-w-md text-center text-[14px] leading-relaxed">
               Dummy replies with Beautiful UI loaders — no backend required.
             </p>
 
@@ -121,7 +121,7 @@ export default function ChatWorkspace({
                   key={suggestion}
                   type="button"
                   onClick={() => startTurn(suggestion)}
-                  className="rounded-2xl border border-black/10 bg-white/55 px-4 py-3 text-left text-[13.5px] leading-snug text-[#1a1a1a] backdrop-blur-sm transition-colors hover:bg-white/75"
+                  className="gpt-empty-chip rounded-2xl px-4 py-3 text-left text-[13.5px] leading-snug backdrop-blur-sm transition-colors"
                 >
                   {suggestion}
                 </button>
@@ -129,15 +129,10 @@ export default function ChatWorkspace({
             </div>
 
             <div className="w-full">
-              <PromptInputBox
-                placeholder="Ask anything"
-                onSend={(message) => {
-                  if (message.trim()) startTurn(message.trim());
-                }}
-              />
+              <PromptInputBox placeholder="Ask anything" onSend={handleSend} />
             </div>
 
-            <p className="mt-3 text-center text-[11.5px] text-[#1a1a1a]/55">
+            <p className="gpt-empty-footnote mt-3 text-center text-[11.5px]">
               Veda AI can make mistakes. Check important info.
             </p>
           </div>
@@ -183,12 +178,15 @@ export default function ChatWorkspace({
           </div>
 
           <div className="gpt-composer-dock shrink-0 px-3 pb-3 pt-1 sm:px-4 sm:pb-4">
-            <div className="mx-auto w-full max-w-3xl">
-              <PromptBar
-                demo={false}
-                variant="Pill"
+            <div
+              className={`mx-auto w-full transition-[max-width] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                queryRunning ? "max-w-3xl" : "max-w-2xl"
+              }`}
+            >
+              <PromptInputBox
                 placeholder="Ask anything"
-                onSend={(text) => startTurn(text)}
+                isLoading={queryRunning}
+                onSend={handleSend}
               />
               <p className="mt-2 text-center text-[11.5px] text-ink-3">
                 Veda AI can make mistakes. Check important info.
