@@ -3,19 +3,15 @@
  */
 import {
   ShaderMount,
-  grainGradientFragmentShader,
-  GrainGradientShapes,
   ditheringFragmentShader,
   DitheringShapes,
   DitheringTypes,
   ShaderFitOptions,
   defaultObjectSizing,
   getShaderColorFromString,
-  getShaderNoiseTexture,
 } from '@paper-design/shaders';
 
 var mounts = [];
-var noiseTex = null;
 
 /** Paper-exported dither backgrounds (light / dark). */
 var PAGE_DITHER = {
@@ -122,70 +118,6 @@ function mountPageDither(el) {
     if (typeof m.setFrame === 'function') {
       m.setFrame(next.frame);
     }
-  });
-}
-
-function mountGrain(el) {
-  if (!el) return null;
-  var bg = pageBg();
-  var dark = isDark();
-  var colors = dark
-    ? [
-        getShaderColorFromString('#1a1a1a'),
-        getShaderColorFromString('#2c2c2c'),
-        getShaderColorFromString('#4285F4'),
-        getShaderColorFromString('#121212'),
-      ]
-    : [
-        getShaderColorFromString('#f0f0f0'),
-        getShaderColorFromString('#e4e4e4'),
-        getShaderColorFromString('#4285F4'),
-        getShaderColorFromString('#f7f7f7'),
-      ];
-  while (colors.length < 7) {
-    colors.push(getShaderColorFromString('rgba(0,0,0,0)'));
-  }
-  var uniforms = Object.assign(sizing({ scale: 1.2, fit: 'cover' }), {
-    u_colorBack: getShaderColorFromString(bg),
-    u_colors: colors,
-    u_colorsCount: 4,
-    u_softness: 0.75,
-    u_intensity: 0.35,
-    u_noise: 0.4,
-    u_shape: GrainGradientShapes.corners,
-  });
-  if (noiseTex && noiseTex.complete) {
-    uniforms.u_noiseTexture = noiseTex;
-  }
-  var mount = new ShaderMount(
-    el,
-    grainGradientFragmentShader,
-    uniforms,
-    undefined,
-    reduceMotion() ? 0 : 0.12,
-    0
-  );
-  return track(mount, 'grain', function (m) {
-    var nextBg = pageBg();
-    var nextDark = isDark();
-    var next = nextDark
-      ? [
-          getShaderColorFromString('#1a1a1a'),
-          getShaderColorFromString('#2c2c2c'),
-          getShaderColorFromString('#4285F4'),
-          getShaderColorFromString('#121212'),
-        ]
-      : [
-          getShaderColorFromString('#f0f0f0'),
-          getShaderColorFromString('#e4e4e4'),
-          getShaderColorFromString('#4285F4'),
-          getShaderColorFromString('#f7f7f7'),
-        ];
-    while (next.length < 7) next.push(getShaderColorFromString('rgba(0,0,0,0)'));
-    m.setUniforms({
-      u_colorBack: getShaderColorFromString(nextBg),
-      u_colors: next,
-    });
   });
 }
 
@@ -570,17 +502,10 @@ function initShelf(root) {
 }
 
 function boot() {
-  try {
-    noiseTex = getShaderNoiseTexture();
-  } catch (e) {
-    noiseTex = null;
-  }
-
   function safeMount(el) {
     var kind = el.getAttribute('data-hp2');
     try {
       if (kind === 'page-noise') mountPageDither(el);
-      else if (kind === 'hero-grain') mountGrain(el);
     } catch (err) {
       console.warn('[hp2] shader mount failed:', kind, err);
     }
@@ -590,19 +515,7 @@ function boot() {
     document.querySelectorAll('[data-hp2]').forEach(safeMount);
   }
 
-  if (noiseTex && !noiseTex.complete) {
-    noiseTex.addEventListener('load', mountAll, { once: true });
-    noiseTex.addEventListener(
-      'error',
-      function () {
-        noiseTex = null;
-        mountAll();
-      },
-      { once: true }
-    );
-  } else {
-    mountAll();
-  }
+  mountAll();
 
   var home = document.getElementById('page-home');
   if (home) {
@@ -611,6 +524,10 @@ function boot() {
     initPixelTrail();
     initAvatarCursor();
   }
+
+  // Repaint in the same task as the theme swap: the view transition snapshots
+  // the new frame immediately, so a rAF-deferred sync would capture stale fills.
+  document.addEventListener('portfolio:theme-change', syncAll);
 
   var obs = new MutationObserver(function () {
     requestAnimationFrame(syncAll);

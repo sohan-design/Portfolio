@@ -57,18 +57,6 @@ html[data-theme='dark'] .hp2-shader--page {
   position: relative;
 }
 
-.hp2-hero-wash {
-  position: absolute;
-  inset: -12% -8% auto auto;
-  width: min(420px, 55vw);
-  height: min(280px, 40vw);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.45;
-  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
-}
-
 .hero-top,
 .hero-copy {
   position: relative;

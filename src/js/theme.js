@@ -1,6 +1,10 @@
 import { syncHeroShaderBackgrounds } from './heroShader.js';
 
 var STORAGE_KEY = 'portfolio-theme';
+var root = document.documentElement;
+var reducedMotion = window.matchMedia
+  ? matchMedia('(prefers-reduced-motion: reduce)')
+  : { matches: false, addEventListener: function () {} };
 
 function getStoredTheme() {
   try {
@@ -26,66 +30,118 @@ export function resolveTheme() {
   return systemPrefersDark() ? 'dark' : 'light';
 }
 
-export function applyTheme(theme) {
-  var next = theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', next);
-  document.documentElement.style.colorScheme = next;
-  syncToggles(next);
-  // Wait a frame so CSS vars resolve, then push --bg into live shaders.
-  requestAnimationFrame(function () {
-    syncHeroShaderBackgrounds();
-  });
-  return next;
-}
-
 function syncToggles(theme) {
   var isDark = theme === 'dark';
+  var label = isDark ? 'Light mode' : 'Dark mode';
   Array.prototype.forEach.call(document.querySelectorAll('[data-theme-toggle]'), function (btn) {
     btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
     btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
     btn.classList.toggle('is-dark', isDark);
+    var tip = btn.querySelector('.theme-toggle-tooltip');
+    if (tip) tip.textContent = label;
   });
 }
 
-function setThemeFromPoint(theme, x, y) {
-  var root = document.documentElement;
-  var originX = typeof x === 'number' ? x : window.innerWidth / 2;
-  var originY = typeof y === 'number' ? y : window.innerHeight / 2;
-  var radius = Math.hypot(
-    Math.max(originX, window.innerWidth - originX),
-    Math.max(originY, window.innerHeight - originY)
-  );
+export function applyTheme(theme) {
+  var next = theme === 'dark' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  root.style.colorScheme = next;
 
-  root.style.setProperty('--theme-origin-x', originX + 'px');
-  root.style.setProperty('--theme-origin-y', originY + 'px');
-  root.style.setProperty('--theme-radius', Math.ceil(radius) + 'px');
-  root.style.setProperty('--theme-x', originX + 'px');
-  root.style.setProperty('--theme-y', originY + 'px');
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = next === 'dark' ? '#000000' : '#ffffff';
 
-  var reduce =
-    window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  syncToggles(next);
 
-  var run = function () {
-    applyTheme(theme);
-    storeTheme(theme);
-  };
+  // Shader canvases paint their own fills, so they have to repaint in the same
+  // task — the view transition snapshots the new frame as soon as this returns.
+  syncHeroShaderBackgrounds();
+  document.dispatchEvent(new CustomEvent('portfolio:theme-change', { detail: { theme: next } }));
 
-  function clearFlags() {
-    root.removeAttribute('data-theme-transition');
-    root.removeAttribute('data-theme-animating');
-    root.classList.remove('theme-animating');
+  return next;
+}
+
+var themeTransition;
+var themeRequest = 0;
+var requestedTheme;
+
+function stopThemeTransition() {
+  if (themeTransition && typeof themeTransition.skipTransition === 'function') {
+    themeTransition.skipTransition();
+  }
+  root.removeAttribute('data-theme-animating');
+  root.removeAttribute('data-theme-transition');
+}
+
+async function toggleFrom(button) {
+  var nextTheme =
+    (requestedTheme || root.getAttribute('data-theme')) === 'dark' ? 'light' : 'dark';
+  requestedTheme = nextTheme;
+  var request = ++themeRequest;
+
+  // A second click lands on the settled colors instead of queueing a wipe.
+  if (themeTransition) {
+    themeTransition.skipTransition();
+    try {
+      await themeTransition.finished;
+    } catch (e) {}
+  }
+  if (request !== themeRequest) return;
+
+  root.removeAttribute('data-theme-animating');
+  root.removeAttribute('data-theme-transition');
+  themeTransition = undefined;
+
+  function apply() {
+    applyTheme(nextTheme);
+    storeTheme(nextTheme);
   }
 
-  if (!reduce && typeof document.startViewTransition === 'function') {
-    root.setAttribute('data-theme-transition', theme);
-    root.setAttribute('data-theme-animating', '');
+  if (typeof document.startViewTransition !== 'function' || reducedMotion.matches) {
     root.classList.add('theme-animating');
-    var transition = document.startViewTransition(run);
-    Promise.resolve(transition.finished).then(clearFlags, clearFlags);
+    apply();
+    requestedTheme = undefined;
+    setTimeout(function () {
+      root.classList.remove('theme-animating');
+    }, 420);
     return;
   }
 
-  run();
+  var box = button.getBoundingClientRect();
+  var x = box.left + box.width / 2;
+  var y = box.top + box.height / 2;
+
+  // Relative coordinates stay aligned with the browser's snapshot scale on Retina.
+  root.style.setProperty('--theme-origin-x', (x / innerWidth) * 100 + '%');
+  root.style.setProperty('--theme-origin-y', (y / innerHeight) * 100 + '%');
+  var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  root.style.setProperty(
+    '--theme-radius',
+    (radius / Math.hypot(innerWidth, innerHeight)) * Math.SQRT2 * 100 + 1 + '%'
+  );
+
+  root.setAttribute('data-theme-transition', nextTheme);
+
+  var transition;
+  try {
+    transition = document.startViewTransition(apply);
+    themeTransition = transition;
+    await transition.ready;
+    if (request === themeRequest && !reducedMotion.matches && root.hasAttribute('data-theme-transition')) {
+      root.setAttribute('data-theme-animating', '');
+    }
+    await transition.finished;
+  } catch (e) {
+    // Theme switching stays usable if snapshots or pseudo-element animation fail.
+    if (transition) transition.skipTransition();
+    if (request === themeRequest) apply();
+  } finally {
+    if (request === themeRequest) {
+      root.removeAttribute('data-theme-animating');
+      root.removeAttribute('data-theme-transition');
+      themeTransition = undefined;
+      requestedTheme = undefined;
+    }
+  }
 }
 
 export function initThemeToggle() {
@@ -93,12 +149,16 @@ export function initThemeToggle() {
 
   document.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('[data-theme-toggle]');
-    if (!btn) return;
-    var current = document.documentElement.getAttribute('data-theme') || 'light';
-    var next = current === 'dark' ? 'light' : 'dark';
-    var rect = btn.getBoundingClientRect();
-    setThemeFromPoint(next, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    if (btn) toggleFrom(btn);
   });
+
+  // A viewport change invalidates the captured snapshots and the wipe origin.
+  addEventListener('resize', stopThemeTransition);
+  if (typeof reducedMotion.addEventListener === 'function') {
+    reducedMotion.addEventListener('change', function () {
+      if (reducedMotion.matches) stopThemeTransition();
+    });
+  }
 
   if (window.matchMedia) {
     matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
