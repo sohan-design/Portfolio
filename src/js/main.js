@@ -34,8 +34,8 @@ inject();
     var current = 0;
     var loopsDone = 0;
     var totalLoops = 2;
-    var iconDelay = 200;
-    var holdLast = 300;
+    var iconDelay = 140;
+    var holdLast = 210;
     var step = 0;
     var totalSteps = icons.length * totalLoops;
 
