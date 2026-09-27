@@ -4,12 +4,39 @@ import { initFooterLotties } from './footerLottie.js';
 import { initThemeToggle } from './theme.js';
 import { initCtaPixelWave } from './ctaWave.js';
 import { mountSiteFooter } from './siteFooter.js';
+import { initClickPixelPop } from './clickPixelPop.js';
 
 // Initialize Vercel Analytics
 inject();
 
+function initCopyEmail() {
+  var timer = 0;
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-copy-email]');
+    if (!btn) return;
+    var email = btn.getAttribute('data-copy-email');
+    if (!email) return;
+    var label = btn.querySelector('.action-label');
+    function copied() {
+      if (!label) return;
+      var prev = label.getAttribute('data-label') || label.textContent;
+      label.setAttribute('data-label', prev);
+      label.textContent = 'Copied';
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        label.textContent = prev;
+      }, 1400);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(copied).catch(function () {});
+    }
+  });
+}
+
 (function () {
   initThemeToggle();
+  initClickPixelPop();
+  initCopyEmail();
 
   // ---------- Intro loader ----------
   (function () {

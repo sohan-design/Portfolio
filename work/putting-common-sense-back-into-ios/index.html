@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Putting Common Sense Back Into iOS · Sohan Bhute</title>
-  <meta name="description" content="A UX critique of everyday iOS friction — alarms, notifications, navigation, keyboards — and why common sense still beats AI." />
+  <title>Good Design, Bad UX: What an OS Taught Me About UX · Sohan Bhute</title>
+  <meta name="description" content="Six months with an iPhone 17. Great hardware, real friction, and what an operating system taught me about UX." />
 
-  <meta property="og:title" content="Putting Common Sense Back Into iOS · Sohan Bhute" />
-  <meta property="og:description" content="A UX critique of everyday iOS friction — alarms, notifications, navigation, keyboards — and why common sense still beats AI." />
+  <meta property="og:title" content="Good Design, Bad UX: What an OS Taught Me About UX · Sohan Bhute" />
+  <meta property="og:description" content="Six months with an iPhone 17. Great hardware, real friction, and what an operating system taught me about UX." />
   <meta property="og:image" content="/assets/articles/ios-common-sense/cover.jpg" />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Putting Common Sense Back Into iOS · Sohan Bhute" />
-  <meta name="twitter:description" content="A UX critique of everyday iOS friction — and why common sense still beats AI." />
+  <meta name="twitter:title" content="Good Design, Bad UX: What an OS Taught Me About UX · Sohan Bhute" />
+  <meta name="twitter:description" content="Six months with an iPhone 17. Great hardware, real friction, and what an operating system taught me about UX." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
@@ -36,15 +36,21 @@
   <div class="cs-overlay" id="caseStudyIos" data-project="ios" data-hero-intro role="dialog" aria-modal="true" aria-labelledby="csi-title" aria-hidden="true">
     <nav class="cs-nav" aria-label="Article sections">
       <a class="cs-nav-item" href="#csi-intro">Intro</a>
-      <a class="cs-nav-item" href="#csi-waking">Waking up</a>
+      <a class="cs-nav-item" href="#csi-disclaimer">Disclaimer</a>
+      <a class="cs-nav-item" href="#csi-invisible">Invisible phone</a>
       <a class="cs-nav-item" href="#csi-notifications">Notifications</a>
+      <a class="cs-nav-item" href="#csi-alarms">Alarms</a>
       <a class="cs-nav-item" href="#csi-flashlight">Flashlight</a>
-      <a class="cs-nav-item" href="#csi-text">Text selection</a>
       <a class="cs-nav-item" href="#csi-navigation">Navigation</a>
       <a class="cs-nav-item" href="#csi-keyboard">Keyboard</a>
-      <a class="cs-nav-item" href="#csi-context">Context</a>
-      <a class="cs-nav-item" href="#csi-else">Everything else</a>
-      <a class="cs-nav-item" href="#csi-close">Common sense</a>
+      <a class="cs-nav-item" href="#csi-text">Text</a>
+      <a class="cs-nav-item" href="#csi-widgets">Widgets</a>
+      <a class="cs-nav-item" href="#csi-whatsapp">WhatsApp</a>
+      <a class="cs-nav-item" href="#csi-icloud">iCloud</a>
+      <a class="cs-nav-item" href="#csi-nails">What Apple nails</a>
+      <a class="cs-nav-item" href="#csi-intelligence">Apple Intelligence</a>
+      <a class="cs-nav-item" href="#csi-six-months">Six months</a>
+      <a class="cs-nav-item" href="#csi-lesson">The lesson</a>
     </nav>
 
     <div class="cs-panel">
@@ -66,20 +72,20 @@
                   <span class="theme-toggle-tooltip">Dark mode</span>
                 </button>
                 <div class="nav-actions">
-                  <a class="btn-primary selection-control" href="https://www.linkedin.com/in/sugandhajain-/" target="_blank" rel="noopener">
+                  <a class="btn-primary selection-control" href="https://www.linkedin.com/in/sohan-bhute/" target="_blank" rel="noopener">
                     <span class="action-content">
                       <span class="action-label">LinkedIn</span>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
                     </span>
                     <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
                   </a>
-                  <a class="btn-primary selection-control" href="mailto:sugandhajain0312@gmail.com">
+                  <button class="btn-primary selection-control" type="button" data-copy-email="sohan.work@proton.me">
                     <span class="action-content">
                       <span class="action-label">Email</span>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5"></rect><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"></path></svg>
                     </span>
                     <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-                  </a>
+                  </button>
                 </div>
               </div>
             </nav>
@@ -92,13 +98,13 @@
               <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <h1 class="cs-title" id="csi-title">
-              <span class="cs-title-line">Putting common sense</span>
-              <span class="cs-title-line">back into iOS</span>
+              <span class="cs-title-line">Good design, bad UX</span>
+              <span class="cs-title-line">What an OS taught me about UX</span>
             </h1>
           </div>
           <div class="cs-meta">
             <div><span class="cs-meta-label">Type</span><span class="cs-meta-val">Essay</span></div>
-            <div><span class="cs-meta-label">Published</span><span class="cs-meta-val">Jun 2026</span></div>
+            <div><span class="cs-meta-label">Published</span><span class="cs-meta-val">Jun 16, 2026</span></div>
             <div><span class="cs-meta-label">Topics</span><span class="cs-meta-val">iOS · UX · Product</span></div>
           </div>
         </div>
@@ -109,123 +115,183 @@
         </div>
 
         <section class="cs-section cs-intro" id="csi-intro">
-          <p>It’s not about what phone, OS, or device you use every day. It’s 2026, and with or without AI, technology should make life easier and smoother in every moment.</p>
-          <p>I used a Google Pixel for years. Regardless of what hardware you can buy at any price point, Pixel’s hardware was never its USP. The software was.</p>
-          <p>It was so good and so effortless to use that it simply got out of your way. You didn’t think about it. You just flowed with it. It was like breathing, completely involuntary.</p>
-          <p>And the best part?</p>
-          <blockquote>Most of that experience had nothing to do with AI.</blockquote>
-          <p>Some of the things I’ll talk about in this article come from different operating systems, Android skins, brands, and apps that I’ve used over the years. They’re small experiences that stayed with me because they solved real problems with simple thinking.</p>
-          <p>This year, I gifted myself an iPhone.</p>
-          <p>And honestly, I’ve never been less happy with a phone purchase.</p>
-          <p>I’m a UX designer by profession, and seeing such beautiful interfaces paired with such frustrating user experiences finally pushed me to write this article.</p>
+          <p>Six months ago, I bought an iPhone 17.</p>
+          <p>A month in, I wrote a long rant about everything I hated about it. Six months later, I still agree with a lot of it. But I also realise I was looking at the wrong thing.</p>
+          <p>The iPhone isn’t a bad phone. In fact, some parts of it are ridiculously good. The hardware is excellent. Performance is absurd. Battery life is great. Haptics are unmatched. Face ID is brilliant. Video is fantastic. iOS animations are probably the best in the business. Apps are polished. And the thing is reliably boring — it just works.</p>
+          <p>Yet somehow, I still find myself fighting the OS.</p>
+          <p>And as a product designer, that’s what interests me.</p>
+          <blockquote>Good design doesn’t always mean good UX.</blockquote>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csi-common">
-          <h2>Common sense things</h2>
-          <p>Let’s start chronologically with my day.</p>
+        <section class="cs-section" id="csi-disclaimer">
+          <h2>A quick disclaimer</h2>
+          <p>This isn’t an objective iPhone review. Most of my opinions come from comparing the iPhone 17 with my old Google Pixel 6a, which cost roughly one-third of the iPhone 17.</p>
+          <p>That’s obviously an unfair hardware comparison. I’m not comparing processors, cameras or benchmark scores. I’m comparing something much simpler:</p>
+          <p>How much friction does this phone add to my everyday life?</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csi-waking">
-          <h2>Waking up</h2>
-          <p>I wake up around 8 AM.</p>
-          <p>For context, I set multiple alarms because I like to snooze. But I also want to wake up eventually. Usually, I wake up by the second or third alarm. Sometimes I even wake up before the alarm goes off.</p>
-          <blockquote>Now, for any sane smartphone, it should understand one simple thing. If I’m actively using my phone, I’m awake.</blockquote>
-          <p>This doesn’t require state-of-the-art AI. It doesn’t require an LLM. It’s common sense. An A18 chip, or even a child’s brain, could figure this out.</p>
-          <p>A simple “Dismiss All Remaining Alarms” CTA after the first alarm would solve the problem instantly. Instead, the phone happily continues ringing every backup alarm I’ve ever set, even though I’m already brushing my teeth.</p>
+        <section class="cs-section" id="csi-invisible">
+          <h2>I Miss the Invisible Phone</h2>
+          <p>The Pixel 6a wasn’t impressive because of its hardware. It was impressive because the software mostly stayed out of my way.</p>
+          <p>It felt like using a phone rather than operating one.</p>
+          <p>That’s what I’ve started calling the Invisible Phone.</p>
+          <p>You shouldn’t have to think about the phone. You should think about what you’re trying to do.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
         <section class="cs-section" id="csi-notifications">
-          <h2>Notification Center</h2>
-          <p>Now I unlock my phone. There are 50 notifications waiting for me.</p>
-          <blockquote>I’ve been using an iPhone for six months, and I can honestly say I’ve opened Notification Center fewer than ten times. It’s that bad.</blockquote>
-          <p>Notifications feel endless, poorly grouped, and difficult to process. Ironically, I do notice notifications in real time when they arrive. But the moment I’m inactive for a while, they pile up into a giant wall of information that I simply ignore.</p>
-          <p>I’ve never ignored a notification center before.</p>
-          <p>A combination of better grouping by app, smarter categorization, and modern prioritization could solve most of this. And somehow, in 2026, iOS still doesn’t support notification channels.</p>
-          <p>It’s surprising because notifications are one of the most important interactions on a smartphone.</p>
+          <h2>Notifications: The Graveyard</h2>
+          <p>This is still my biggest complaint.</p>
+          <p>Live notifications are great. The problem starts when they’re no longer live.</p>
+          <p>My Notification Centre becomes a giant pile of things I don’t care about anymore. I’ve reached a point where I barely open it.</p>
+          <p>That’s probably the biggest UX failure: the interface has trained me not to use it.</p>
+          <p>iOS has notification grouping, scheduled summaries and AI-powered notification summaries on supported devices. But I still want something more fundamental: better information architecture.</p>
+          <p>I don’t want 40 notifications. I want three things that matter.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-alarms">
+          <h2>Alarms: Just Tell Me What’s Next</h2>
+          <p>The alarm experience is fine. But I still want one stupidly simple thing:</p>
+          <blockquote>Next alarm · 4:20 AM</blockquote>
+          <p>Put it on the Lock Screen. Put it in a widget. Put it somewhere.</p>
+          <p>I shouldn’t have to open the Clock app just to remember whether I turned tomorrow’s alarm on.</p>
+          <p>Small pieces of context like this are what made Google’s At a Glance so good.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
         <section class="cs-section" id="csi-flashlight">
-          <h2>The flashlight incident</h2>
-          <p>Then I ride my bike to the office. About thirty minutes into my commute, I feel warmth in my pocket. My phone is getting hot. Really hot. I pull it out and realize the flashlight is on. How? No idea.</p>
-          <p>At some point, it got activated accidentally and stayed on long enough to turn my pocket into a portable oven. I had to stop in traffic, unlock my phone, and manually turn it off.</p>
-          <p>Physical discomfort caused by a flashlight shouldn’t be a thing. A simple auto-turn-off after five minutes would save battery, prevent overheating, and probably save a lot of thighs.</p>
-          <p>And before anyone says this is a rare issue, I regularly see people on public transport with their flashlight accidentally turned on.</p>
-        </section>
-
-        <div class="cs-divider" aria-hidden="true">***********</div>
-
-        <section class="cs-section" id="csi-text">
-          <h2>Let me select text</h2>
-          <p>Later, I’m scrolling through social media. I find a useful link buried in the comments. My phone has clearly rendered the text. It can display it. It knows it’s text. Yet I can’t select it.</p>
-          <p>I miss desktops.</p>
-          <p>Global text selection feels like such a simple feature, but only a few companies do it well. Being able to select text from anywhere — images, recent apps, screenshots, social feeds — sounds small until you’ve used it. Then it becomes difficult to live without.</p>
+          <h2>The Flashlight Shouldn’t Cook Me</h2>
+          <p>This hasn’t changed.</p>
+          <p>I’ve accidentally turned on the flashlight. It stayed on. My phone got ridiculously hot in my pocket.</p>
+          <p>Why can’t the OS simply turn it off after five or ten minutes of inactivity?</p>
+          <p>It’s a tiny problem. But UX is made of tiny problems.</p>
+          <p>Good UX makes accidental states harmless.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
         <section class="cs-section" id="csi-navigation">
-          <h2>Navigation shouldn’t be a puzzle</h2>
-          <p>Have you ever used iOS and thought: “Wow, this looks beautiful.” Followed immediately by: “How do I go back?”</p>
-          <p>Sometimes the back button sits all the way in the top-left corner, miles away from your thumb. Then there are gesture-based navigation patterns that work only some of the time. And occasionally, the only reliable way out is to go back to the home screen and start over.</p>
-          <p>How is this still a thing?</p>
-          <p>You’re a trillion-dollar company. Surely we can agree that users shouldn’t have to guess how to navigate between screens. A platform should have a universal navigation language.</p>
+          <h2>Back Navigation: Still Scary</h2>
+          <p>This is probably my biggest iOS interaction complaint.</p>
+          <p>Sometimes there’s a back button. Sometimes there’s a gesture. Sometimes there’s a close button. Sometimes the gesture doesn’t work.</p>
+          <p>And sometimes I’m deep inside an interface thinking:</p>
+          <p>“How the hell do I get out of here?”</p>
+          <p>A navigation system shouldn’t make me understand the app’s architecture before I can go back.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
         <section class="cs-section" id="csi-keyboard">
-          <h2>The keyboard</h2>
-          <p>I’ve installed Gboard on my iPhone. That alone should tell you everything.</p>
-          <p>I don’t want to spend too much time criticizing Apple’s keyboard, but it’s genuinely frustrating to use. The autocorrect is aggressive, inconsistent, and often feels like it’s working against me.</p>
-          <p>More importantly, it doesn’t seem to learn. I’ve typed some of my friends’ names hundreds of times. Why am I still correcting the same mistakes?</p>
-          <p>We’re carrying incredibly powerful mobile processors in our pockets. Remembering a frequently used name shouldn’t be a challenge.</p>
-          <p>And while we’re here: Where is the number row?</p>
+          <h2>The Keyboard Is Beautiful. I Still Hate It.</h2>
+          <p>Apple’s keyboard looks great. I don’t enjoy typing on it.</p>
+          <p>The missing number row is annoying. Autocorrect can be aggressively wrong. And after typing someone’s name 100 times, I’d expect the phone to understand that I probably meant to type that name.</p>
+          <p>So I installed Gboard.</p>
+          <p>On an iPhone.</p>
+          <p>That probably says enough.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csi-context">
-          <h2>Context matters</h2>
-          <p>Remember those alarms I mentioned earlier? I often forget whether they’re still enabled. When is my next alarm? Did I turn it off? Did I accidentally disable tomorrow’s wake-up alarm? So I open the Clock app just to check. Again. And again. And again.</p>
-          <p>The thing is, I always look at my lock screen before sleeping. That’s where context should live. Imagine if iOS simply showed:</p>
-          <blockquote>“Next alarm: 7:00 AM.” Done.</blockquote>
-          <p>No taps. No app launches. No mental effort. The same idea extends far beyond alarms.</p>
-          <p>Let’s say I have a flight in 18 hours.</p>
-          <p>A small contextual widget could remind me about it, show airport information, estimate when I should leave, and surface useful details exactly when I need them.</p>
-          <p>This idea is heavily inspired by Google’s At a Glance feature. It’s one of those features that’s so good that once you’ve experienced it, you want it everywhere.</p>
+        <section class="cs-section" id="csi-text">
+          <h2>Text Selection Should Be Universal</h2>
+          <p>If my phone can see text, I should be able to interact with it.</p>
+          <p>Sometimes I see a URL or a piece of text inside an app and can’t simply select it. This is one area where I still miss desktop-style interaction.</p>
+          <p>Text is text. Let me grab it.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csi-else">
-          <h2>And then there’s everything else</h2>
-          <p>There are plenty of other things to complain about.</p>
-          <ul>
-            <li>The lack of a built-in clipboard manager</li>
-            <li>The fact that WhatsApp on iOS feels like a collection of UX compromises</li>
-            <li>A closed ecosystem that turns storage into a forced iCloud upsell</li>
-          </ul>
-          <p>Take WhatsApp backups, for example. On iOS, you’re effectively tied to iCloud. If you run out of storage, your solution is simple: buy more iCloud storage. That’s it.</p>
-          <p>In a world full of cloud providers and storage options, users are still pushed toward a single ecosystem. It feels less like a user-first decision and more like a business one.</p>
+        <section class="cs-section" id="csi-widgets">
+          <h2>Widgets: Useful, But Why So Huge?</h2>
+          <p>iOS widgets are useful. The ecosystem of third-party widgets is even better.</p>
+          <p>But why are so many of them enormous?</p>
+          <p>Sometimes I want information, not a billboard.</p>
+          <p>Give me density. Give me options.</p>
         </section>
 
         <div class="cs-divider" aria-hidden="true">***********</div>
 
-        <section class="cs-section" id="csi-close">
-          <h2>Intelligence doesn’t need AI</h2>
-          <p>The irony is that most of these problems don’t require artificial intelligence to solve.</p>
-          <p>They require common sense.</p>
-          <p>The smartest products I’ve used weren’t necessarily the most advanced. They were the ones that understood context, reduced friction, and respected my time. That’s the kind of intelligence I want from my phone.</p>
-          <blockquote>Not another chatbot. Just pure common sense.</blockquote>
-          <p><a href="https://medium.com/@sohan.bhute21/putting-common-sense-back-into-ios-97bfd87c670a" target="_blank" rel="noopener">Read the original on Medium ↗</a></p>
+        <section class="cs-section" id="csi-whatsapp">
+          <h2>WhatsApp + iOS = Pain</h2>
+          <p>The actual messaging experience is fine.</p>
+          <p>The migration and import experience? Terrible.</p>
+          <p>Moving between ecosystems shouldn’t feel like moving houses.</p>
+          <p>My data should feel like my data, not something attached to whichever platform I currently use.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-icloud">
+          <h2>And Then There’s iCloud</h2>
+          <p>I understand the ecosystem. I even like parts of it.</p>
+          <p>But there’s an uncomfortable trade-off:</p>
+          <p>The better the ecosystem becomes, the harder it becomes to leave.</p>
+          <p>Photos, backups, WhatsApp, documents, storage — everything slowly becomes part of the Apple ecosystem.</p>
+          <p>That’s great when you’re staying. Not so great when you’re trying to leave.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-nails">
+          <h2>The Things Apple Absolutely Nails</h2>
+          <p>This is where my original rant was unfair.</p>
+          <p>Performance — Goat. I don’t think about performance. That’s the point. Everything is fast.</p>
+          <p>Battery — Goat. I trust the battery. That’s more valuable than a benchmark number.</p>
+          <p>Haptics — Goat. Apple’s haptics are ridiculously good. You feel them everywhere without thinking about them.</p>
+          <p>Face ID — Goat. One of those features you don’t appreciate until you don’t have it.</p>
+          <p>Build Quality — Goat. The hardware feels premium in a way that’s difficult to explain until you’ve used it for months.</p>
+          <p>Video — Excellent. I still prefer Google’s approach to photos, but iPhone video is something I trust. Point. Shoot. Good result.</p>
+          <p>iOS Animations — Still the Goat. This is where Apple is almost annoyingly good. The transitions, gestures and micro-interactions feel incredibly polished.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-intelligence">
+          <h2>Apple Intelligence: Meh</h2>
+          <p>It’s 2026. And somehow, AI still hasn’t fundamentally changed how I use my phone.</p>
+          <p>Apple Intelligence is interesting, but for me, it isn’t transformative.</p>
+          <p>I don’t need my phone to become an AI chatbot. I want it to quietly understand context and remove friction.</p>
+          <p>That’s the AI I actually want.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-six-months">
+          <h2>What Six Months Changed</h2>
+          <p>My original argument was:</p>
+          <blockquote>“Why am I paying three times more for this?”</blockquote>
+          <p>I don’t think that anymore.</p>
+          <p>The iPhone is clearly a better piece of hardware than the Pixel 6a.</p>
+          <p>But that’s not what makes this comparison interesting.</p>
+          <p>The Pixel taught me that software can make mediocre hardware feel great.</p>
+          <p>The iPhone taught me that great hardware can make an operating system incredibly reliable.</p>
+          <p>Both are valuable.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csi-lesson">
+          <h2>The Real Lesson</h2>
+          <p>After six months, I don’t think iOS is bad.</p>
+          <p>I think it’s beautifully designed in ways that don’t always translate into the least-frictional experience.</p>
+          <p>And that’s an important distinction.</p>
+          <p>As designers, we sometimes optimise for:</p>
+          <p>Consistency → Beauty → System rules</p>
+          <p>when users care about:</p>
+          <p>Intent → Action → Outcome</p>
+          <p>The best interface isn’t necessarily the prettiest one.</p>
+          <p>It’s the one that makes you forget there was an interface at all.</p>
+          <blockquote>The best phone isn’t the one you admire. It’s the one you don’t have to think about.</blockquote>
+          <p>That’s what my Pixel taught me.</p>
+          <p>And that’s probably the thing I miss most.</p>
         </section>
 
         </div>

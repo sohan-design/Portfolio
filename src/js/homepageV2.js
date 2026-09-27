@@ -81,7 +81,7 @@ function applyPageDitherShell(cfg) {
 }
 
 /**
- * Paper Dithering bg — from export @paper-design/shaders-react@0.0.80
+ * Paper Dithering bg â€” from export @paper-design/shaders-react@0.0.80
  * Light: https://app.paper.design/.../9R-0
  * Dark:  https://app.paper.design/.../9M-0
  */
@@ -251,146 +251,6 @@ function initPixelFrame(root) {
 }
 
 /**
- * Pixel cursor trail (thebrowser.company): 5px rectangles in #0C50FF.
- * Native pointer stays visible.
- */
-function initPixelTrail() {
-  document.documentElement.classList.remove('pixel-cursor');
-
-  var fine =
-    window.matchMedia &&
-    matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var reduce =
-    window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!fine || reduce) return;
-
-  var canvas = document.querySelector('[data-pixel-trail]');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var cell = 5;
-  var fade = 500;
-  var maxStamps = 96;
-  var color = '#0C50FF';
-  var stamps = [];
-  var seen = Object.create(null);
-  var lastX = null;
-  var lastY = null;
-  var cursorX = null;
-  var cursorY = null;
-  var raf = 0;
-  var running = false;
-
-  function resize() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.floor(window.innerWidth * dpr);
-    canvas.height = Math.floor(window.innerHeight * dpr);
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.imageSmoothingEnabled = false;
-  }
-
-  function stampCell(sx, sy, now) {
-    var key = sx + ':' + sy;
-    if (seen[key]) return;
-    seen[key] = 1;
-    stamps.push({ x: sx, y: sy, t: now });
-    if (stamps.length > maxStamps) {
-      var dropped = stamps.shift();
-      delete seen[dropped.x + ':' + dropped.y];
-    }
-  }
-
-  function stamp(x, y) {
-    var now = performance.now();
-    var sx = Math.floor(x / cell) * cell;
-    var sy = Math.floor(y / cell) * cell;
-    cursorX = sx;
-    cursorY = sy;
-
-    if (lastX == null) {
-      stampCell(sx, sy, now);
-      lastX = sx;
-      lastY = sy;
-      return;
-    }
-
-    var dx = sx - lastX;
-    var dy = sy - lastY;
-    var steps = Math.max(Math.abs(dx), Math.abs(dy)) / cell;
-    if (steps < 1) {
-      stampCell(sx, sy, now);
-    } else {
-      for (var i = 1; i <= steps; i++) {
-        var px = Math.round(lastX + (dx * i) / steps);
-        var py = Math.round(lastY + (dy * i) / steps);
-        stampCell(Math.floor(px / cell) * cell, Math.floor(py / cell) * cell, now);
-      }
-    }
-
-    lastX = sx;
-    lastY = sy;
-  }
-
-  function draw(now) {
-    raf = 0;
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    var alive = [];
-    ctx.fillStyle = color;
-    for (var i = 0; i < stamps.length; i++) {
-      var s = stamps[i];
-      var age = now - s.t;
-      if (age >= fade) {
-        delete seen[s.x + ':' + s.y];
-        continue;
-      }
-      var a = 1 - age / fade;
-      ctx.globalAlpha = a * a;
-      ctx.fillRect(s.x, s.y, cell, cell);
-      alive.push(s);
-    }
-    ctx.globalAlpha = 1;
-    if (cursorX != null) {
-      ctx.fillStyle = color;
-      ctx.fillRect(cursorX, cursorY, cell, cell);
-    }
-    stamps = alive;
-    if (alive.length || cursorX != null) {
-      running = true;
-      raf = requestAnimationFrame(draw);
-    } else {
-      running = false;
-    }
-  }
-
-  function kick() {
-    if (!running) {
-      running = true;
-      raf = requestAnimationFrame(draw);
-    }
-  }
-
-  document.addEventListener(
-    'mousemove',
-    function (e) {
-      stamp(e.clientX, e.clientY);
-      kick();
-    },
-    { passive: true }
-  );
-
-  document.addEventListener('mouseleave', function () {
-    lastX = null;
-    lastY = null;
-    cursorX = null;
-    cursorY = null;
-  });
-
-  window.addEventListener('resize', resize);
-  resize();
-}
-
-/**
  * Avatar hover: starts straight, tilts on hover + cycling cursor badge.
  */
 function initAvatarCursor() {
@@ -521,7 +381,6 @@ function boot() {
   if (home) {
     initPixelFrame(home);
     initShelf(home);
-    initPixelTrail();
     initAvatarCursor();
   }
 
