@@ -909,19 +909,42 @@ html[data-theme="dark"] .btn-primary {
 
 .exp-head {
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exp-role {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  color: var(--text);
+}
+
+.exp-aside {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-faint);
+}
+
+.exp-meta {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 8px 16px;
 }
 
 .exp-company {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
   letter-spacing: -0.075px;
 }
 
 .exp-date {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-faint);
 }
 
@@ -930,6 +953,7 @@ html[data-theme="dark"] .btn-primary {
   font-size: 18px;
   line-height: 1.4;
   color: var(--text);
+  font-weight: 400;
 }
 
 /* ---------- CTA footer (dark pixel wave) ---------- */
