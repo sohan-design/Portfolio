@@ -9,6 +9,7 @@ const MPA_ROUTES = [
   '/work/white-label-evolution',
   '/work/b2b-trainer-dashboard',
   '/work/putting-common-sense-back-into-ios',
+  '/work/design-engineering-the-new-ai-process',
 ];
 
 function isViteInternalPath(pathname) {
@@ -66,6 +67,7 @@ export default defineConfig({
         whitelabel: resolve(__dirname, 'work/white-label-evolution/index.html'),
         trainer: resolve(__dirname, 'work/b2b-trainer-dashboard/index.html'),
         ios: resolve(__dirname, 'work/putting-common-sense-back-into-ios/index.html'),
+        aiProcess: resolve(__dirname, 'work/design-engineering-the-new-ai-process/index.html'),
       },
     },
   },

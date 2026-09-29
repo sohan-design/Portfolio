@@ -563,7 +563,8 @@ function initCopyEmail() {
         cosmo: '/work/redesigned-payment-pages',
         whitelabel: '/work/white-label-evolution',
         trainer: '/work/b2b-trainer-dashboard',
-        ios: '/work/putting-common-sense-back-into-ios'
+        ios: '/work/putting-common-sense-back-into-ios',
+        'ai-process': '/work/design-engineering-the-new-ai-process'
       };
       var modals = {};
       Array.prototype.forEach.call(document.querySelectorAll('.pm-overlay'), function (m) {

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Engineering: The New AI Process · Sohan Bhute</title>
+  <meta name="description" content="How I use AI to go from an idea to a real product: dump the context, scope the problem, prototype, critique, craft in Figma, and hand it off." />
+
+  <meta property="og:title" content="Design Engineering: The New AI Process · Sohan Bhute" />
+  <meta property="og:description" content="How I use AI to go from an idea to a real product: dump the context, scope the problem, prototype, critique, craft in Figma, and hand it off." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Design Engineering: The New AI Process · Sohan Bhute" />
+  <meta name="twitter:description" content="How I use AI to go from an idea to a real product: dump the context, scope the problem, prototype, critique, craft in Figma, and hand it off." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio-theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.style.colorScheme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-study="ai-process">
+  <div class="cs-overlay" id="caseStudyAi" data-project="ai-process" data-hero-intro role="dialog" aria-modal="true" aria-labelledby="csa-title" aria-hidden="true">
+    <nav class="cs-nav" aria-label="Article sections">
+      <a class="cs-nav-item" href="#csa-intro">Intro</a>
+      <a class="cs-nav-item" href="#csa-brain-dump">Brain dump</a>
+      <a class="cs-nav-item" href="#csa-scope">Scope</a>
+      <a class="cs-nav-item" href="#csa-first">First version</a>
+      <a class="cs-nav-item" href="#csa-critique">Critique</a>
+      <a class="cs-nav-item" href="#csa-refine">Refine</a>
+      <a class="cs-nav-item" href="#csa-figma">Figma</a>
+      <a class="cs-nav-item" href="#csa-build">Build again</a>
+      <a class="cs-nav-item" href="#csa-handoff">Handoff</a>
+      <a class="cs-nav-item" href="#csa-final">Final thoughts</a>
+    </nav>
+
+    <div class="cs-panel">
+      <article class="cs-content">
+        <div class="cs-hero">
+          <header class="site-header">
+            <nav class="site-nav" aria-label="Primary">
+              <div class="nav-links">
+                <a class="nav-link" href="/" data-nav="home">Home</a>
+                <a class="nav-link" href="/more-work" data-nav="works">Works</a>
+                <a class="nav-link" href="/about" data-nav="about">About</a>
+              </div>
+              <div class="nav-social">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
+                  <span class="theme-toggle-icons" aria-hidden="true">
+                    <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+                    <svg class="theme-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
+                  </span>
+                  <span class="theme-toggle-tooltip">Dark mode</span>
+                </button>
+                <div class="nav-actions">
+                  <a class="btn-primary selection-control" href="https://www.linkedin.com/in/sohan-bhute/" target="_blank" rel="noopener">
+                    <span class="action-content">
+                      <span class="action-label">LinkedIn</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
+                    </span>
+                    <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </a>
+                  <button class="btn-primary selection-control" type="button" data-copy-email="sohan.work@proton.me">
+                    <span class="action-content">
+                      <span class="action-label">Email</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5"></rect><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"></path></svg>
+                    </span>
+                    <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </button>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <div class="cs-hero-fill" aria-hidden="true">
+            <div class="cs-hero-shader" data-hero-shader data-shader-color="#5B4DFF"></div>
+          </div>
+          <div class="cs-title-row">
+            <button class="cs-back" type="button" aria-label="Back to work" data-cs-close>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <h1 class="cs-title" id="csa-title">
+              <span class="cs-title-line">Design Engineering:</span>
+              <span class="cs-title-line">The New AI Process</span>
+            </h1>
+          </div>
+          <div class="cs-meta">
+            <div><span class="cs-meta-label">Type</span><span class="cs-meta-val">Essay</span></div>
+            <div><span class="cs-meta-label">Published</span><span class="cs-meta-val">Sep 29, 2026</span></div>
+            <div><span class="cs-meta-label">Topics</span><span class="cs-meta-val">AI · Design · Process</span></div>
+          </div>
+        </div>
+
+        <div class="cs-body">
+        <section class="cs-section cs-intro" id="csa-intro">
+          <p>AI has completely changed the way I approach product design.</p>
+          <p>Earlier, my workflow was pretty straightforward: understand the problem, research, design in Figma, and hand it over to developers.</p>
+          <p>Now, I use AI to explore ideas, build rough prototypes, test functionality, and figure out what works before I start designing the actual UI.</p>
+          <p>It’s not about giving AI a prompt and getting a perfect product. There’s a lot of back and forth, things that don’t work, and decisions that still need a designer’s eye.</p>
+          <p>Here’s how my workflow looks today.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-brain-dump">
+          <h2>Step 1: Brain Dump</h2>
+          <p>Whenever I start working on a new feature, I don’t immediately jump into Figma.</p>
+          <p>I get everything out of my head first. Meeting notes, a conversation with a coworker, a conversation with myself, or just holding the dictation keys while I think through the problem with whatever I already know.</p>
+          <p>My favorite dictation tool is <a href="https://x.com/WillowVoiceAI" target="_blank" rel="noopener">@WillowVoiceAI</a>. I’m using it right now to write this.</p>
+          <p>I dump all of that into ChatGPT or Claude, along with product documentation, user feedback, requirements, and anything else that might matter.</p>
+          <p>I’m not trying to organize it yet. I just want as much context as possible.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-scope">
+          <h2>Step 2: Scope and Plan</h2>
+          <p>Once I have all the information in one place, I start working with AI to break down the problem.</p>
+          <p>I’ll ask questions, explore different scenarios, identify gaps, and figure out what we’re actually trying to build.</p>
+          <p>Sometimes, explaining the problem to AI helps me realize that I haven’t thought through certain things properly.</p>
+          <p>I’ll also use it for research, competitor analysis, organizing requirements, and creating documents or tables.</p>
+          <p>The goal is to understand the problem and define the scope before building anything.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-first">
+          <h2>Step 3: Build the First Version</h2>
+          <p>This is where I use tools like Cursor, Lovable, v0, or Google Stitch to build a rough, functional prototype.</p>
+          <p>And honestly, I already know the first version is going to look bad.</p>
+          <p>The layout might be off, the hierarchy might not make sense, and there might be unnecessary components everywhere.</p>
+          <p>But that’s fine.</p>
+          <p>I just want something that works well enough to help me understand how the feature might function.</p>
+          <p>Instead of starting from a blank canvas in Figma, I now have something I can actually interact with.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-critique">
+          <h2>Step 4: Critique and Simplify</h2>
+          <p>Once I have a working prototype, I start tearing it apart.</p>
+          <p>I look for unnecessary components, confusing layouts, missing screens, edge cases, and error states.</p>
+          <p>AI tends to add too much stuff—cards, icons, labels, colors, and sections that don’t always add value.</p>
+          <p>So I start removing things, simplifying the experience, and rethinking the information hierarchy.</p>
+          <p>The best part is that I’m not afraid to change everything.</p>
+          <p>I can ask AI to rebuild a section or try a completely different approach without worrying about reworking a bunch of screens manually.</p>
+          <p>The prototype is just a starting point, not something I need to protect.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-refine">
+          <h2>Step 5: Refine the Prototype</h2>
+          <p>Once the basic experience makes sense, I use Cursor to improve the structure, functionality, and usability.</p>
+          <p>I’ll work on navigation, interactions, information architecture, and missing functionality until the prototype starts feeling like a real product.</p>
+          <p>But a working product doesn’t automatically mean it’s well-designed.</p>
+          <p>The UI can still feel inconsistent, components might not match, and adding new features can introduce more design inconsistencies.</p>
+          <p>You can keep refining the prototype forever, but at some point, you need to move on.</p>
+          <p>This stage is great for early stakeholder feedback and understanding how people might interact with the product.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-figma">
+          <h2>Step 6: Figma and Craft</h2>
+          <p>Now I take the prototype, screenshots, and all the context I’ve gathered into Figma.</p>
+          <p>This is where I actually design the product.</p>
+          <p>I work on typography, spacing, visual hierarchy, design system components, tokens, and all the little details that make the experience feel consistent.</p>
+          <p>Honestly, going back to Figma can feel slow after building a functional prototype.</p>
+          <p>But this is where the actual craft happens.</p>
+          <p>I can explore different layouts, experiment with interactions, and come up with solutions I hadn’t considered earlier.</p>
+          <p>I also share designs and prototypes with the team to get feedback.</p>
+          <p>By this stage, a lot of the exploration is already done, so I often don’t need as many screens as I used to.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-build">
+          <h2>Step 7: Build It Again</h2>
+          <p>Once the designs are ready, I start a fresh conversation in Cursor and share the final Figma designs, requirements, and documentation.</p>
+          <p>Before building anything, I want to make sure AI understands what has changed and whether the new designs introduce any gaps or conflicts.</p>
+          <p>One of the biggest challenges here is translating Figma designs into working code.</p>
+          <p>A screenshot shows how a screen looks, but it doesn’t explain every interaction, component state, or edge case.</p>
+          <p>Ideally, I’d want AI to understand the component structure, design tokens, interactions, and how everything connects.</p>
+          <p>I also want it to ask questions and identify missing states, just like a developer would.</p>
+          <p>Once the prototype is functional and the core experience works, it’s time for handoff.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-handoff">
+          <h2>Step 8: Handoff to Developers</h2>
+          <p>I still believe working with a good developer is incredibly important, especially when building within an existing product.</p>
+          <p>Performance, APIs, code structure, integrations, and production dependencies require a level of technical context that goes beyond making the UI work.</p>
+          <p>I use AI for prototyping and smaller UI changes, but I still want developers involved in production implementation.</p>
+          <p>The handoff process hasn’t changed much. I share the final designs, explain the requirements, and work with developers to get the feature shipped.</p>
+          <p>The difference is that now they also get a working prototype they can interact with, instead of relying only on static screens.</p>
+        </section>
+
+        <div class="cs-divider" aria-hidden="true">***********</div>
+
+        <section class="cs-section" id="csa-final">
+          <h2>Final Thoughts</h2>
+          <p>I don’t think AI has changed what product design actually is.</p>
+          <p>I’m still trying to understand problems, explore solutions, and create experiences that work for people.</p>
+          <p>What’s changed is how I get there.</p>
+          <p>I can now use AI to explore ideas, build prototypes, and test functionality before spending time crafting the final UI.</p>
+          <p>By the time I reach Figma, I already have a much clearer idea of what I’m trying to build.</p>
+          <p>The tools will keep changing, and this workflow might evolve, but the core process remains the same.</p>
+          <p>It’s still about exploring ideas, making decisions, and figuring out what works.</p>
+          <p>AI just gives me a different way to do it.</p>
+        </section>
+
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="cursor" aria-hidden="true">
+    <span class="cursor-icon"></span>
+    <span class="cursor-text"></span>
+    <span class="cursor-icon-after"></span>
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
