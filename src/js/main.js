@@ -18,13 +18,16 @@ function initCopyEmail() {
     if (!email) return;
     var label = btn.querySelector('.action-label');
     function copied() {
-      if (!label) return;
-      var prev = label.getAttribute('data-label') || label.textContent;
-      label.setAttribute('data-label', prev);
-      label.textContent = 'Copied';
+      btn.setAttribute('data-copied', '');
+      if (label) {
+        var prev = label.getAttribute('data-label') || label.textContent;
+        label.setAttribute('data-label', prev);
+        label.textContent = 'Copied';
+      }
       clearTimeout(timer);
       timer = setTimeout(function () {
-        label.textContent = prev;
+        btn.removeAttribute('data-copied');
+        if (label) label.textContent = label.getAttribute('data-label') || 'Email';
       }, 1400);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
