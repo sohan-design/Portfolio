@@ -1,0 +1,24 @@
+:root {
+  --maestro-ink: #181818;
+  --maestro-blue: #3682f9;
+  --maestro-border: #efeeea;
+  --maestro-warn-tint: #fff6e6;
+  --maestro-white: #ffffff;
+  --maestro-black-50: rgba(0, 0, 0, 0.5);
+  --maestro-border-soft: rgba(0, 0, 0, 0.1);
+
+  --font-display: 'Cal Sans', 'Lato', system-ui, sans-serif;
+  --font-serif: 'Ancizar Serif', Georgia, serif;
+  --font-logo: 'Lato', system-ui, sans-serif;
+  --font-ui: 'Figtree', 'Lato', system-ui, sans-serif;
+
+  --uv-blur-login: 7.3px;
+  --uv-blur-sidebar: 30px;
+  --uv-blur-card: 26px;
+  --uv-blur-chip: 1px;
+
+  --sidebar-width: 400px;
+  --radius-pill: 100px;
+  --radius-card: 16px;
+  --radius-row: 10px;
+}
