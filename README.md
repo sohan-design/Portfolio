@@ -1,8 +1,6 @@
 # Portfolio recreate (local)
 
-A local recreation of [sugandhadesigns.me](https://www.sugandhadesigns.me/) as a **static multi-page site** with **dummy images**.
-
-Built to match the original stack: plain HTML + CSS + vanilla JS, packaged with Vite for local dev and Vercel deploy. No React, Ant Design, or Paper.
+My first personal project for my portfolio.
 
 ## Stack
 
