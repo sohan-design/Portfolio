@@ -1452,7 +1452,7 @@ body.cs-lightbox-open { overflow: hidden; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-  /* Keep Home / Works / About + actions on one row; icons keep it compact. */
+  /* Keep Home / Works / About / Resume + actions on one row; icons keep it compact. */
   .site-nav {
     flex-direction: row;
     align-items: center;
@@ -1460,8 +1460,9 @@ body.cs-lightbox-open { overflow: hidden; }
   }
 
   .nav-links {
-    gap: 16px;
+    gap: 12px;
     min-width: 0;
+    flex-wrap: nowrap;
   }
 
   .nav-social {
@@ -1559,5 +1560,5 @@ body.cs-lightbox-open { overflow: hidden; }
 }
 
 @media (max-width: 480px) {
-  .nav-links { gap: 16px; }
+  .nav-links { gap: 10px; }
 }
