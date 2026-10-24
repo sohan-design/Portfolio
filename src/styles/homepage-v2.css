@@ -178,6 +178,10 @@ html[data-theme='dark'] .hp2-pixel-frame--hero {
   padding-top: 48px;
 }
 
+.hp2-writing.hp2-projects {
+  padding-top: 0;
+}
+
 .hp2-pcard-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -232,6 +236,22 @@ html[data-theme='dark'] .hp2-pcard-media {
   object-fit: cover;
   border: 0;
   border-radius: 6px;
+}
+
+.hp2-pcard-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hp2-pcard-kicker {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted, rgba(0, 0, 0, 0.5));
 }
 
 .hp2-pcard-title {
