@@ -1,0 +1,294 @@
+/* Draft staging layout for the B2B trainer case study.
+   Scoped to .cs-draft so the live studies keep their column. */
+
+.cs-draft.cs-overlay,
+.cs-draft .cs-panel {
+  background: #141414;
+  background-image: none;
+  color: #fff;
+}
+
+.cs-draft .cs-content {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cs-draft .cs-nav {
+  gap: 22px;
+}
+
+.cs-draft .cs-nav-track {
+  position: absolute;
+  left: 2px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+}
+
+.cs-draft .cs-nav-track-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #00b3ff;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.cs-draft .cs-nav-item {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.cs-draft .cs-nav-item:hover,
+.cs-draft .cs-nav-item.active {
+  color: #fff;
+}
+
+.cs-draft .cs-nav-item.active::before {
+  background: #00b3ff;
+}
+
+.cs-draft .site-header {
+  margin-bottom: 48px;
+}
+
+.cs-draft .nav-link,
+.cs-draft .theme-toggle,
+.cs-draft .nav-actions .btn-primary {
+  color: #fff;
+}
+
+.td-hero {
+  background: rgba(9, 17, 53, 0.92);
+  padding: 112px 64px 96px 200px;
+}
+
+.td-block {
+  padding: 112px 64px 112px 200px;
+}
+
+.td-kicker {
+  margin: 0 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #00b3ff;
+}
+
+.td-draft {
+  display: inline-flex;
+  margin: 0 0 16px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.td-title {
+  margin: 0;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.td-sub {
+  margin: 16px 0 0;
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.td-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.td-byline img {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+}
+
+.td-byline span:not(.td-year) {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.td-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 72px;
+  margin-top: 40px;
+}
+
+.td-stat strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.td-stat span {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.td-figure {
+  margin: 48px 0 0;
+  width: min(1120px, 100%);
+  aspect-ratio: 1120 / 664;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0c0c0c;
+}
+
+.td-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.td-lead,
+.td-h {
+  margin: 0;
+  max-width: 720px;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.td-lead {
+  max-width: 630px;
+}
+
+.td-h {
+  margin-top: 16px;
+}
+
+.td-num {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.td-copy {
+  max-width: 500px;
+  margin: 24px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.td-pull {
+  margin: 0;
+  max-width: 920px;
+  font-size: clamp(28px, 3.4vw, 48px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+  color: #f09d2e;
+}
+
+.td-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 80px;
+  margin-top: 40px;
+}
+
+.td-split h3 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.td-split p,
+.td-split li {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.td-split ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.td-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 500px));
+  gap: 48px 40px;
+  margin-top: 40px;
+}
+
+.td-quote p {
+  margin: 0;
+  max-width: 500px;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.td-quote cite {
+  display: block;
+  margin-top: 16px;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #00b3ff;
+}
+
+@media (max-width: 1079px) {
+  .td-hero,
+  .td-block {
+    padding: 88px 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  .td-quotes {
+    grid-template-columns: 1fr;
+  }
+}
