@@ -234,6 +234,22 @@ html[data-theme='dark'] .hp2-pcard-media {
   border-radius: 6px;
 }
 
+.hp2-pcard-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hp2-pcard-kicker {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted, rgba(0, 0, 0, 0.5));
+}
+
 .hp2-pcard-title {
   margin: 0;
   font-size: 18px;
