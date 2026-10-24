@@ -1177,8 +1177,8 @@ html[data-theme="dark"] .btn-primary {
 
 .bp-card {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  min-height: 320px;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  min-height: 300px;
   border-radius: 22px;
   overflow: hidden;
   text-decoration: none;
@@ -1202,15 +1202,15 @@ html[data-theme="dark"] .btn-primary {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 22px 22px 48px;
+  padding: 40px 28px 64px;
   background: var(--bp-mat, #333);
   min-height: 100%;
 }
 
 .bp-media img {
-  width: 100%;
+  width: 88%;
   height: auto;
-  max-height: 280px;
+  max-height: 200px;
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
@@ -1237,7 +1237,7 @@ html[data-theme="dark"] .btn-primary {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 28px 28px 22px;
+  padding: 36px 40px 32px 36px;
   min-width: 0;
 }
 
@@ -1269,9 +1269,9 @@ html[data-theme="dark"] .btn-primary {
 
 .bp-desc {
   margin: 0;
-  max-width: 36ch;
+  max-width: 46ch;
   font-size: 15px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -1318,12 +1318,17 @@ html[data-theme="dark"] .btn-primary {
     min-height: 0;
   }
 
+  .bp-media {
+    padding: 28px 20px 52px;
+  }
+
   .bp-media img {
-    max-height: 220px;
+    width: 92%;
+    max-height: 180px;
   }
 
   .bp-copy {
-    padding: 22px 20px 20px;
+    padding: 24px 22px 22px;
   }
 
   .bp-desc {
