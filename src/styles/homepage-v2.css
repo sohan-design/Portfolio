@@ -178,6 +178,10 @@ html[data-theme='dark'] .hp2-pixel-frame--hero {
   padding-top: 48px;
 }
 
+.hp2-writing.hp2-projects {
+  padding-top: 0;
+}
+
 .hp2-pcard-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
