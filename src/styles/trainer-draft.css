@@ -34,6 +34,27 @@
   padding: 0;
 }
 
+/* Draft sections use .td-section (not .cs-section) so shared
+   .cs-section p / h2 / li type rules never bind these elements. */
+.cs-draft .cs-content .td-section > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s var(--ease);
+}
+
+.cs-draft .cs-content .td-section > .reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-draft .cs-content .td-section > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .cs-draft .cs-nav {
   gap: 22px;
 }
@@ -140,7 +161,7 @@
   color: #fff;
 }
 
-.cs-draft p.td-sub {
+#caseStudyTrainerDraft p.td-sub {
   margin: 16px 0 0;
   font-family: var(--font);
   font-size: 24px;
