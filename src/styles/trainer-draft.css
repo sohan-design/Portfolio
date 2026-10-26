@@ -5,7 +5,6 @@
 
 .cs-draft.cs-overlay,
 .cs-draft .cs-panel {
-  --font: "Segoe UI", SegoeUI, "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --sans: var(--font);
   --mono: var(--font);
   --td-gutter: 120px;
