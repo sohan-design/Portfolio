@@ -75,10 +75,21 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 }
 
+/* Nav + hero copy fill the first viewport; cover starts after scroll. */
+.cs-draft .td-first-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
 .cs-draft .site-header {
   width: 100%;
   margin: 0;
   padding: 40px 0 32px;
+  flex: none;
 }
 
 .cs-draft .site-nav {
@@ -89,14 +100,19 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 .cs-draft .td-hero {
   background: var(--td-page-bg);
   margin-inline: calc(-1 * var(--td-gutter));
-  padding: 0 var(--td-gutter) 96px;
+  padding: 0 var(--td-gutter) 48px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-/* First viewport: header + intro copy only; figure sits below the fold. */
 .cs-draft .td-hero-intro {
-  min-height: calc(100svh - 7.75rem);
+  flex: 1 1 auto;
   padding-top: 48px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .cs-draft .td-block {
@@ -190,14 +206,33 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   color: var(--td-text-muted);
 }
 
-.cs-draft .td-figure {
-  margin: 0;
+.cs-draft .td-hero-figure {
+  margin: 0 0 96px;
   width: min(1120px, 100%);
   aspect-ratio: 1120 / 664;
   border-radius: 10px;
   overflow: visible;
   background: transparent;
-  box-shadow: 0 40px 120px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 32px 96px rgba(255, 255, 255, 0.5);
+}
+
+.cs-draft .td-hero-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  border-radius: 10px;
+  background: var(--td-figure-bg);
+}
+
+.cs-draft .td-figure {
+  margin: 48px 0 0;
+  width: min(1120px, 100%);
+  aspect-ratio: 1120 / 664;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--td-figure-bg);
 }
 
 .cs-draft .td-figure img {
@@ -205,8 +240,6 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   height: 100%;
   object-fit: cover;
   object-position: center 40%;
-  border-radius: 10px;
-  background: var(--td-figure-bg);
 }
 
 .cs-draft p.td-lead {
@@ -353,13 +386,22 @@ html[data-theme="dark"] .cs-draft .cs-panel {
     padding-bottom: 24px;
   }
 
+  .cs-draft .td-first-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
   .cs-draft .td-hero {
-    padding: 0 var(--td-gutter) 88px;
+    padding: 0 var(--td-gutter) 40px;
   }
 
   .cs-draft .td-hero-intro {
-    min-height: calc(100svh - 6.5rem);
     padding-top: 40px;
+  }
+
+  .cs-draft .td-hero-figure {
+    margin-bottom: 88px;
   }
 
   .cs-draft .td-block {
