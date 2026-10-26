@@ -8,7 +8,7 @@
   --font: "Segoe UI", SegoeUI, "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --sans: var(--font);
   --mono: var(--font);
-  --td-gutter: 80px;
+  --td-gutter: 120px;
   --td-page-bg: var(--bg);
   --td-hero-bg: #e8eef8;
   --td-text-primary: var(--text);
@@ -334,14 +334,14 @@ html[data-theme="dark"] .cs-draft .site-header {
 @media (max-width: 1280px) {
   .cs-draft.cs-overlay,
   .cs-draft .cs-panel {
-    --td-gutter: 48px;
+    --td-gutter: 80px;
   }
 }
 
 @media (max-width: 1079px) {
   .cs-draft .td-hero,
   .cs-draft .td-block {
-    padding: 88px 28px;
+    padding: 88px var(--td-gutter);
   }
 
   .cs-draft h1.td-title {
