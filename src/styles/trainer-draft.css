@@ -148,6 +148,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   width: 12px;
   height: 12px;
   object-fit: contain;
+  color: var(--td-text-muted);
 }
 
 .cs-draft .td-byline span:not(.td-year) {
