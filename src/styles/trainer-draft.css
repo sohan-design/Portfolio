@@ -53,6 +53,8 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   max-width: none;
   margin: 0;
   padding: 0;
+  padding-inline: var(--td-gutter);
+  box-sizing: border-box;
 }
 
 /* Draft sections use .td-section (not .cs-section) so shared
@@ -77,27 +79,24 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 .cs-draft .site-header {
-  margin-bottom: 48px;
+  width: 100%;
+  margin: 0;
+  padding: 40px 0 32px;
 }
 
-/* Navy hero in dark mode: light nav chrome on the header only. */
-html[data-theme="dark"] .cs-draft .site-header {
-  --text: #f2f2f2;
-  --text-secondary: #a8a8a8;
-  --text-muted: rgba(255, 255, 255, 0.52);
-  --text-faint: rgba(255, 255, 255, 0.4);
-  --accent: #f2f2f2;
-  --hairline: rgba(255, 255, 255, 0.1);
-  color: var(--text);
+.cs-draft .site-nav {
+  width: 100%;
+  max-width: none;
 }
 
 .cs-draft .td-hero {
   background: var(--td-hero-bg);
-  padding: 112px var(--td-gutter) 96px;
+  margin-inline: calc(-1 * var(--td-gutter));
+  padding: 48px var(--td-gutter) 96px;
 }
 
 .cs-draft .td-block {
-  padding: 112px var(--td-gutter);
+  padding: 112px 0;
 }
 
 .cs-draft p.td-kicker {
@@ -339,9 +338,17 @@ html[data-theme="dark"] .cs-draft .site-header {
 }
 
 @media (max-width: 1079px) {
-  .cs-draft .td-hero,
+  .cs-draft .site-header {
+    padding-top: 28px;
+    padding-bottom: 24px;
+  }
+
+  .cs-draft .td-hero {
+    padding: 40px var(--td-gutter) 88px;
+  }
+
   .cs-draft .td-block {
-    padding: 88px var(--td-gutter);
+    padding: 88px 0;
   }
 
   .cs-draft h1.td-title {
