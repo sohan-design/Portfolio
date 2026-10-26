@@ -63,14 +63,22 @@
   background: #00b3ff;
 }
 
+/* Keep the homepage nav component styles; only set dark tokens
+   so LinkedIn / Email / theme toggle match the homepage chrome. */
 .cs-draft .site-header {
   margin-bottom: 48px;
-}
-
-.cs-draft .nav-link,
-.cs-draft .theme-toggle,
-.cs-draft .nav-actions .btn-primary {
-  color: #fff;
+  --text: #f2f2f2;
+  --text-secondary: #a8a8a8;
+  --text-muted: rgba(255, 255, 255, 0.52);
+  --text-faint: rgba(255, 255, 255, 0.4);
+  --accent: #f2f2f2;
+  --bg: #141414;
+  --surface: #1c1c1c;
+  --hairline: rgba(255, 255, 255, 0.1);
+  --thumb-fill: #2a2a2a;
+  --card-bg: var(--surface);
+  --card-bg-hover: #242424;
+  color: var(--text);
 }
 
 .td-hero {
