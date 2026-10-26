@@ -9,10 +9,30 @@
   --sans: var(--font);
   --mono: var(--font);
   --td-gutter: 64px;
+  --td-page-bg: var(--bg);
+  --td-hero-bg: #e8eef8;
+  --td-text-primary: var(--text);
+  --td-text-muted: var(--text-muted);
+  --td-kicker: #0077b3;
+  --td-cite: #0077b3;
+  --td-pull: #b45309;
+  --td-figure-bg: var(--thumb-fill);
   font-family: var(--font);
-  background: #141414;
+  background: var(--td-page-bg);
   background-image: none;
-  color: #fff;
+  color: var(--td-text-primary);
+}
+
+html[data-theme="dark"] .cs-draft.cs-overlay,
+html[data-theme="dark"] .cs-draft .cs-panel {
+  --td-page-bg: #141414;
+  --td-hero-bg: rgba(9, 17, 53, 0.92);
+  --td-text-primary: #fff;
+  --td-text-muted: rgba(255, 255, 255, 0.5);
+  --td-kicker: #00b3ff;
+  --td-cite: #00b3ff;
+  --td-pull: #f09d2e;
+  --td-figure-bg: #0c0c0c;
 }
 
 .cs-draft,
@@ -56,26 +76,23 @@
   }
 }
 
-/* Keep the homepage nav component styles; only set dark tokens
-   so LinkedIn / Email / theme toggle match the homepage chrome. */
 .cs-draft .site-header {
   margin-bottom: 48px;
+}
+
+/* Navy hero in dark mode: light nav chrome on the header only. */
+html[data-theme="dark"] .cs-draft .site-header {
   --text: #f2f2f2;
   --text-secondary: #a8a8a8;
   --text-muted: rgba(255, 255, 255, 0.52);
   --text-faint: rgba(255, 255, 255, 0.4);
   --accent: #f2f2f2;
-  --bg: #141414;
-  --surface: #1c1c1c;
   --hairline: rgba(255, 255, 255, 0.1);
-  --thumb-fill: #2a2a2a;
-  --card-bg: var(--surface);
-  --card-bg-hover: #242424;
   color: var(--text);
 }
 
 .cs-draft .td-hero {
-  background: rgba(9, 17, 53, 0.92);
+  background: var(--td-hero-bg);
   padding: 112px var(--td-gutter) 96px;
 }
 
@@ -91,7 +108,7 @@
   line-height: 18px;
   letter-spacing: -0.28px;
   text-transform: uppercase;
-  color: #00b3ff;
+  color: var(--td-kicker);
 }
 
 .cs-draft h1.td-title {
@@ -101,7 +118,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -3.2px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 #caseStudyTrainerDraft p.td-sub {
@@ -111,7 +128,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -1.2px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft p.td-byline {
@@ -125,7 +142,7 @@
   font-weight: 600;
   line-height: 18px;
   letter-spacing: -0.28px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft .td-byline img {
@@ -136,7 +153,7 @@
 
 .cs-draft .td-byline span:not(.td-year) {
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--td-text-muted);
 }
 
 .cs-draft .td-stats {
@@ -153,7 +170,7 @@
   font-weight: 600;
   line-height: 28px;
   letter-spacing: -0.48px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft .td-stat span {
@@ -164,7 +181,7 @@
   font-weight: 600;
   line-height: 18px;
   letter-spacing: -0.28px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--td-text-muted);
 }
 
 .cs-draft .td-figure {
@@ -173,7 +190,7 @@
   aspect-ratio: 1120 / 664;
   border-radius: 10px;
   overflow: hidden;
-  background: #0c0c0c;
+  background: var(--td-figure-bg);
 }
 
 .cs-draft .td-figure img {
@@ -191,7 +208,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -2.4px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft h2.td-h {
@@ -202,7 +219,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -2.4px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft p.td-num {
@@ -212,7 +229,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -1.2px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--td-text-muted);
 }
 
 .cs-draft p.td-copy {
@@ -223,7 +240,7 @@
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: -0.8px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft p.td-pull {
@@ -234,7 +251,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -2.4px;
-  color: #f09d2e;
+  color: var(--td-pull);
 }
 
 .cs-draft .td-split {
@@ -251,7 +268,7 @@
   font-weight: 600;
   line-height: 28px;
   letter-spacing: -0.48px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft .td-split p {
@@ -261,7 +278,7 @@
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: -0.28px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--td-text-muted);
 }
 
 .cs-draft .td-split li {
@@ -271,7 +288,7 @@
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: -0.28px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--td-text-muted);
 }
 
 .cs-draft .td-split ul {
@@ -298,7 +315,7 @@
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: -0.8px;
-  color: #fff;
+  color: var(--td-text-primary);
 }
 
 .cs-draft .td-quote cite {
@@ -311,7 +328,7 @@
   line-height: 18px;
   letter-spacing: -0.28px;
   text-transform: uppercase;
-  color: #00b3ff;
+  color: var(--td-cite);
 }
 
 @media (max-width: 1280px) {
