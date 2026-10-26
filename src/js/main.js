@@ -217,7 +217,7 @@ function initCopyEmail() {
       function initCaseStudy(overlay) {
         var panel = overlay.querySelector('.cs-panel');
         var navItems = overlay.querySelectorAll('.cs-nav-item');
-        var sections = panel.querySelectorAll('.cs-section');
+        var sections = panel.querySelectorAll('.cs-section, .td-section');
         var textTimer = null, closeTimer = null, revealTimer = null;
         var revealList = [];
         var suppressSpy = false;   // muted while a nav-click glide is running
@@ -344,7 +344,7 @@ function initCopyEmail() {
         // ---- scroll reveal: content blocks fade + rise in as they scroll into
         // view (one-time; scrolling back up shows them already revealed) ----
         function revealBlocks() {
-          return panel.querySelectorAll('.cs-content .cs-section > *, .cs-content .cs-divider, .cs-content .cs-footer');
+          return panel.querySelectorAll('.cs-content .cs-section > *, .cs-content .td-section > *, .cs-content .cs-divider, .cs-content .cs-footer');
         }
         function resetReveal() {
           Array.prototype.forEach.call(revealBlocks(), function (el) { el.classList.remove('reveal-in'); });

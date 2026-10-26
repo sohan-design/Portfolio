@@ -1,0 +1,466 @@
+/* Draft staging layout for the B2B trainer case study.
+   Scoped to .cs-draft so the live studies keep their column.
+   Type rules use .cs-draft + element/class so they beat shared
+   .cs-section p / li styles from case-study.css. */
+
+.cs-draft.cs-overlay,
+.cs-draft .cs-panel {
+  --sans: var(--font);
+  --mono: var(--font);
+  --td-gutter: 120px;
+  --td-page-bg: var(--bg);
+  --td-text-primary: var(--text);
+  --td-text-muted: var(--text-muted);
+  --td-kicker: #0077b3;
+  --td-cite: #0077b3;
+  --td-pull: #b45309;
+  --td-figure-bg: var(--thumb-fill);
+  font-family: var(--font);
+  background: var(--td-page-bg);
+  background-image: none;
+  color: var(--td-text-primary);
+}
+
+html[data-theme="dark"] .cs-draft.cs-overlay,
+html[data-theme="dark"] .cs-draft .cs-panel {
+  --td-page-bg: #141414;
+  --td-text-primary: #fff;
+  --td-text-muted: rgba(255, 255, 255, 0.5);
+  --td-kicker: #00b3ff;
+  --td-cite: #00b3ff;
+  --td-pull: #f09d2e;
+  --td-figure-bg: #0c0c0c;
+}
+
+.cs-draft,
+.cs-draft button,
+.cs-draft input,
+.cs-draft textarea {
+  font-family: var(--font);
+}
+
+/* Keep each type style independent: no shared opsz / inherited fluid sizes. */
+.cs-draft,
+.cs-draft * {
+  font-optical-sizing: none;
+  font-variation-settings: normal;
+}
+
+.cs-draft .cs-content {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  padding-inline: var(--td-gutter);
+  box-sizing: border-box;
+}
+
+/* Draft sections use .td-section (not .cs-section) so shared
+   .cs-section p / h2 / li type rules never bind these elements. */
+.cs-draft .cs-content .td-section > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s var(--ease);
+}
+
+.cs-draft .cs-content .td-section > .reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-draft .cs-content .td-section > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Nav + hero copy fill the first viewport; cover starts after scroll. */
+.cs-draft .td-first-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-draft .site-header {
+  width: 100%;
+  margin: 0;
+  padding: 40px 0 32px;
+  flex: none;
+}
+
+.cs-draft .site-nav {
+  width: 100%;
+  max-width: none;
+}
+
+.cs-draft .td-hero {
+  background: var(--td-page-bg);
+  margin-inline: calc(-1 * var(--td-gutter));
+  padding: 0 var(--td-gutter) 48px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-draft .td-hero-intro {
+  flex: 1 1 auto;
+  padding-top: 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cs-draft .td-block {
+  padding: 112px 0;
+}
+
+.cs-draft p.td-kicker {
+  margin: 0 0 20px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
+  color: var(--td-kicker);
+}
+
+.cs-draft h1.td-title {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -3.2px;
+  color: var(--td-text-primary);
+}
+
+#caseStudyTrainerDraft p.td-sub {
+  margin: 16px 0 0;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft p.td-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-byline-rule {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 12px;
+  background: var(--td-text-muted);
+  opacity: 0.45;
+}
+
+.cs-draft .td-byline span:not(.td-year) {
+  font-weight: 400;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 72px;
+  margin-top: 40px;
+}
+
+.cs-draft .td-stat strong {
+  display: block;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.48px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-stat span {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-hero-figure {
+  margin: 0 0 96px;
+  width: min(1120px, 100%);
+  aspect-ratio: 1120 / 664;
+  border-radius: 10px;
+  overflow: visible;
+  background: transparent;
+  box-shadow: 0 32px 96px rgba(255, 255, 255, 0.5);
+}
+
+.cs-draft .td-hero-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  border-radius: 10px;
+  background: var(--td-figure-bg);
+}
+
+.cs-draft .td-figure {
+  margin: 48px 0 0;
+  width: min(1120px, 100%);
+  aspect-ratio: 1120 / 664;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--td-figure-bg);
+}
+
+.cs-draft .td-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.cs-draft p.td-lead {
+  margin: 0;
+  max-width: 630px;
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft h2.td-h {
+  margin: 16px 0 0;
+  max-width: 720px;
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft p.td-num {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft p.td-copy {
+  max-width: 500px;
+  margin: 24px 0 0;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.8px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft p.td-pull {
+  margin: 0;
+  max-width: 920px;
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
+  color: var(--td-pull);
+}
+
+.cs-draft .td-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 80px;
+  margin-top: 40px;
+}
+
+.cs-draft .td-split h3 {
+  margin: 0 0 16px;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.48px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-split p {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-split li {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-split ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-draft .td-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 500px));
+  gap: 48px 40px;
+  margin-top: 40px;
+}
+
+.cs-draft .td-quote p {
+  margin: 0;
+  max-width: 500px;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.8px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-quote cite {
+  display: block;
+  margin-top: 16px;
+  font-family: var(--font);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
+  color: var(--td-cite);
+}
+
+@media (max-width: 1280px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 80px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .cs-draft .site-header {
+    padding-top: 28px;
+    padding-bottom: 24px;
+  }
+
+  .cs-draft .td-first-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  .cs-draft .td-hero {
+    padding: 0 var(--td-gutter) 40px;
+  }
+
+  .cs-draft .td-hero-intro {
+    padding-top: 40px;
+  }
+
+  .cs-draft .td-hero-figure {
+    margin-bottom: 88px;
+  }
+
+  .cs-draft .td-block {
+    padding: 88px 0;
+  }
+
+  .cs-draft h1.td-title {
+    font-size: 48px;
+    letter-spacing: -2.4px;
+  }
+
+  #caseStudyTrainerDraft p.td-sub {
+    font-size: 22px;
+    letter-spacing: -1.1px;
+  }
+
+  .cs-draft p.td-lead {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+
+  .cs-draft h2.td-h {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+
+  .cs-draft p.td-pull {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+}
+
+@media (max-width: 720px) {
+  .cs-draft .td-quotes {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-draft h1.td-title {
+    font-size: 40px;
+    letter-spacing: -2px;
+  }
+
+  #caseStudyTrainerDraft p.td-sub {
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+
+  .cs-draft p.td-lead {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+  }
+
+  .cs-draft h2.td-h {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+  }
+
+  .cs-draft p.td-pull {
+    font-size: 28px;
+    letter-spacing: -1.4px;
+  }
+}

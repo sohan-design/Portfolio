@@ -1,6 +1,5 @@
-/* Portfolio v3 — Figma layout + Inter Display */
+/* Portfolio v3 — Segoe UI (system) typography */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('./case-study.css');
 
 :root {
@@ -11,7 +10,7 @@
   --text-muted: rgba(0, 0, 0, 0.5);
   --text-faint: rgba(0, 0, 0, 0.4);
   --hairline: rgba(0, 0, 0, 0.08);
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font: "Segoe UI", SegoeUI, "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --sans: var(--font);
   --mono: var(--font);
   --hand: var(--font);
