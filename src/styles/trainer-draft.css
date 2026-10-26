@@ -9,7 +9,6 @@
   --mono: var(--font);
   --td-gutter: 120px;
   --td-page-bg: var(--bg);
-  --td-hero-bg: #e8eef8;
   --td-text-primary: var(--text);
   --td-text-muted: var(--text-muted);
   --td-kicker: #0077b3;
@@ -25,7 +24,6 @@
 html[data-theme="dark"] .cs-draft.cs-overlay,
 html[data-theme="dark"] .cs-draft .cs-panel {
   --td-page-bg: #141414;
-  --td-hero-bg: rgba(9, 17, 53, 0.92);
   --td-text-primary: #fff;
   --td-text-muted: rgba(255, 255, 255, 0.5);
   --td-kicker: #00b3ff;
@@ -89,7 +87,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 .cs-draft .td-hero {
-  background: var(--td-hero-bg);
+  background: var(--td-page-bg);
   margin-inline: calc(-1 * var(--td-gutter));
   padding: 48px var(--td-gutter) 96px;
 }
