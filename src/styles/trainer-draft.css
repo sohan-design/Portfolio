@@ -11,7 +11,7 @@
   /* Nav + body share one horizontal grid so the gutter gap stays in sync. */
   --td-gutter: 64px;
   --td-nav-sidebar: 112px;
-  --td-nav-gap: 56px;
+  --td-nav-gap: 80px;
   --td-body-inset-left: calc(var(--td-gutter) + var(--td-nav-sidebar) + var(--td-nav-gap));
   font-family: var(--font);
   background: #141414;
@@ -374,7 +374,7 @@
   .cs-draft .cs-panel {
     --td-gutter: 48px;
     --td-nav-sidebar: 104px;
-    --td-nav-gap: 48px;
+    --td-nav-gap: 64px;
   }
 }
 
