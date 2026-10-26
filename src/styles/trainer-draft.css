@@ -353,10 +353,60 @@
   .td-block {
     padding: 88px 28px;
   }
+
+  .td-title {
+    font-size: 48px;
+    letter-spacing: -2.4px;
+  }
+
+  .td-sub {
+    font-size: 22px;
+    letter-spacing: -1.1px;
+  }
+
+  .td-lead {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+
+  .td-h {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+
+  .td-pull {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
 }
 
 @media (max-width: 720px) {
   .td-quotes {
     grid-template-columns: 1fr;
+  }
+
+  .td-title {
+    font-size: 40px;
+    letter-spacing: -2px;
+  }
+
+  .td-sub {
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+
+  .td-lead {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+  }
+
+  .td-h {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+  }
+
+  .td-pull {
+    font-size: 28px;
+    letter-spacing: -1.4px;
   }
 }
