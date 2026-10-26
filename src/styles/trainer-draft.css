@@ -144,11 +144,13 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   color: var(--td-text-primary);
 }
 
-.cs-draft .td-byline img {
-  width: 12px;
+.cs-draft .td-byline-rule {
+  flex: none;
+  align-self: center;
+  width: 1px;
   height: 12px;
-  object-fit: contain;
-  color: var(--td-text-muted);
+  background: var(--td-text-muted);
+  opacity: 0.45;
 }
 
 .cs-draft .td-byline span:not(.td-year) {
