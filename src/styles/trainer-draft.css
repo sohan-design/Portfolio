@@ -8,6 +8,11 @@
   --font: "Segoe UI", SegoeUI, "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --sans: var(--font);
   --mono: var(--font);
+  /* Nav + body share one horizontal grid so the gutter gap stays in sync. */
+  --td-gutter: 64px;
+  --td-nav-sidebar: 112px;
+  --td-nav-gap: 56px;
+  --td-body-inset-left: calc(var(--td-gutter) + var(--td-nav-sidebar) + var(--td-nav-gap));
   font-family: var(--font);
   background: #141414;
   background-image: none;
@@ -56,6 +61,14 @@
 }
 
 .cs-draft .cs-nav {
+  position: fixed;
+  top: 50%;
+  left: var(--td-gutter);
+  transform: translateY(-50%);
+  z-index: 4;
+  box-sizing: content-box;
+  width: var(--td-nav-sidebar);
+  padding-right: var(--td-nav-gap);
   gap: 22px;
 }
 
@@ -118,11 +131,11 @@
 
 .cs-draft .td-hero {
   background: rgba(9, 17, 53, 0.92);
-  padding: 112px 64px 96px 200px;
+  padding: 112px var(--td-gutter) 96px var(--td-body-inset-left);
 }
 
 .cs-draft .td-block {
-  padding: 112px 64px 112px 200px;
+  padding: 112px var(--td-gutter) 112px var(--td-body-inset-left);
 }
 
 .cs-draft p.td-kicker {
@@ -356,7 +369,20 @@
   color: #00b3ff;
 }
 
+@media (max-width: 1280px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 48px;
+    --td-nav-sidebar: 104px;
+    --td-nav-gap: 48px;
+  }
+}
+
 @media (max-width: 1079px) {
+  .cs-draft .cs-nav {
+    display: none;
+  }
+
   .cs-draft .td-hero,
   .cs-draft .td-block {
     padding: 88px 28px;
