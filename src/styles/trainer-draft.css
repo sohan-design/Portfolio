@@ -382,7 +382,7 @@
     letter-spacing: -2.4px;
   }
 
-  .cs-draft p.td-sub {
+  #caseStudyTrainerDraft p.td-sub {
     font-size: 22px;
     letter-spacing: -1.1px;
   }
@@ -413,7 +413,7 @@
     letter-spacing: -2px;
   }
 
-  .cs-draft p.td-sub {
+  #caseStudyTrainerDraft p.td-sub {
     font-size: 20px;
     letter-spacing: -1px;
   }
