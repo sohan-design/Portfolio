@@ -3,7 +3,7 @@
 @import "./styles/veda-theme.css";
 
 @theme inline {
-  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-inter: "Segoe UI Variable", "Segoe UI Variable Text", "Segoe UI", sans-serif;
   --font-mono-face: "JetBrains Mono", ui-monospace, monospace;
 }
 

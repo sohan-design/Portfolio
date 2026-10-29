@@ -1,7 +1,31 @@
-/* Portfolio v3 — Figma layout + Inter Display */
+/* Portfolio v3 — Segoe UI Variable (Microsoft system variable font) */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('./case-study.css');
+
+/* Windows installs Segoe UI Variable as a variable font (wght + opsz).
+   local() only — the font file is not redistributed. */
+@font-face {
+  font-family: "Segoe UI Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Segoe UI Variable"),
+       local("Segoe UI Variable Text"),
+       local("Segoe UI Variable Display"),
+       local("Segoe UI Variable Small");
+}
+
+@font-face {
+  font-family: "Segoe UI Variable";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Segoe UI Variable Italic"),
+       local("Segoe UI Variable Text Italic"),
+       local("Segoe UI Variable Display Italic"),
+       local("Segoe UI Variable Small Italic"),
+       local("Segoe UI Italic");
+}
 
 :root {
   --bg: #ffffff;
@@ -11,11 +35,10 @@
   --text-muted: rgba(0, 0, 0, 0.5);
   --text-faint: rgba(0, 0, 0, 0.4);
   --hairline: rgba(0, 0, 0, 0.08);
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font: "Segoe UI Variable", "Segoe UI Variable Text", "Segoe UI", "Segoe UI Web (West European)", sans-serif;
   --sans: var(--font);
   --mono: var(--font);
   --hand: var(--font);
-  --opsz-display: 32;
   --max-w: 837px;
   --page-pad: 24px;
   --radius-card: 25px;
@@ -53,8 +76,7 @@ html[data-theme="dark"] {
 
 *, *::before, *::after {
   box-sizing: border-box;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' var(--opsz-display);
+  font-optical-sizing: auto;
 }
 
 html {
