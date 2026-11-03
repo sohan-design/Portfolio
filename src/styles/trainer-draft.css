@@ -191,11 +191,14 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 .cs-draft .td-title-line {
-  display: block;
+  display: inline-block;
+  width: max-content;
+  max-width: none;
   white-space: nowrap;
   overflow: visible;
   padding-right: 0.14em;
   padding-bottom: 0.08em;
+  vertical-align: top;
 }
 
 #caseStudyTrainerDraft p.td-sub {

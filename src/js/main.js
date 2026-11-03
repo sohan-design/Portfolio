@@ -269,18 +269,47 @@ function initCopyEmail() {
             : column;
           var fitRect = fitRoot.getBoundingClientRect();
           var panelRect = panel.getBoundingClientRect();
+          // Panel uses overflow-y:auto, so overflow-x clips to clientWidth (scrollbar gutter),
+          // not the border-box right edge from getBoundingClientRect().
+          var visibleRight = panelRect.left + panel.clientWidth;
+          var vv = window.visualViewport;
+          if (vv) visibleRight = Math.min(visibleRight, vv.offsetLeft + vv.width);
+
+          function lineTextRight(line) {
+            // Block-level nowrap lines report the container width via getBoundingClientRect;
+            // Range + scrollWidth capture the real glyph extent.
+            var right = 0;
+            try {
+              var range = document.createRange();
+              range.selectNodeContents(line);
+              right = Math.max(right, range.getBoundingClientRect().right);
+              var rects = range.getClientRects();
+              for (var r = 0; r < rects.length; r++) {
+                right = Math.max(right, rects[r].right);
+              }
+            } catch (e) { /* ignore */ }
+            var lineRect = line.getBoundingClientRect();
+            right = Math.max(right, lineRect.left + line.scrollWidth);
+            // Inline-block / max-content lines expose true width here too.
+            right = Math.max(right, lineRect.right);
+            return right;
+          }
 
           function titleFits(size, rightEdge) {
             heroTitle.style.fontSize = size + 'px';
+            void heroTitle.offsetWidth;
             var widestRight = 0;
             for (var i = 0; i < lines.length; i++) {
-              widestRight = Math.max(widestRight, lines[i].getBoundingClientRect().right);
+              widestRight = Math.max(widestRight, lineTextRight(lines[i]));
             }
-            // Slack so Segoe final glyphs / descenders are not clipped.
-            return widestRight <= rightEdge - 6;
+            // Also check the heading's own scrollWidth (padding + overflow).
+            var titleRect = heroTitle.getBoundingClientRect();
+            widestRight = Math.max(widestRight, titleRect.left + heroTitle.scrollWidth);
+            return widestRight <= rightEdge;
           }
 
           function maxFittingSize(lo, hi, rightEdge) {
+            if (hi < lo) hi = lo;
             var best = lo;
             while (lo <= hi + 0.01) {
               var mid = Math.round(((lo + hi) / 2) * 4) / 4;
@@ -291,31 +320,25 @@ function initCopyEmail() {
                 hi = mid - 0.25;
               }
             }
+            while (best > 16 && !titleFits(best, rightEdge)) best -= 0.5;
+            titleFits(best, rightEdge);
             return best;
           }
 
           if (draftTitle) {
-            // Settled size: responsive within the content column.
-            var columnRight = fitRect.right - 12;
+            // Keep a few px of ink safety inside the visible scrollport.
+            var screenRight = visibleRight - 8;
+            var columnRight = Math.min(fitRect.right - 12, screenRight);
+            if (columnRight < fitRect.left + 40) columnRight = screenRight;
+
             var preferredEnd = Math.round(Math.min(64, Math.max(28, fitRect.width * 0.078)));
             heroTitleEndSize = maxFittingSize(24, preferredEnd, columnRight);
 
-            // Start size: oversized toward the panel edge (same dramatic hero as live studies).
-            var startRight = panelRect.right - 24;
-            if (startRight < columnRight) startRight = columnRight;
-            var startMax = 180;
-            heroTitleBaseSize = maxFittingSize(heroTitleEndSize, startMax, startRight);
-            // Keep a visible scale range even on narrow screens.
-            if (heroTitleBaseSize < heroTitleEndSize * 1.35) {
-              heroTitleBaseSize = Math.min(startMax, Math.max(heroTitleBaseSize, heroTitleEndSize * 1.8));
-              // If forcing larger would hard-clip the panel, fall back to max that fits.
-              if (!titleFits(heroTitleBaseSize, startRight)) {
-                heroTitleBaseSize = maxFittingSize(heroTitleEndSize, startMax, startRight);
-              }
-            }
+            // Start size: fill the screen width without clipping past the visible edge.
+            heroTitleBaseSize = maxFittingSize(heroTitleEndSize, 200, screenRight);
           } else {
             heroTitleEndSize = 24;
-            var targetRight = panelRect.right - 16;
+            var targetRight = visibleRight - 16;
             if (targetRight < fitRect.left + 1) targetRight = fitRect.right - 16;
             heroTitleBaseSize = maxFittingSize(24, 160, targetRight);
           }
@@ -324,13 +347,35 @@ function initCopyEmail() {
         }
 
         function scheduleHeroTitleFit(done) {
-          requestAnimationFrame(function () {
+          function applyFit() {
+            fitHeroTitle();
+            resizeHeroShader();
+          }
+          function refitOpen() {
+            applyFit();
+            if (!overlay.classList.contains('open')) return;
+            if (reduceMotion) {
+              if (heroTitle) heroTitle.style.fontSize = heroTitleEndSize + 'px';
+            } else {
+              updateHeroScroll();
+            }
+          }
+          function afterFonts() {
             requestAnimationFrame(function () {
-              fitHeroTitle();
-              resizeHeroShader();
-              if (done) done();
+              requestAnimationFrame(function () {
+                applyFit();
+                if (done) done();
+                // Segoe (CDN) / scrollbar layout can settle after the first fit.
+                setTimeout(refitOpen, 150);
+                setTimeout(refitOpen, 450);
+              });
             });
-          });
+          }
+          if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(afterFonts).catch(afterFonts);
+          } else {
+            afterFonts();
+          }
         }
 
         function resetHero() {
