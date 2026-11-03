@@ -76,14 +76,19 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 }
 
-/* Nav + hero copy fill the first viewport; cover starts after scroll. */
+/* Nav + empty fill + bottom intro: first viewport, cover after scroll.
+   Matches the data-hero-intro scale pattern used on live case studies. */
 .cs-draft .td-first-screen {
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  overflow: visible;
+  position: relative;
 }
 
 .cs-draft .site-header {
@@ -98,23 +103,39 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   max-width: none;
 }
 
+.cs-draft .td-hero-fill {
+  flex: 1 1 0;
+  min-height: 0;
+  pointer-events: none;
+}
+
 .cs-draft .td-hero {
   /* No separate hero fill — inherits the same page bg as every section. */
   background: transparent;
   margin-inline: calc(-1 * var(--td-gutter));
   padding: 0 var(--td-gutter) 48px;
-  flex: 1 1 auto;
+  flex: none;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .cs-draft .td-hero-intro {
-  flex: 1 1 auto;
-  padding-top: 48px;
+  flex: none;
+  padding-top: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
+}
+
+/* Hero copy stays visible while scroll-reveal handles later sections. */
+.cs-draft .cs-content .td-hero > *,
+.cs-draft .cs-content .td-hero > .reveal-in {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 .cs-draft .td-block {
@@ -137,9 +158,16 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   font-family: var(--font);
   font-size: 64px;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -3.2px;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
   color: var(--td-text-primary);
+  will-change: font-size;
+  overflow: visible;
+}
+
+.cs-draft .td-title-line {
+  display: block;
+  white-space: nowrap;
 }
 
 #caseStudyTrainerDraft p.td-sub {
@@ -389,9 +417,10 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 
   .cs-draft .td-first-screen {
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    max-height: 100dvh;
   }
 
   .cs-draft .td-hero {
@@ -399,7 +428,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 
   .cs-draft .td-hero-intro {
-    padding-top: 40px;
+    padding-top: 0;
   }
 
   .cs-draft .td-hero-figure {
@@ -412,7 +441,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
   .cs-draft h1.td-title {
     font-size: 48px;
-    letter-spacing: -2.4px;
+    letter-spacing: -0.05em;
   }
 
   #caseStudyTrainerDraft p.td-sub {
@@ -436,6 +465,21 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .cs-draft .td-first-screen {
+    height: auto;
+    max-height: none;
+  }
+
+  .cs-draft .td-hero-fill {
+    display: none;
+  }
+
+  .cs-draft h1.td-title {
+    font-size: 64px;
+  }
+}
+
 @media (max-width: 720px) {
   .cs-draft .td-quotes {
     grid-template-columns: 1fr;
@@ -443,7 +487,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
   .cs-draft h1.td-title {
     font-size: 40px;
-    letter-spacing: -2px;
+    letter-spacing: -0.05em;
   }
 
   #caseStudyTrainerDraft p.td-sub {

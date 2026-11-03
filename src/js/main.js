@@ -223,11 +223,14 @@ function initCopyEmail() {
         var suppressSpy = false;   // muted while a nav-click glide is running
         var scrollRAF = null;
         var heroIntro = overlay.hasAttribute('data-hero-intro');
-        var heroTitle = heroIntro ? overlay.querySelector('.cs-title') : null;
+        var heroTitle = heroIntro
+          ? (overlay.querySelector('.cs-title') || overlay.querySelector('.td-title'))
+          : null;
         var heroShaderEl = heroIntro ? overlay.querySelector('[data-hero-shader]') : null;
         var heroShaderMount = null;
         var heroRevealStarted = false;
         var heroTitleBaseSize = 64;
+        var heroTitleEndSize = 24;
         var heroFitTimer = null;
 
         function initHeroShaderMount() {
@@ -255,7 +258,10 @@ function initCopyEmail() {
         function fitHeroTitle() {
           if (!heroTitle) return;
           heroTitle.style.fontSize = '';
-          var lines = heroTitle.querySelectorAll('.cs-title-line');
+          heroTitle.style.transform = '';
+          var draftTitle = heroTitle.classList.contains('td-title');
+          heroTitleEndSize = draftTitle ? 64 : 24;
+          var lines = heroTitle.querySelectorAll('.cs-title-line, .td-title-line');
           if (!lines.length) lines = [heroTitle];
 
           var column = heroTitle.closest('.cs-content') || panel;
@@ -266,8 +272,8 @@ function initCopyEmail() {
           if (targetRight < columnRect.left + 1) targetRight = columnRect.right - 16;
           if (targetRight < 1) return;
 
-          var minSize = 24;
-          var maxSize = 160;
+          var minSize = heroTitleEndSize;
+          var maxSize = draftTitle ? 180 : 160;
           var best = minSize;
           var lo = minSize;
           var hi = maxSize;
@@ -308,6 +314,7 @@ function initCopyEmail() {
             heroTitle.style.marginBottom = '';
             heroTitle.style.fontSize = '';
             heroTitleBaseSize = 64;
+            heroTitleEndSize = heroTitle.classList.contains('td-title') ? 64 : 24;
           }
         }
 
@@ -316,11 +323,20 @@ function initCopyEmail() {
           var range = heroScrollRange();
           var progress = Math.min(1, Math.max(0, panel.scrollTop / range));
           var eased = 1 - Math.pow(1 - progress, 2.5);
-          var minScale = 24 / heroTitleBaseSize;
-          var scale = 1 - eased * (1 - minScale);
+          var draftTitle = heroTitle.classList.contains('td-title');
 
-          heroTitle.style.transform = 'scale(' + scale + ')';
-          heroTitle.style.transformOrigin = 'left bottom';
+          if (draftTitle) {
+            // Interpolate font-size so the surrounding draft layout reflows
+            // into the settled 64px heading composition (no leftover scale box).
+            var size = heroTitleBaseSize - eased * (heroTitleBaseSize - heroTitleEndSize);
+            heroTitle.style.transform = '';
+            heroTitle.style.fontSize = size + 'px';
+          } else {
+            var minScale = heroTitleEndSize / heroTitleBaseSize;
+            var scale = 1 - eased * (1 - minScale);
+            heroTitle.style.transform = 'scale(' + scale + ')';
+            heroTitle.style.transformOrigin = 'left bottom';
+          }
           heroTitle.style.marginBottom = '';
 
           var showChrome = progress > 0.35;
@@ -394,6 +410,7 @@ function initCopyEmail() {
             initHeroShaderMount();
             scheduleHeroTitleFit(function () {
               if (reduceMotion) {
+                if (heroTitle) heroTitle.style.fontSize = heroTitleEndSize + 'px';
                 overlay.classList.add('text-in');
                 startReveal();
               } else {
