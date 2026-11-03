@@ -29,6 +29,8 @@ const HERO_SHADER_DEFAULTS = {
 
 /** Chunkier cells on the trainer draft hero. */
 const DRAFT_SHADER_PX_SIZE = 48;
+/** Draft animation: 150% faster than the shared 0.1 default → 0.25. */
+const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed * 2.5;
 
 var activeMounts = [];
 
@@ -51,6 +53,15 @@ function resolvePxSize(parentElement) {
     return DRAFT_SHADER_PX_SIZE;
   }
   return HERO_SHADER_DEFAULTS.size;
+}
+
+function resolveSpeed(parentElement) {
+  var declared = parseFloat(parentElement && parentElement.getAttribute('data-shader-speed'));
+  if (declared > 0) return declared;
+  if (parentElement && parentElement.classList.contains('td-hero-shader')) {
+    return DRAFT_SHADER_SPEED;
+  }
+  return HERO_SHADER_DEFAULTS.speed;
 }
 
 function pageBackgroundColor() {
@@ -153,7 +164,7 @@ export function createHeroShader(parentElement, options) {
     ditheringFragmentShader,
     uniforms,
     undefined,
-    reduceMotion ? 0 : HERO_SHADER_DEFAULTS.speed,
+    reduceMotion ? 0 : resolveSpeed(parentElement),
     HERO_SHADER_DEFAULTS.frame
   );
   activeMounts.push(mount);
