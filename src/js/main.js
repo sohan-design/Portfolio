@@ -260,45 +260,61 @@ function initCopyEmail() {
           heroTitle.style.fontSize = '';
           heroTitle.style.transform = '';
           var draftTitle = heroTitle.classList.contains('td-title');
-          if (draftTitle) {
-            if (window.matchMedia('(max-width: 720px)').matches) heroTitleEndSize = 40;
-            else if (window.matchMedia('(max-width: 1079px)').matches) heroTitleEndSize = 48;
-            else heroTitleEndSize = 64;
-          } else {
-            heroTitleEndSize = 24;
-          }
           var lines = heroTitle.querySelectorAll('.cs-title-line, .td-title-line');
           if (!lines.length) lines = [heroTitle];
 
           var column = heroTitle.closest('.cs-content') || panel;
-          var columnRect = column.getBoundingClientRect();
+          var fitRoot = draftTitle
+            ? (heroTitle.closest('.td-hero-intro') || heroTitle.closest('.td-hero') || column)
+            : column;
+          var fitRect = fitRoot.getBoundingClientRect();
           var panelRect = panel.getBoundingClientRect();
-          // Maximize to the panel's right edge — leave extra room for descenders / last glyph.
-          var edgeInset = draftTitle ? 28 : 16;
-          var targetRight = panelRect.right - edgeInset;
-          if (targetRight < columnRect.left + 1) targetRight = columnRect.right - edgeInset;
+          // Draft titles must stay inside the padded content column.
+          // Live studies may extend toward the panel edge.
+          var edgeInset = draftTitle ? 16 : 16;
+          var targetRight = draftTitle
+            ? fitRect.right - edgeInset
+            : panelRect.right - edgeInset;
+          if (!draftTitle && targetRight < fitRect.left + 1) {
+            targetRight = fitRect.right - edgeInset;
+          }
           if (targetRight < 1) return;
 
-          var minSize = heroTitleEndSize;
-          var maxSize = draftTitle ? 180 : 160;
-          var best = minSize;
-          var lo = minSize;
-          var hi = maxSize;
-
-          while (lo <= hi + 0.01) {
-            var mid = Math.round(((lo + hi) / 2) * 4) / 4;
-            heroTitle.style.fontSize = mid + 'px';
+          function titleFits(size) {
+            heroTitle.style.fontSize = size + 'px';
             var widestRight = 0;
             for (var i = 0; i < lines.length; i++) {
               widestRight = Math.max(widestRight, lines[i].getBoundingClientRect().right);
             }
-            if (widestRight <= targetRight + 0.5) {
-              best = mid;
-              lo = mid + 0.25;
-            } else {
-              hi = mid - 0.25;
-            }
+            // Extra slack so Segoe descenders / final glyphs are not clipped.
+            return widestRight <= targetRight - 4;
           }
+
+          function maxFittingSize(lo, hi) {
+            var best = lo;
+            while (lo <= hi + 0.01) {
+              var mid = Math.round(((lo + hi) / 2) * 4) / 4;
+              if (titleFits(mid)) {
+                best = mid;
+                lo = mid + 0.25;
+              } else {
+                hi = mid - 0.25;
+              }
+            }
+            return best;
+          }
+
+          if (draftTitle) {
+            // Settled size scales with the content width, then clamps to what fits.
+            var preferredEnd = Math.round(Math.min(64, Math.max(28, fitRect.width * 0.078)));
+            heroTitleEndSize = maxFittingSize(24, preferredEnd);
+          } else {
+            heroTitleEndSize = 24;
+          }
+
+          var minSize = heroTitleEndSize;
+          var maxSize = draftTitle ? Math.min(180, Math.max(minSize, fitRect.width * 0.22)) : 160;
+          var best = maxFittingSize(minSize, maxSize);
 
           heroTitle.style.fontSize = best + 'px';
           heroTitleBaseSize = best;

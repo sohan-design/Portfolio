@@ -138,15 +138,19 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   flex-direction: column;
   position: relative;
   z-index: 1;
+  overflow: visible;
 }
 
 .cs-draft .td-hero-intro {
   flex: none;
+  width: 100%;
+  max-width: 100%;
   padding-top: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  overflow: visible;
 }
 
 /* Hero copy stays visible while scroll-reveal handles later sections. */
@@ -174,22 +178,24 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
 .cs-draft h1.td-title {
   margin: 0;
-  padding: 0.08em 0.04em 0.18em 0;
+  padding: 0.12em 0.08em 0.22em 0;
   font-family: var(--font);
-  font-size: 64px;
+  font-size: clamp(28px, 5.2vw, 64px);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.05em;
   color: var(--td-text-primary);
   will-change: font-size;
   overflow: visible;
+  max-width: 100%;
 }
 
 .cs-draft .td-title-line {
   display: block;
   white-space: nowrap;
   overflow: visible;
-  padding-right: 0.06em;
+  padding-right: 0.14em;
+  padding-bottom: 0.08em;
 }
 
 #caseStudyTrainerDraft p.td-sub {
@@ -470,11 +476,6 @@ html[data-theme="dark"] .cs-draft .cs-panel {
     padding: 88px 0;
   }
 
-  .cs-draft h1.td-title {
-    font-size: 48px;
-    letter-spacing: -0.05em;
-  }
-
   #caseStudyTrainerDraft p.td-sub {
     font-size: 22px;
     letter-spacing: -1.1px;
@@ -507,8 +508,8 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 
   .cs-draft h1.td-title {
-    font-size: 64px;
-    line-height: 1.2;
+    font-size: clamp(28px, 5.2vw, 64px);
+    line-height: 1.25;
   }
 }
 
@@ -532,11 +533,6 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
   .cs-draft .td-quotes {
     grid-template-columns: 1fr;
-  }
-
-  .cs-draft h1.td-title {
-    font-size: 40px;
-    letter-spacing: -0.05em;
   }
 
   #caseStudyTrainerDraft p.td-sub {
