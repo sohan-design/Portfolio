@@ -1,7 +1,52 @@
-/* Portfolio v3 — Figma layout + Inter Display */
+/* Portfolio v3 — Segoe UI (Microsoft Fabric web fonts) */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('./case-study.css');
+
+/* Prefer the local Windows font; fall back to Microsoft's hosted woff2. */
+@font-face {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local("Segoe UI Light"),
+       url("https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 350;
+  font-display: swap;
+  src: local("Segoe UI Semilight"),
+       url("https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Segoe UI"),
+       url("https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+  src: local("Segoe UI Semibold"),
+       url("https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Segoe UI Bold"),
+       url("https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-bold.woff2") format("woff2");
+}
 
 :root {
   --bg: #ffffff;
@@ -11,11 +56,10 @@
   --text-muted: rgba(0, 0, 0, 0.5);
   --text-faint: rgba(0, 0, 0, 0.4);
   --hairline: rgba(0, 0, 0, 0.08);
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font: "Segoe UI", "Segoe UI Web (West European)", sans-serif;
   --sans: var(--font);
   --mono: var(--font);
   --hand: var(--font);
-  --opsz-display: 32;
   --max-w: 837px;
   --page-pad: 24px;
   --radius-card: 25px;
@@ -53,8 +97,6 @@ html[data-theme="dark"] {
 
 *, *::before, *::after {
   box-sizing: border-box;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' var(--opsz-display);
 }
 
 html {
