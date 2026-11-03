@@ -40,7 +40,8 @@ var BINARY_TAIL = [
 var MULTI_TAIL = [
   '// Classic random dither against the animated shape (cells fill/unfill over time),',
   '// remapped so density sits near ~50% instead of a solid block.',
-  '  float density = mix(0.22, 0.78, clamp(shape, 0.0, 1.0));',
+  '  // shape animates over time → density crosses each cell hash → fill/unfill.',
+  '  float density = mix(0.08, 0.72, clamp(shape, 0.0, 1.0));',
   '  float lit = step(hash21(ditheringNoiseUV), density);',
   '  float rnd = hash21(ditheringNoiseUV + vec2(17.0, 9.0));',
   '  float levels = 5.0;',
