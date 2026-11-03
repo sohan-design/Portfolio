@@ -269,32 +269,22 @@ function initCopyEmail() {
             : column;
           var fitRect = fitRoot.getBoundingClientRect();
           var panelRect = panel.getBoundingClientRect();
-          // Draft titles must stay inside the padded content column.
-          // Live studies may extend toward the panel edge.
-          var edgeInset = draftTitle ? 16 : 16;
-          var targetRight = draftTitle
-            ? fitRect.right - edgeInset
-            : panelRect.right - edgeInset;
-          if (!draftTitle && targetRight < fitRect.left + 1) {
-            targetRight = fitRect.right - edgeInset;
-          }
-          if (targetRight < 1) return;
 
-          function titleFits(size) {
+          function titleFits(size, rightEdge) {
             heroTitle.style.fontSize = size + 'px';
             var widestRight = 0;
             for (var i = 0; i < lines.length; i++) {
               widestRight = Math.max(widestRight, lines[i].getBoundingClientRect().right);
             }
-            // Extra slack so Segoe descenders / final glyphs are not clipped.
-            return widestRight <= targetRight - 4;
+            // Slack so Segoe final glyphs / descenders are not clipped.
+            return widestRight <= rightEdge - 6;
           }
 
-          function maxFittingSize(lo, hi) {
+          function maxFittingSize(lo, hi, rightEdge) {
             var best = lo;
             while (lo <= hi + 0.01) {
               var mid = Math.round(((lo + hi) / 2) * 4) / 4;
-              if (titleFits(mid)) {
+              if (titleFits(mid, rightEdge)) {
                 best = mid;
                 lo = mid + 0.25;
               } else {
@@ -305,19 +295,32 @@ function initCopyEmail() {
           }
 
           if (draftTitle) {
-            // Settled size scales with the content width, then clamps to what fits.
+            // Settled size: responsive within the content column.
+            var columnRight = fitRect.right - 12;
             var preferredEnd = Math.round(Math.min(64, Math.max(28, fitRect.width * 0.078)));
-            heroTitleEndSize = maxFittingSize(24, preferredEnd);
+            heroTitleEndSize = maxFittingSize(24, preferredEnd, columnRight);
+
+            // Start size: oversized toward the panel edge (same dramatic hero as live studies).
+            var startRight = panelRect.right - 24;
+            if (startRight < columnRight) startRight = columnRight;
+            var startMax = 180;
+            heroTitleBaseSize = maxFittingSize(heroTitleEndSize, startMax, startRight);
+            // Keep a visible scale range even on narrow screens.
+            if (heroTitleBaseSize < heroTitleEndSize * 1.35) {
+              heroTitleBaseSize = Math.min(startMax, Math.max(heroTitleBaseSize, heroTitleEndSize * 1.8));
+              // If forcing larger would hard-clip the panel, fall back to max that fits.
+              if (!titleFits(heroTitleBaseSize, startRight)) {
+                heroTitleBaseSize = maxFittingSize(heroTitleEndSize, startMax, startRight);
+              }
+            }
           } else {
             heroTitleEndSize = 24;
+            var targetRight = panelRect.right - 16;
+            if (targetRight < fitRect.left + 1) targetRight = fitRect.right - 16;
+            heroTitleBaseSize = maxFittingSize(24, 160, targetRight);
           }
 
-          var minSize = heroTitleEndSize;
-          var maxSize = draftTitle ? Math.min(180, Math.max(minSize, fitRect.width * 0.22)) : 160;
-          var best = maxFittingSize(minSize, maxSize);
-
-          heroTitle.style.fontSize = best + 'px';
-          heroTitleBaseSize = best;
+          heroTitle.style.fontSize = heroTitleBaseSize + 'px';
         }
 
         function scheduleHeroTitleFit(done) {
