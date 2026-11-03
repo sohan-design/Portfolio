@@ -30,8 +30,8 @@ const HERO_SHADER_DEFAULTS = {
 
 /** Draft cells: 30% smaller than the previous 48px chunky grid. */
 const DRAFT_SHADER_PX_SIZE = Math.round(48 * 0.7);
-/** Draft animation: 150% faster than the shared 0.1 default → 0.25. */
-const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed * 2.5;
+/** Draft animation uses the shared original speed. */
+const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed;
 /** Start near a dense phase so the silhouette reads as fully filled. */
 const DRAFT_SHADER_FRAME = 0;
 
@@ -150,7 +150,8 @@ export function createHeroShader(parentElement, options) {
     u_colorBack: getShaderColorFromString(pageBg),
     u_colorFront: getShaderColorFromString(colorFront),
     u_shape: DitheringShapes[HERO_SHADER_DEFAULTS.shape],
-    u_type: DitheringTypes[HERO_SHADER_DEFAULTS.type],
+    // Draft: random cell field (not ordered Bayer).
+    u_type: DitheringTypes[isDraft ? 'random' : HERO_SHADER_DEFAULTS.type],
     u_pxSize: pxSize,
     u_fit: ShaderFitOptions[defaultObjectSizing.fit],
     u_scale: HERO_SHADER_DEFAULTS.scale,

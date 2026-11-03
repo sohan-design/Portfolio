@@ -25,31 +25,29 @@ var BINARY_TAIL = [
 ].join('\n');
 
 var MULTI_TAIL = [
-  '// Solid silhouette + continuous tone so cells use shades/tints of the ink.',
+  '// Filled silhouette; each cell picks a random tint of the ink (no dark shades).',
   '  float mask = step(0.1, shape);',
-  '  float tone = mix(0.18, 1.0, smoothstep(0.1, 1.35, shape));',
-  '',
-  '  dithering -= .5;',
+  '  // Re-roll with time so the tint field stays totally random as it animates.',
+  '  float rnd = hash21(ditheringNoiseUV + vec2(floor(t * 3.0), floor(t * 5.0)));',
   '  float levels = 5.0;',
-  '  float band = clamp(tone * levels + dithering * 1.15, 0.0, levels - 0.001);',
-  '  int idx = int(floor(band));',
+  '  int idx = int(floor(rnd * levels));',
   '',
   '  vec3 base = u_colorFront.rgb;',
-  '  vec3 shadeDeep = base * 0.22;',
-  '  vec3 shadeLow = base * 0.42;',
-  '  vec3 shadeMid = base * 0.68;',
-  '  vec3 tintLite = mix(base, vec3(1.0), 0.28);',
-  '  vec3 tintHigh = mix(base, vec3(1.0), 0.55);',
+  '  vec3 tint0 = mix(base, vec3(1.0), 0.06);',
+  '  vec3 tint1 = mix(base, vec3(1.0), 0.22);',
+  '  vec3 tint2 = mix(base, vec3(1.0), 0.38);',
+  '  vec3 tint3 = mix(base, vec3(1.0), 0.55);',
+  '  vec3 tint4 = mix(base, vec3(1.0), 0.72);',
   '',
-  '  vec3 ink = base;',
+  '  vec3 ink = tint0;',
   '  float inkA = 0.0;',
   '  if (mask > 0.5) {',
   '    inkA = u_colorFront.a;',
-  '    if (idx <= 0) ink = shadeDeep;',
-  '    else if (idx == 1) ink = shadeLow;',
-  '    else if (idx == 2) ink = shadeMid;',
-  '    else if (idx == 3) ink = mix(base, tintLite, 0.4);',
-  '    else ink = tintHigh;',
+  '    if (idx == 0) ink = tint0;',
+  '    else if (idx == 1) ink = tint1;',
+  '    else if (idx == 2) ink = tint2;',
+  '    else if (idx == 3) ink = tint3;',
+  '    else ink = tint4;',
   '  }',
   '',
   '  vec3 fgColor = ink * inkA;',
@@ -83,7 +81,7 @@ export var heroDitherMultiFragmentShader = ditheringFragmentShader
 
 if (
   heroDitherMultiFragmentShader === ditheringFragmentShader ||
-  heroDitherMultiFragmentShader.indexOf('tintHigh') === -1
+  heroDitherMultiFragmentShader.indexOf('tint4') === -1
 ) {
   console.warn('[heroDitherMulti] Failed to patch Paper dithering shader');
 }
