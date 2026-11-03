@@ -48,6 +48,12 @@ export function snapHeroShaderSize(parentElement) {
   var maxH = fill && fill.clientHeight > 0 ? fill.clientHeight : 342;
   var maxW = fill && fill.clientWidth > 0 ? fill.clientWidth : 800;
   maxW = Math.min(800, maxW);
+  var declaredMax = parseFloat(parentElement.getAttribute('data-shader-max-width'));
+  if (declaredMax > 0) maxW = Math.min(maxW, declaredMax);
+  var cssMax = parseFloat(window.getComputedStyle(parentElement).maxWidth);
+  if (cssMax > 0 && isFinite(cssMax)) maxW = Math.min(maxW, cssMax);
+  var cssMaxH = parseFloat(window.getComputedStyle(parentElement).maxHeight);
+  if (cssMaxH > 0 && isFinite(cssMaxH)) maxH = Math.min(maxH, cssMaxH);
   if (maxW < 2) maxW = 800;
 
   var w = evenPx(maxW);
