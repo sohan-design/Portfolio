@@ -178,16 +178,17 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
 .cs-draft h1.td-title {
   margin: 0;
-  padding: 0.12em 0.08em 0.22em 0;
+  padding: 0.12em 0.04em 0.22em 0;
   font-family: var(--font);
-  font-size: clamp(28px, 5.2vw, 64px);
+  font-size: clamp(28px, 5.2vw, 56px);
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.05em;
   color: var(--td-text-primary);
   will-change: font-size;
   overflow: visible;
-  max-width: 100%;
+  max-width: none;
+  width: max-content;
 }
 
 .cs-draft .td-title-line {
@@ -269,7 +270,8 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
 .cs-draft .td-hero-figure {
   margin: 0 0 96px;
-  width: min(1120px, 100%);
+  width: 100%;
+  max-width: none;
   aspect-ratio: 1120 / 664;
   border-radius: 10px;
   overflow: visible;
@@ -289,7 +291,8 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
 .cs-draft .td-figure {
   margin: 48px 0 0;
-  width: min(1120px, 100%);
+  width: 100%;
+  max-width: none;
   aspect-ratio: 1120 / 664;
   border-radius: 10px;
   overflow: hidden;
@@ -511,7 +514,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   }
 
   .cs-draft h1.td-title {
-    font-size: clamp(28px, 5.2vw, 64px);
+    font-size: clamp(28px, 5.2vw, 56px);
     line-height: 1.25;
   }
 }

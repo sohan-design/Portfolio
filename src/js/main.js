@@ -269,78 +269,71 @@ function initCopyEmail() {
             : column;
           var fitRect = fitRoot.getBoundingClientRect();
           var panelRect = panel.getBoundingClientRect();
-          // Panel uses overflow-y:auto, so overflow-x clips to clientWidth (scrollbar gutter),
-          // not the border-box right edge from getBoundingClientRect().
+          // overflow-y:auto makes overflow-x clip to clientWidth (scrollbar), not border-box.
           var visibleRight = panelRect.left + panel.clientWidth;
           var vv = window.visualViewport;
           if (vv) visibleRight = Math.min(visibleRight, vv.offsetLeft + vv.width);
 
-          function lineTextRight(line) {
-            // Block-level nowrap lines report the container width via getBoundingClientRect;
-            // Range + scrollWidth capture the real glyph extent.
-            var right = 0;
-            try {
-              var range = document.createRange();
-              range.selectNodeContents(line);
-              right = Math.max(right, range.getBoundingClientRect().right);
-              var rects = range.getClientRects();
-              for (var r = 0; r < rects.length; r++) {
-                right = Math.max(right, rects[r].right);
-              }
-            } catch (e) { /* ignore */ }
-            var lineRect = line.getBoundingClientRect();
-            right = Math.max(right, lineRect.left + line.scrollWidth);
-            // Inline-block / max-content lines expose true width here too.
-            right = Math.max(right, lineRect.right);
-            return right;
-          }
-
-          function titleFits(size, rightEdge) {
+          function measuredWidth(size) {
             heroTitle.style.fontSize = size + 'px';
             void heroTitle.offsetWidth;
-            var widestRight = 0;
+            var widest = 0;
             for (var i = 0; i < lines.length; i++) {
-              widestRight = Math.max(widestRight, lineTextRight(lines[i]));
+              var line = lines[i];
+              // inline-block + max-content → offsetWidth is the true glyph+padding width
+              widest = Math.max(widest, line.offsetWidth, line.scrollWidth);
+              try {
+                var range = document.createRange();
+                range.selectNodeContents(line);
+                widest = Math.max(widest, range.getBoundingClientRect().width);
+              } catch (e) { /* ignore */ }
             }
-            // Also check the heading's own scrollWidth (padding + overflow).
-            var titleRect = heroTitle.getBoundingClientRect();
-            widestRight = Math.max(widestRight, titleRect.left + heroTitle.scrollWidth);
-            return widestRight <= rightEdge;
+            return widest;
           }
 
-          function maxFittingSize(lo, hi, rightEdge) {
+          function maxFittingSize(lo, hi, available) {
+            if (available < 40) available = 40;
             if (hi < lo) hi = lo;
+            // Ratio estimate first so we never start from a wildly overflowing size.
+            var probe = Math.max(hi, lo);
+            var probeW = measuredWidth(probe);
+            if (probeW > 0 && probeW > available) {
+              hi = Math.min(hi, Math.floor(probe * (available / probeW) * 4) / 4);
+              if (hi < lo) hi = lo;
+            }
             var best = lo;
             while (lo <= hi + 0.01) {
               var mid = Math.round(((lo + hi) / 2) * 4) / 4;
-              if (titleFits(mid, rightEdge)) {
+              if (measuredWidth(mid) <= available) {
                 best = mid;
                 lo = mid + 0.25;
               } else {
                 hi = mid - 0.25;
               }
             }
-            while (best > 16 && !titleFits(best, rightEdge)) best -= 0.5;
-            titleFits(best, rightEdge);
+            while (best > lo && measuredWidth(best) > available) best -= 0.5;
+            measuredWidth(best);
             return best;
           }
 
           if (draftTitle) {
-            // Keep a few px of ink safety inside the visible scrollport.
-            var screenRight = visibleRight - 8;
-            var columnRight = Math.min(fitRect.right - 12, screenRight);
-            if (columnRight < fitRect.left + 40) columnRight = screenRight;
+            var titleLeft = heroTitle.getBoundingClientRect().left;
+            // Fit inside the visible screen, from the title's left edge.
+            // Extra slack covers antialiased ink + letter-spacing side bearings.
+            var available = Math.floor(visibleRight - titleLeft - 32);
+            var columnAvail = Math.floor(fitRect.width - 16);
+            if (columnAvail > 40) available = Math.min(available, columnAvail);
 
-            var preferredEnd = Math.round(Math.min(64, Math.max(28, fitRect.width * 0.078)));
-            heroTitleEndSize = maxFittingSize(24, preferredEnd, columnRight);
+            // Settled (scrolled) size: fixed 56px minimum.
+            heroTitleEndSize = 56;
 
-            // Start size: fill the screen width without clipping past the visible edge.
-            heroTitleBaseSize = maxFittingSize(heroTitleEndSize, 200, screenRight);
+            // Start size: fill the content column / screen without clipping.
+            heroTitleBaseSize = maxFittingSize(heroTitleEndSize, 200, available);
           } else {
             heroTitleEndSize = 24;
-            var targetRight = visibleRight - 16;
-            if (targetRight < fitRect.left + 1) targetRight = fitRect.right - 16;
-            heroTitleBaseSize = maxFittingSize(24, 160, targetRight);
+            var targetAvail = Math.floor(visibleRight - fitRect.left - 16);
+            if (targetAvail < 40) targetAvail = Math.floor(fitRect.width - 16);
+            heroTitleBaseSize = maxFittingSize(24, 160, targetAvail);
           }
 
           heroTitle.style.fontSize = heroTitleBaseSize + 'px';
@@ -365,16 +358,22 @@ function initCopyEmail() {
               requestAnimationFrame(function () {
                 applyFit();
                 if (done) done();
-                // Segoe (CDN) / scrollbar layout can settle after the first fit.
                 setTimeout(refitOpen, 150);
                 setTimeout(refitOpen, 450);
               });
             });
           }
-          if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(afterFonts).catch(afterFonts);
-          } else {
-            afterFonts();
+          var fontWait = Promise.resolve();
+          if (document.fonts) {
+            fontWait = Promise.all([
+              document.fonts.ready,
+              document.fonts.load('400 120px "Segoe UI"').catch(function () {}),
+              document.fonts.load('400 120px "Segoe UI Web (West European)"').catch(function () {})
+            ]);
+          }
+          fontWait.then(afterFonts).catch(afterFonts);
+          if (document.fonts && document.fonts.addEventListener) {
+            document.fonts.addEventListener('loadingdone', refitOpen, { once: true });
           }
         }
 
@@ -385,7 +384,7 @@ function initCopyEmail() {
             heroTitle.style.marginBottom = '';
             heroTitle.style.fontSize = '';
             heroTitleBaseSize = 64;
-            heroTitleEndSize = heroTitle.classList.contains('td-title') ? 64 : 24;
+            heroTitleEndSize = heroTitle.classList.contains('td-title') ? 56 : 24;
           }
         }
 
