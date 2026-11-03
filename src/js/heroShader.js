@@ -44,17 +44,30 @@ function pageBackgroundColor() {
 /** Snap shader container to even width/height, fitting the available hero fill area. */
 export function snapHeroShaderSize(parentElement) {
   if (!parentElement) return;
+
+  // Clear previous inline size so responsive CSS max/clamp can resolve.
+  parentElement.style.width = '';
+  parentElement.style.height = '';
+
   var fill = parentElement.closest('.cs-hero-fill, .td-hero-fill');
-  var maxH = fill && fill.clientHeight > 0 ? fill.clientHeight : 342;
-  var maxW = fill && fill.clientWidth > 0 ? fill.clientWidth : 800;
-  maxW = Math.min(800, maxW);
+  var fillW = fill && fill.clientWidth > 0 ? fill.clientWidth : 800;
+  var fillH = fill && fill.clientHeight > 0 ? fill.clientHeight : 342;
+  var styles = window.getComputedStyle(parentElement);
+  var cssW = parseFloat(styles.width);
+  var cssMaxW = parseFloat(styles.maxWidth);
+  var cssMaxH = parseFloat(styles.maxHeight);
+
+  var maxW = fillW;
+  if (cssW > 0 && isFinite(cssW)) maxW = Math.min(maxW, cssW);
+  if (cssMaxW > 0 && isFinite(cssMaxW)) maxW = Math.min(maxW, cssMaxW);
   var declaredMax = parseFloat(parentElement.getAttribute('data-shader-max-width'));
   if (declaredMax > 0) maxW = Math.min(maxW, declaredMax);
-  var cssMax = parseFloat(window.getComputedStyle(parentElement).maxWidth);
-  if (cssMax > 0 && isFinite(cssMax)) maxW = Math.min(maxW, cssMax);
-  var cssMaxH = parseFloat(window.getComputedStyle(parentElement).maxHeight);
+  maxW = Math.min(800, maxW);
+
+  var maxH = fillH;
   if (cssMaxH > 0 && isFinite(cssMaxH)) maxH = Math.min(maxH, cssMaxH);
-  if (maxW < 2) maxW = 800;
+  if (maxW < 2) maxW = Math.min(320, fillW) || 160;
+  if (maxH < 2) maxH = Math.max(48, Math.floor(maxW / SHADER_ASPECT));
 
   var w = evenPx(maxW);
   var h = evenPx(w / SHADER_ASPECT);
@@ -62,6 +75,7 @@ export function snapHeroShaderSize(parentElement) {
     h = evenPx(maxH);
     w = evenPx(h * SHADER_ASPECT);
   }
+  if (w < 2 || h < 2) return;
 
   parentElement.style.width = w + 'px';
   parentElement.style.height = h + 'px';

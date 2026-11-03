@@ -105,7 +105,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
 .cs-draft .td-hero-fill.cs-hero-fill {
   flex: 1 1 0;
-  min-height: 0;
+  min-height: clamp(72px, 18vh, 220px);
   position: relative;
   display: flex;
   justify-content: flex-end;
@@ -117,10 +117,11 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 .cs-draft .td-hero-shader.cs-hero-shader {
-  width: auto;
+  --td-shader-w: clamp(140px, 28vw, 320px);
+  width: var(--td-shader-w);
   height: auto;
-  max-width: min(320px, 34vw);
-  max-height: min(140px, 22vh);
+  max-width: min(var(--td-shader-w), 100%);
+  max-height: min(calc(var(--td-shader-w) * 342 / 800), 40%);
   aspect-ratio: 800 / 342;
   flex: none;
   background: var(--td-page-bg);
@@ -432,6 +433,15 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 @media (max-width: 1079px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 40px;
+  }
+
+  .cs-draft .td-hero-shader.cs-hero-shader {
+    --td-shader-w: clamp(120px, 32vw, 240px);
+  }
+
   .cs-draft .site-header {
     padding-top: 28px;
     padding-bottom: 24px;
@@ -503,6 +513,23 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 @media (max-width: 720px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 20px;
+  }
+
+  .cs-draft .td-hero-fill.cs-hero-fill {
+    min-height: clamp(64px, 16vh, 160px);
+  }
+
+  .cs-draft .td-hero-shader.cs-hero-shader {
+    --td-shader-w: clamp(110px, 42vw, 180px);
+  }
+
+  .cs-draft .td-hero {
+    padding-bottom: 32px;
+  }
+
   .cs-draft .td-quotes {
     grid-template-columns: 1fr;
   }

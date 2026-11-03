@@ -483,14 +483,22 @@ function initCopyEmail() {
         panel.addEventListener('scroll', syncActive, { passive: true });
         if (heroIntro) {
           panel.addEventListener('scroll', updateHeroScroll, { passive: true });
-          window.addEventListener('resize', function () {
+          function onHeroLayoutChange() {
             if (!overlay.classList.contains('open')) return;
             clearTimeout(heroFitTimer);
             heroFitTimer = setTimeout(function () {
               resizeHeroShader();
               scheduleHeroTitleFit(updateHeroScroll);
             }, 100);
-          });
+          }
+          window.addEventListener('resize', onHeroLayoutChange);
+          if (typeof ResizeObserver === 'function') {
+            var heroFill = overlay.querySelector('.cs-hero-fill, .td-hero-fill');
+            if (heroFill) {
+              var heroFillObserver = new ResizeObserver(onHeroLayoutChange);
+              heroFillObserver.observe(heroFill);
+            }
+          }
         }
 
         // custom eased scroll for the panel — a single consistent 620ms glide
