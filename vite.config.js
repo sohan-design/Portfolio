@@ -8,6 +8,7 @@ const MPA_ROUTES = [
   '/work/redesigned-payment-pages',
   '/work/white-label-evolution',
   '/work/b2b-trainer-dashboard',
+  '/work/b2b-trainer-dashboard-draft',
   '/work/putting-common-sense-back-into-ios',
   '/work/design-engineering-the-new-ai-process',
 ];
@@ -66,6 +67,7 @@ export default defineConfig({
         cosmo: resolve(__dirname, 'work/redesigned-payment-pages/index.html'),
         whitelabel: resolve(__dirname, 'work/white-label-evolution/index.html'),
         trainer: resolve(__dirname, 'work/b2b-trainer-dashboard/index.html'),
+        trainerDraft: resolve(__dirname, 'work/b2b-trainer-dashboard-draft/index.html'),
         ios: resolve(__dirname, 'work/putting-common-sense-back-into-ios/index.html'),
         aiProcess: resolve(__dirname, 'work/design-engineering-the-new-ai-process/index.html'),
       },

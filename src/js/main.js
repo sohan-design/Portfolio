@@ -217,17 +217,20 @@ function initCopyEmail() {
       function initCaseStudy(overlay) {
         var panel = overlay.querySelector('.cs-panel');
         var navItems = overlay.querySelectorAll('.cs-nav-item');
-        var sections = panel.querySelectorAll('.cs-section');
+        var sections = panel.querySelectorAll('.cs-section, .td-section');
         var textTimer = null, closeTimer = null, revealTimer = null;
         var revealList = [];
         var suppressSpy = false;   // muted while a nav-click glide is running
         var scrollRAF = null;
         var heroIntro = overlay.hasAttribute('data-hero-intro');
-        var heroTitle = heroIntro ? overlay.querySelector('.cs-title') : null;
+        var heroTitle = heroIntro
+          ? (overlay.querySelector('.cs-title') || overlay.querySelector('.td-title'))
+          : null;
         var heroShaderEl = heroIntro ? overlay.querySelector('[data-hero-shader]') : null;
         var heroShaderMount = null;
         var heroRevealStarted = false;
         var heroTitleBaseSize = 64;
+        var heroTitleEndSize = 24;
         var heroFitTimer = null;
 
         function initHeroShaderMount() {
@@ -255,50 +258,123 @@ function initCopyEmail() {
         function fitHeroTitle() {
           if (!heroTitle) return;
           heroTitle.style.fontSize = '';
-          var lines = heroTitle.querySelectorAll('.cs-title-line');
+          heroTitle.style.transform = '';
+          var draftTitle = heroTitle.classList.contains('td-title');
+          var lines = heroTitle.querySelectorAll('.cs-title-line, .td-title-line');
           if (!lines.length) lines = [heroTitle];
 
           var column = heroTitle.closest('.cs-content') || panel;
-          var columnRect = column.getBoundingClientRect();
+          var fitRoot = draftTitle
+            ? (heroTitle.closest('.td-hero-intro') || heroTitle.closest('.td-hero') || column)
+            : column;
+          var fitRect = fitRoot.getBoundingClientRect();
           var panelRect = panel.getBoundingClientRect();
-          // Maximize to the panel's right edge (16px inset) — only shrink when a line would clip.
-          var targetRight = panelRect.right - 16;
-          if (targetRight < columnRect.left + 1) targetRight = columnRect.right - 16;
-          if (targetRight < 1) return;
+          // overflow-y:auto makes overflow-x clip to clientWidth (scrollbar), not border-box.
+          var visibleRight = panelRect.left + panel.clientWidth;
+          var vv = window.visualViewport;
+          if (vv) visibleRight = Math.min(visibleRight, vv.offsetLeft + vv.width);
 
-          var minSize = 24;
-          var maxSize = 160;
-          var best = minSize;
-          var lo = minSize;
-          var hi = maxSize;
-
-          while (lo <= hi + 0.01) {
-            var mid = Math.round(((lo + hi) / 2) * 4) / 4;
-            heroTitle.style.fontSize = mid + 'px';
-            var widestRight = 0;
+          function measuredWidth(size) {
+            heroTitle.style.fontSize = size + 'px';
+            void heroTitle.offsetWidth;
+            var widest = 0;
             for (var i = 0; i < lines.length; i++) {
-              widestRight = Math.max(widestRight, lines[i].getBoundingClientRect().right);
+              var line = lines[i];
+              // inline-block + max-content → offsetWidth is the true glyph+padding width
+              widest = Math.max(widest, line.offsetWidth, line.scrollWidth);
+              try {
+                var range = document.createRange();
+                range.selectNodeContents(line);
+                widest = Math.max(widest, range.getBoundingClientRect().width);
+              } catch (e) { /* ignore */ }
             }
-            if (widestRight <= targetRight + 0.5) {
-              best = mid;
-              lo = mid + 0.25;
-            } else {
-              hi = mid - 0.25;
-            }
+            return widest;
           }
 
-          heroTitle.style.fontSize = best + 'px';
-          heroTitleBaseSize = best;
+          function maxFittingSize(lo, hi, available) {
+            if (available < 40) available = 40;
+            if (hi < lo) hi = lo;
+            // Ratio estimate first so we never start from a wildly overflowing size.
+            var probe = Math.max(hi, lo);
+            var probeW = measuredWidth(probe);
+            if (probeW > 0 && probeW > available) {
+              hi = Math.min(hi, Math.floor(probe * (available / probeW) * 4) / 4);
+              if (hi < lo) hi = lo;
+            }
+            var best = lo;
+            while (lo <= hi + 0.01) {
+              var mid = Math.round(((lo + hi) / 2) * 4) / 4;
+              if (measuredWidth(mid) <= available) {
+                best = mid;
+                lo = mid + 0.25;
+              } else {
+                hi = mid - 0.25;
+              }
+            }
+            while (best > lo && measuredWidth(best) > available) best -= 0.5;
+            measuredWidth(best);
+            return best;
+          }
+
+          if (draftTitle) {
+            var titleLeft = heroTitle.getBoundingClientRect().left;
+            // Fit inside the visible screen, from the title's left edge.
+            // Extra slack covers antialiased ink + letter-spacing side bearings.
+            var available = Math.floor(visibleRight - titleLeft - 32);
+            var columnAvail = Math.floor(fitRect.width - 16);
+            if (columnAvail > 40) available = Math.min(available, columnAvail);
+
+            // Settled (scrolled) size: fixed 56px minimum.
+            heroTitleEndSize = 56;
+
+            // Start size: fill the content column / screen without clipping.
+            heroTitleBaseSize = maxFittingSize(heroTitleEndSize, 200, available);
+          } else {
+            heroTitleEndSize = 24;
+            var targetAvail = Math.floor(visibleRight - fitRect.left - 16);
+            if (targetAvail < 40) targetAvail = Math.floor(fitRect.width - 16);
+            heroTitleBaseSize = maxFittingSize(24, 160, targetAvail);
+          }
+
+          heroTitle.style.fontSize = heroTitleBaseSize + 'px';
         }
 
         function scheduleHeroTitleFit(done) {
-          requestAnimationFrame(function () {
+          function applyFit() {
+            fitHeroTitle();
+            resizeHeroShader();
+          }
+          function refitOpen() {
+            applyFit();
+            if (!overlay.classList.contains('open')) return;
+            if (reduceMotion) {
+              if (heroTitle) heroTitle.style.fontSize = heroTitleEndSize + 'px';
+            } else {
+              updateHeroScroll();
+            }
+          }
+          function afterFonts() {
             requestAnimationFrame(function () {
-              fitHeroTitle();
-              resizeHeroShader();
-              if (done) done();
+              requestAnimationFrame(function () {
+                applyFit();
+                if (done) done();
+                setTimeout(refitOpen, 150);
+                setTimeout(refitOpen, 450);
+              });
             });
-          });
+          }
+          var fontWait = Promise.resolve();
+          if (document.fonts) {
+            fontWait = Promise.all([
+              document.fonts.ready,
+              document.fonts.load('400 120px "Segoe UI"').catch(function () {}),
+              document.fonts.load('400 120px "Segoe UI Web (West European)"').catch(function () {})
+            ]);
+          }
+          fontWait.then(afterFonts).catch(afterFonts);
+          if (document.fonts && document.fonts.addEventListener) {
+            document.fonts.addEventListener('loadingdone', refitOpen, { once: true });
+          }
         }
 
         function resetHero() {
@@ -308,6 +384,7 @@ function initCopyEmail() {
             heroTitle.style.marginBottom = '';
             heroTitle.style.fontSize = '';
             heroTitleBaseSize = 64;
+            heroTitleEndSize = heroTitle.classList.contains('td-title') ? 56 : 24;
           }
         }
 
@@ -316,11 +393,20 @@ function initCopyEmail() {
           var range = heroScrollRange();
           var progress = Math.min(1, Math.max(0, panel.scrollTop / range));
           var eased = 1 - Math.pow(1 - progress, 2.5);
-          var minScale = 24 / heroTitleBaseSize;
-          var scale = 1 - eased * (1 - minScale);
+          var draftTitle = heroTitle.classList.contains('td-title');
 
-          heroTitle.style.transform = 'scale(' + scale + ')';
-          heroTitle.style.transformOrigin = 'left bottom';
+          if (draftTitle) {
+            // Interpolate font-size so the surrounding draft layout reflows
+            // into the settled 64px heading composition (no leftover scale box).
+            var size = heroTitleBaseSize - eased * (heroTitleBaseSize - heroTitleEndSize);
+            heroTitle.style.transform = '';
+            heroTitle.style.fontSize = size + 'px';
+          } else {
+            var minScale = heroTitleEndSize / heroTitleBaseSize;
+            var scale = 1 - eased * (1 - minScale);
+            heroTitle.style.transform = 'scale(' + scale + ')';
+            heroTitle.style.transformOrigin = 'left bottom';
+          }
           heroTitle.style.marginBottom = '';
 
           var showChrome = progress > 0.35;
@@ -344,7 +430,7 @@ function initCopyEmail() {
         // ---- scroll reveal: content blocks fade + rise in as they scroll into
         // view (one-time; scrolling back up shows them already revealed) ----
         function revealBlocks() {
-          return panel.querySelectorAll('.cs-content .cs-section > *, .cs-content .cs-divider, .cs-content .cs-footer');
+          return panel.querySelectorAll('.cs-content .cs-section > *, .cs-content .td-section > *, .cs-content .cs-divider, .cs-content .cs-footer');
         }
         function resetReveal() {
           Array.prototype.forEach.call(revealBlocks(), function (el) { el.classList.remove('reveal-in'); });
@@ -394,6 +480,7 @@ function initCopyEmail() {
             initHeroShaderMount();
             scheduleHeroTitleFit(function () {
               if (reduceMotion) {
+                if (heroTitle) heroTitle.style.fontSize = heroTitleEndSize + 'px';
                 overlay.classList.add('text-in');
                 startReveal();
               } else {
@@ -459,14 +546,23 @@ function initCopyEmail() {
         panel.addEventListener('scroll', syncActive, { passive: true });
         if (heroIntro) {
           panel.addEventListener('scroll', updateHeroScroll, { passive: true });
-          window.addEventListener('resize', function () {
+          function onHeroLayoutChange() {
             if (!overlay.classList.contains('open')) return;
             clearTimeout(heroFitTimer);
             heroFitTimer = setTimeout(function () {
               resizeHeroShader();
               scheduleHeroTitleFit(updateHeroScroll);
             }, 100);
-          });
+          }
+          window.addEventListener('resize', onHeroLayoutChange);
+          if (typeof ResizeObserver === 'function') {
+            var heroResizeObserver = new ResizeObserver(onHeroLayoutChange);
+            var heroFill = overlay.querySelector('.cs-hero-fill, .td-hero-fill');
+            var heroIntroBox = overlay.querySelector('.td-hero-intro') || overlay.querySelector('.cs-title-row');
+            if (heroFill) heroResizeObserver.observe(heroFill);
+            if (heroIntroBox) heroResizeObserver.observe(heroIntroBox);
+            heroResizeObserver.observe(panel);
+          }
         }
 
         // custom eased scroll for the panel — a single consistent 620ms glide

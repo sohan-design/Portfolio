@@ -1,0 +1,581 @@
+/* Draft staging layout for the B2B trainer case study.
+   Scoped to .cs-draft so the live studies keep their column.
+   Type rules use .cs-draft + element/class so they beat shared
+   .cs-section p / li styles from case-study.css. */
+
+.cs-draft.cs-overlay,
+.cs-draft .cs-panel {
+  --sans: var(--font);
+  --mono: var(--font);
+  --td-gutter: 120px;
+  --td-page-bg: var(--bg);
+  --td-text-primary: var(--text);
+  --td-text-muted: var(--text-muted);
+  --td-kicker: #0077b3;
+  --td-cite: #0077b3;
+  --td-pull: #b45309;
+  --td-figure-bg: var(--thumb-fill);
+  font-family: var(--font);
+  background: var(--td-page-bg);
+  background-image: none;
+  color: var(--td-text-primary);
+}
+
+html[data-theme="dark"] .cs-draft.cs-overlay,
+html[data-theme="dark"] .cs-draft .cs-panel {
+  /* Match other case-study panels (case-study.css uses #000). */
+  --td-page-bg: #000000;
+  --td-text-primary: #fff;
+  --td-text-muted: rgba(255, 255, 255, 0.5);
+  --td-kicker: #00b3ff;
+  --td-cite: #00b3ff;
+  --td-pull: #f09d2e;
+  --td-figure-bg: #0c0c0c;
+}
+
+.cs-draft,
+.cs-draft button,
+.cs-draft input,
+.cs-draft textarea {
+  font-family: var(--font);
+}
+
+/* Keep each type style independent: no shared opsz / inherited fluid sizes. */
+.cs-draft,
+.cs-draft * {
+  font-optical-sizing: none;
+  font-variation-settings: normal;
+}
+
+.cs-draft .cs-content {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  padding-inline: var(--td-gutter);
+  box-sizing: border-box;
+}
+
+/* Draft sections use .td-section (not .cs-section) so shared
+   .cs-section p / h2 / li type rules never bind these elements. */
+.cs-draft .cs-content .td-section > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s var(--ease);
+}
+
+.cs-draft .cs-content .td-section > .reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-draft .cs-content .td-section > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Nav + empty fill + bottom intro: first viewport, cover after scroll.
+   Matches the data-hero-intro scale pattern used on live case studies. */
+.cs-draft .td-first-screen {
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  position: relative;
+}
+
+.cs-draft .site-header {
+  width: 100%;
+  margin: 0;
+  padding: 40px 0 32px;
+  flex: none;
+}
+
+.cs-draft .site-nav {
+  width: 100%;
+  max-width: none;
+}
+
+.cs-draft .td-hero-fill.cs-hero-fill {
+  flex: 1 1 0;
+  min-height: clamp(72px, 18vh, 220px);
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cs-draft .td-hero-shader.cs-hero-shader {
+  --td-shader-w: clamp(160px, 30vw, 320px);
+  width: var(--td-shader-w);
+  height: auto;
+  max-width: min(var(--td-shader-w), 100%);
+  max-height: min(calc(var(--td-shader-w) * 342 / 800), 50%);
+  aspect-ratio: 800 / 342;
+  flex: none;
+  margin-top: 24px;
+  background: var(--td-page-bg);
+  pointer-events: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.cs-draft .td-hero-shader.cs-hero-shader canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.cs-draft .td-hero {
+  /* No separate hero fill — inherits the same page bg as every section. */
+  background: transparent;
+  margin-inline: calc(-1 * var(--td-gutter));
+  padding: 0 var(--td-gutter) 48px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+.cs-draft .td-hero-intro {
+  flex: none;
+  width: 100%;
+  max-width: 100%;
+  padding-top: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: visible;
+}
+
+/* Hero copy stays visible while scroll-reveal handles later sections. */
+.cs-draft .cs-content .td-hero > *,
+.cs-draft .cs-content .td-hero > .reveal-in {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.cs-draft .td-block {
+  padding: 112px 0;
+}
+
+.cs-draft p.td-kicker {
+  margin: 0 0 20px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
+  color: var(--td-kicker);
+}
+
+.cs-draft h1.td-title {
+  margin: 0;
+  padding: 0.12em 0.04em 0.22em 0;
+  font-family: var(--font);
+  font-size: clamp(28px, 5.2vw, 56px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.05em;
+  color: var(--td-text-primary);
+  will-change: font-size;
+  overflow: visible;
+  max-width: none;
+  width: max-content;
+}
+
+.cs-draft .td-title-line {
+  display: inline-block;
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+  overflow: visible;
+  padding-right: 0.14em;
+  padding-bottom: 0.08em;
+  vertical-align: top;
+}
+
+#caseStudyTrainerDraft p.td-sub {
+  margin: 16px 0 0;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft p.td-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-byline-rule {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 12px;
+  background: var(--td-text-muted);
+  opacity: 0.45;
+}
+
+.cs-draft .td-byline span:not(.td-year) {
+  font-weight: 400;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 72px;
+  margin-top: 40px;
+}
+
+.cs-draft .td-stat strong {
+  display: block;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.48px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-stat span {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-hero-figure {
+  margin: 0 0 96px;
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1120 / 664;
+  border-radius: 10px;
+  overflow: visible;
+  background: transparent;
+  box-shadow: 0 32px 96px rgba(255, 255, 255, 0.5);
+}
+
+.cs-draft .td-hero-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  border-radius: 10px;
+  background: var(--td-figure-bg);
+}
+
+.cs-draft .td-figure {
+  margin: 48px 0 0;
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1120 / 664;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--td-figure-bg);
+}
+
+.cs-draft .td-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.cs-draft p.td-lead {
+  margin: 0;
+  max-width: 630px;
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft h2.td-h {
+  margin: 16px 0 0;
+  max-width: 720px;
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft p.td-num {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft p.td-copy {
+  max-width: 500px;
+  margin: 24px 0 0;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.8px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft p.td-pull {
+  margin: 0;
+  max-width: 920px;
+  font-family: var(--font);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
+  color: var(--td-pull);
+}
+
+.cs-draft .td-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 80px;
+  margin-top: 40px;
+}
+
+.cs-draft .td-split h3 {
+  margin: 0 0 16px;
+  font-family: var(--font);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.48px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-split p {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-split li {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
+  color: var(--td-text-muted);
+}
+
+.cs-draft .td-split ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-draft .td-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 500px));
+  gap: 48px 40px;
+  margin-top: 40px;
+  padding: 0;
+}
+
+.cs-draft .td-quote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.cs-draft .td-quote p {
+  margin: 0;
+  max-width: 500px;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.8px;
+  color: var(--td-text-primary);
+}
+
+.cs-draft .td-quote cite {
+  display: block;
+  margin-top: 16px;
+  font-family: var(--font);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
+  color: var(--td-cite);
+}
+
+@media (max-width: 1280px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 80px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 40px;
+  }
+
+  .cs-draft .td-hero-shader.cs-hero-shader {
+    --td-shader-w: clamp(120px, 32vw, 240px);
+  }
+
+  .cs-draft .site-header {
+    padding-top: 28px;
+    padding-bottom: 24px;
+  }
+
+  .cs-draft .td-first-screen {
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  .cs-draft .td-hero {
+    padding: 0 var(--td-gutter) 40px;
+  }
+
+  .cs-draft .td-hero-intro {
+    padding-top: 0;
+  }
+
+  .cs-draft .td-hero-figure {
+    margin-bottom: 88px;
+  }
+
+  .cs-draft .td-block {
+    padding: 88px 0;
+  }
+
+  #caseStudyTrainerDraft p.td-sub {
+    font-size: 22px;
+    letter-spacing: -1.1px;
+  }
+
+  .cs-draft p.td-lead {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+
+  .cs-draft h2.td-h {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+
+  .cs-draft p.td-pull {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-draft .td-first-screen {
+    height: auto;
+    max-height: none;
+  }
+
+  .cs-draft .td-hero-fill {
+    display: none;
+  }
+
+  .cs-draft h1.td-title {
+    font-size: clamp(28px, 5.2vw, 56px);
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 720px) {
+  .cs-draft.cs-overlay,
+  .cs-draft .cs-panel {
+    --td-gutter: 20px;
+  }
+
+  .cs-draft .td-hero-fill.cs-hero-fill {
+    min-height: clamp(64px, 16vh, 160px);
+  }
+
+  .cs-draft .td-hero-shader.cs-hero-shader {
+    --td-shader-w: clamp(110px, 42vw, 180px);
+  }
+
+  .cs-draft .td-hero {
+    padding-bottom: 32px;
+  }
+
+  .cs-draft .td-quotes {
+    grid-template-columns: 1fr;
+  }
+
+  #caseStudyTrainerDraft p.td-sub {
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+
+  .cs-draft p.td-lead {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+  }
+
+  .cs-draft h2.td-h {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+  }
+
+  .cs-draft p.td-pull {
+    font-size: 28px;
+    letter-spacing: -1.4px;
+  }
+}
