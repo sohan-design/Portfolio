@@ -30,8 +30,8 @@ const HERO_SHADER_DEFAULTS = {
 
 /** Draft cells: 30% smaller than the previous 48px chunky grid. */
 const DRAFT_SHADER_PX_SIZE = Math.round(48 * 0.7);
-/** Draft animation uses the shared original speed. */
-const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed;
+/** Draft animation: 115% of the shared original speed. */
+const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed * 1.15;
 /** Same start frame as live studies — sparse warp, not a solid fill. */
 const DRAFT_SHADER_FRAME = HERO_SHADER_DEFAULTS.frame;
 
