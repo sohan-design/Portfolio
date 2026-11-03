@@ -7,6 +7,7 @@ import {
   defaultObjectSizing,
   getShaderColorFromString,
 } from '@paper-design/shaders';
+import { heroDitherMultiFragmentShader } from './heroDitherMulti.js';
 
 /** Google brand palette (icon, wordmark, and product colors). */
 export const GOOGLE_COLORS = {
@@ -27,10 +28,12 @@ const HERO_SHADER_DEFAULTS = {
   scale: 1,
 };
 
-/** Chunkier cells on the trainer draft hero. */
-const DRAFT_SHADER_PX_SIZE = 48;
+/** Draft cells: 30% smaller than the previous 48px chunky grid. */
+const DRAFT_SHADER_PX_SIZE = Math.round(48 * 0.7);
 /** Draft animation: 150% faster than the shared 0.1 default → 0.25. */
 const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed * 2.5;
+/** Start near a dense phase so the silhouette reads as fully filled. */
+const DRAFT_SHADER_FRAME = 0;
 
 var activeMounts = [];
 
@@ -142,6 +145,7 @@ export function createHeroShader(parentElement, options) {
     GOOGLE_COLORS.blue;
 
   var pxSize = resolvePxSize(parentElement);
+  var isDraft = parentElement.classList.contains('td-hero-shader');
   var uniforms = {
     u_colorBack: getShaderColorFromString(pageBg),
     u_colorFront: getShaderColorFromString(colorFront),
@@ -159,13 +163,15 @@ export function createHeroShader(parentElement, options) {
     u_worldHeight: defaultObjectSizing.worldHeight,
   };
 
+  var fragment = isDraft ? heroDitherMultiFragmentShader : ditheringFragmentShader;
+  var startFrame = isDraft ? DRAFT_SHADER_FRAME : HERO_SHADER_DEFAULTS.frame;
   var mount = new ShaderMount(
     parentElement,
-    ditheringFragmentShader,
+    fragment,
     uniforms,
     undefined,
     reduceMotion ? 0 : resolveSpeed(parentElement),
-    HERO_SHADER_DEFAULTS.frame
+    startFrame
   );
   activeMounts.push(mount);
   return mount;
