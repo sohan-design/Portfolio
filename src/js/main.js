@@ -260,7 +260,13 @@ function initCopyEmail() {
           heroTitle.style.fontSize = '';
           heroTitle.style.transform = '';
           var draftTitle = heroTitle.classList.contains('td-title');
-          heroTitleEndSize = draftTitle ? 64 : 24;
+          if (draftTitle) {
+            if (window.matchMedia('(max-width: 720px)').matches) heroTitleEndSize = 40;
+            else if (window.matchMedia('(max-width: 1079px)').matches) heroTitleEndSize = 48;
+            else heroTitleEndSize = 64;
+          } else {
+            heroTitleEndSize = 24;
+          }
           var lines = heroTitle.querySelectorAll('.cs-title-line, .td-title-line');
           if (!lines.length) lines = [heroTitle];
 
