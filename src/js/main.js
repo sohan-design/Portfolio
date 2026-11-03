@@ -509,11 +509,12 @@ function initCopyEmail() {
           }
           window.addEventListener('resize', onHeroLayoutChange);
           if (typeof ResizeObserver === 'function') {
+            var heroResizeObserver = new ResizeObserver(onHeroLayoutChange);
             var heroFill = overlay.querySelector('.cs-hero-fill, .td-hero-fill');
-            if (heroFill) {
-              var heroFillObserver = new ResizeObserver(onHeroLayoutChange);
-              heroFillObserver.observe(heroFill);
-            }
+            var heroIntroBox = overlay.querySelector('.td-hero-intro') || overlay.querySelector('.cs-title-row');
+            if (heroFill) heroResizeObserver.observe(heroFill);
+            if (heroIntroBox) heroResizeObserver.observe(heroIntroBox);
+            heroResizeObserver.observe(panel);
           }
         }
 
