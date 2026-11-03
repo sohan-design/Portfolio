@@ -38,10 +38,11 @@ var BINARY_TAIL = [
 ].join('\n');
 
 var MULTI_TAIL = [
-  '// ~50% random fill inside the warp silhouette + random tint when lit.',
-  '  float inShape = step(0.12, shape);',
-  '  float lit = inShape * step(hash21(ditheringNoiseUV), 0.5);',
-  '  float rnd = hash21(ditheringNoiseUV + vec2(17.0, floor(t * 3.0)));',
+  '// Classic random dither against the animated shape (cells fill/unfill over time),',
+  '// remapped so density sits near ~50% instead of a solid block.',
+  '  float density = mix(0.22, 0.78, clamp(shape, 0.0, 1.0));',
+  '  float lit = step(hash21(ditheringNoiseUV), density);',
+  '  float rnd = hash21(ditheringNoiseUV + vec2(17.0, 9.0));',
   '  float levels = 5.0;',
   '  int idx = int(floor(rnd * levels));',
   '',
@@ -84,23 +85,13 @@ var MULTI_TAIL = [
   '}',
 ].join('\n');
 
-// Slightly wider warp ridges so a readable silhouette exists, then 50% random.
-var WARP_ORIG =
-  'shape = .15 / max(0.001, abs(sin(t - shapeUV.y - shapeUV.x)));\n' +
-  '    shape = smoothstep(0.02, 1., shape);';
-
-var WARP_HALF =
-  'shape = .2 / max(0.001, abs(sin(t - shapeUV.y - shapeUV.x)));\n' +
-  '    shape = smoothstep(0.02, 0.7, shape);';
-
 export var heroDitherMultiFragmentShader = ditheringFragmentShader
   .replace(CENTERED_GRID, EDGE_ALIGNED_GRID)
-  .replace(WARP_ORIG, WARP_HALF)
   .replace(BINARY_TAIL, MULTI_TAIL);
 
 if (
   heroDitherMultiFragmentShader.indexOf('fullCell') === -1 ||
-  heroDitherMultiFragmentShader.indexOf('inShape') === -1 ||
+  heroDitherMultiFragmentShader.indexOf('density') === -1 ||
   heroDitherMultiFragmentShader.indexOf('gl_FragCoord.xy / pxSize') === -1
 ) {
   console.warn('[heroDitherMulti] Failed to patch Paper dithering shader');
