@@ -23,7 +23,8 @@
 
 html[data-theme="dark"] .cs-draft.cs-overlay,
 html[data-theme="dark"] .cs-draft .cs-panel {
-  --td-page-bg: #141414;
+  /* Match other case-study panels (case-study.css uses #000). */
+  --td-page-bg: #000000;
   --td-text-primary: #fff;
   --td-text-muted: rgba(255, 255, 255, 0.5);
   --td-kicker: #00b3ff;
@@ -98,7 +99,8 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 .cs-draft .td-hero {
-  background: var(--td-page-bg);
+  /* No separate hero fill — inherits the same page bg as every section. */
+  background: transparent;
   margin-inline: calc(-1 * var(--td-gutter));
   padding: 0 var(--td-gutter) 48px;
   flex: 1 1 auto;
