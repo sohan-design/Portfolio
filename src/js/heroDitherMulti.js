@@ -1,9 +1,22 @@
 /**
- * Multi-tone dithering fragment shader for the draft hero.
- * Built from Paper's dithering shader: same shapes/grid, but maps shape
- * intensity to shades + tints of u_colorFront instead of a binary ink.
+ * Draft hero dither: original sparse warp shape, random tints only,
+ * and a top-left–aligned pixel grid so edge half-cells never draw.
  */
 import { ditheringFragmentShader } from '@paper-design/shaders';
+
+var CENTERED_GRID = [
+  'float pxSize = u_pxSize * u_pixelRatio;',
+  '  vec2 pxSizeUV = gl_FragCoord.xy - .5 * u_resolution;',
+  '  pxSizeUV /= pxSize;',
+  '  vec2 canvasPixelizedUV = (floor(pxSizeUV) + .5) * pxSize;',
+].join('\n');
+
+// Align the dither lattice to the canvas origin so every drawn cell is whole.
+var EDGE_ALIGNED_GRID = [
+  'float pxSize = u_pxSize * u_pixelRatio;',
+  '  vec2 pxSizeUV = gl_FragCoord.xy / pxSize;',
+  '  vec2 canvasPixelizedUV = (floor(pxSizeUV) + .5) * pxSize;',
+].join('\n');
 
 var BINARY_TAIL = [
   'dithering -= .5;',
@@ -25,12 +38,18 @@ var BINARY_TAIL = [
 ].join('\n');
 
 var MULTI_TAIL = [
-  '// Filled silhouette; each cell picks a random tint of the ink (no dark shades).',
-  '  float mask = step(0.1, shape);',
-  '  // Re-roll with time so the tint field stays totally random as it animates.',
-  '  float rnd = hash21(ditheringNoiseUV + vec2(floor(t * 3.0), floor(t * 5.0)));',
+  '// Sparse random presence (not a solid fill) + random tint when lit.',
+  '  // Keep density well below a solid block so it never starts fully filled.',
+  '  float lit = step(hash21(ditheringNoiseUV), clamp(shape * 0.38, 0.0, 1.0));',
+  '  float rnd = hash21(ditheringNoiseUV + vec2(17.0, floor(t * 3.0)));',
   '  float levels = 5.0;',
   '  int idx = int(floor(rnd * levels));',
+  '',
+  '  // Drop any remainder strip that is not a full cell.',
+  '  vec2 cellCoord = floor(gl_FragCoord.xy / pxSize);',
+  '  vec2 cellCount = floor(u_resolution / pxSize);',
+  '  bool fullCell = cellCoord.x >= 0.0 && cellCoord.y >= 0.0',
+  '    && cellCoord.x < cellCount.x && cellCoord.y < cellCount.y;',
   '',
   '  vec3 base = u_colorFront.rgb;',
   '  vec3 tint0 = mix(base, vec3(1.0), 0.06);',
@@ -41,7 +60,7 @@ var MULTI_TAIL = [
   '',
   '  vec3 ink = tint0;',
   '  float inkA = 0.0;',
-  '  if (mask > 0.5) {',
+  '  if (fullCell && lit > 0.5) {',
   '    inkA = u_colorFront.a;',
   '    if (idx == 0) ink = tint0;',
   '    else if (idx == 1) ink = tint1;',
@@ -65,23 +84,13 @@ var MULTI_TAIL = [
   '}',
 ].join('\n');
 
-// Keep a continuous warp field (not crushed to 0/1) so tones have range,
-// while still reading as a filled silhouette via the mask above.
-var WARP_FILL =
-  'shape = .28 / max(0.001, abs(sin(t - shapeUV.y - shapeUV.x)));\n' +
-  '    shape = clamp(shape, 0.0, 1.6);';
-
-var WARP_ORIG =
-  'shape = .15 / max(0.001, abs(sin(t - shapeUV.y - shapeUV.x)));\n' +
-  '    shape = smoothstep(0.02, 1., shape);';
-
 export var heroDitherMultiFragmentShader = ditheringFragmentShader
-  .replace(WARP_ORIG, WARP_FILL)
+  .replace(CENTERED_GRID, EDGE_ALIGNED_GRID)
   .replace(BINARY_TAIL, MULTI_TAIL);
 
 if (
-  heroDitherMultiFragmentShader === ditheringFragmentShader ||
-  heroDitherMultiFragmentShader.indexOf('tint4') === -1
+  heroDitherMultiFragmentShader.indexOf('fullCell') === -1 ||
+  heroDitherMultiFragmentShader.indexOf('gl_FragCoord.xy / pxSize') === -1
 ) {
   console.warn('[heroDitherMulti] Failed to patch Paper dithering shader');
 }

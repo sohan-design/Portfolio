@@ -32,8 +32,8 @@ const HERO_SHADER_DEFAULTS = {
 const DRAFT_SHADER_PX_SIZE = Math.round(48 * 0.7);
 /** Draft animation uses the shared original speed. */
 const DRAFT_SHADER_SPEED = HERO_SHADER_DEFAULTS.speed;
-/** Start near a dense phase so the silhouette reads as fully filled. */
-const DRAFT_SHADER_FRAME = 0;
+/** Same start frame as live studies — sparse warp, not a solid fill. */
+const DRAFT_SHADER_FRAME = HERO_SHADER_DEFAULTS.frame;
 
 var activeMounts = [];
 
