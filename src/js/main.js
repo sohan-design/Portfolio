@@ -273,9 +273,10 @@ function initCopyEmail() {
           var column = heroTitle.closest('.cs-content') || panel;
           var columnRect = column.getBoundingClientRect();
           var panelRect = panel.getBoundingClientRect();
-          // Maximize to the panel's right edge (16px inset) — only shrink when a line would clip.
-          var targetRight = panelRect.right - 16;
-          if (targetRight < columnRect.left + 1) targetRight = columnRect.right - 16;
+          // Maximize to the panel's right edge — leave extra room for descenders / last glyph.
+          var edgeInset = draftTitle ? 28 : 16;
+          var targetRight = panelRect.right - edgeInset;
+          if (targetRight < columnRect.left + 1) targetRight = columnRect.right - edgeInset;
           if (targetRight < 1) return;
 
           var minSize = heroTitleEndSize;

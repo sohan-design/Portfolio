@@ -44,7 +44,7 @@ function pageBackgroundColor() {
 /** Snap shader container to even width/height, fitting the available hero fill area. */
 export function snapHeroShaderSize(parentElement) {
   if (!parentElement) return;
-  var fill = parentElement.closest('.cs-hero-fill');
+  var fill = parentElement.closest('.cs-hero-fill, .td-hero-fill');
   var maxH = fill && fill.clientHeight > 0 ? fill.clientHeight : 342;
   var maxW = fill && fill.clientWidth > 0 ? fill.clientWidth : 800;
   maxW = Math.min(800, maxW);

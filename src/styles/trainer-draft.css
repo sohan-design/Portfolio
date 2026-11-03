@@ -106,7 +106,24 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 .cs-draft .td-hero-fill {
   flex: 1 1 0;
   min-height: 0;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
   pointer-events: none;
+  z-index: 0;
+}
+
+.cs-draft .td-hero-shader {
+  width: auto;
+  height: auto;
+  max-width: min(800px, 100%);
+  max-height: 100%;
+  aspect-ratio: 800 / 342;
+  flex: none;
+  background: var(--td-page-bg);
+  pointer-events: auto;
 }
 
 .cs-draft .td-hero {
@@ -155,10 +172,11 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
 .cs-draft h1.td-title {
   margin: 0;
+  padding: 0.08em 0.04em 0.18em 0;
   font-family: var(--font);
   font-size: 64px;
   font-weight: 400;
-  line-height: 1.12;
+  line-height: 1.2;
   letter-spacing: -0.05em;
   color: var(--td-text-primary);
   will-change: font-size;
@@ -168,6 +186,8 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 .cs-draft .td-title-line {
   display: block;
   white-space: nowrap;
+  overflow: visible;
+  padding-right: 0.06em;
 }
 
 #caseStudyTrainerDraft p.td-sub {
@@ -477,6 +497,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 
   .cs-draft h1.td-title {
     font-size: 64px;
+    line-height: 1.2;
   }
 }
 
