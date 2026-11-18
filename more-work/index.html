@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>More work · Sugandha</title>
-  <meta name="description" content="More work — a few more things Sugandha has shipped and tinkered with on the side." />
+  <title>Works · Sohan Bhute</title>
+  <meta name="description" content="More work — explorations, dashboards, and mobile projects by Sohan Bhute." />
   <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="/src/styles/main.css" />
   <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
+  <link rel="stylesheet" href="/src/styles/works-gallery.css" />
   <script>
     (function () {
       try {
@@ -22,7 +23,6 @@
   </script>
 </head>
 <body class="hp2-exp">
-  <!-- Intro loader -->
   <div class="intro-loader" id="introLoader" aria-hidden="true">
     <div class="intro-loader-inner">
       <div class="intro-icons">
@@ -52,7 +52,6 @@
       var type = nav ? nav.type : 'navigate';
       var seen = false;
       try { seen = sessionStorage.getItem('introLoaderSeen') === '1'; } catch (e) {}
-      // Play on hard reload, or first visit in this tab. Skip in-app navigations.
       if (!(type === 'reload' || (type === 'navigate' && !seen))) {
         el.remove();
         return;
@@ -103,48 +102,69 @@
       </nav>
     </header>
 
-    <main class="work-page" id="page-work">
-      <h1 class="page-title" data-reveal data-reveal-lead>More work</h1>
-      <p class="page-desc" data-reveal>A few more things I&rsquo;ve shipped or tinkered with.</p>
+    <main class="wg-page" id="page-work">
+      <header class="wg-head">
+        <h1 class="wg-title">Works</h1>
+        <p class="wg-desc">Screens and side projects, grouped so you can scroll and open any shot.</p>
+      </header>
 
-      <div class="mw-grid">
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/dashboard-v2.webp" alt="Dashboard v2" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/skyview.webp" alt="Skyview" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/mobile-app-design.webp" alt="Mobile app design" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/ai-insights.webp" alt="AI Insights" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/checkout-for-students.webp" alt="Checkout for Students" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/create.webp" alt="Create" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/crypto-pg-dashboard.webp" alt="Crypto PG Dashboard" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/events-details.webp" alt="Events details page" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/sign-in.webp" alt="Sign in" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/404.webp" alt="404" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/more-work/help-support-panel.jpg" alt="Help and Support panel with Veda AI search" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/cover-before.png" alt="Legacy white-label learner dashboard" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/learner-app.png" alt="Learner App across web and mobile" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/marketing-banner.png" alt="Continue Learning marketing banner system" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/cover-after.png" alt="Modernized white-label learner dashboard" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/design-system-1.png" alt="Design system foundations" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/design-system-2.png" alt="Design system components" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/design-system-3.png" alt="Design system layout and spacing" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-white-label/design-system-4.png" alt="Design system documentation" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/research.webp" alt="Trainer dashboard research" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/overview.webp" alt="B2B trainer admin dashboard" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/analytics.webp" alt="Trainer analytics and reporting" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/system.webp" alt="Trainer operations design system" loading="lazy" /></figure>
-        <figure class="mw-card" data-reveal><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/ai-flows.webp" alt="AI-assisted trainer admin flows" loading="lazy" /></figure>
-      </div>
+      <section class="wg-section" aria-labelledby="wg-explorations">
+        <h2 class="wg-section-label" id="wg-explorations">Explorations</h2>
+        <div class="wg-grid">
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/ai-insights.webp" alt="AI Insights" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/help-support-panel.jpg" alt="Help and Support panel with Veda AI search" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/create.webp" alt="Create" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/404.webp" alt="404" loading="lazy" /></figure>
+        </div>
+      </section>
 
-      <div class="cs-lightbox" id="csLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+      <section class="wg-section" aria-labelledby="wg-dashboards">
+        <h2 class="wg-section-label" id="wg-dashboards">Dashboards</h2>
+        <div class="wg-grid">
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/dashboard-v2.webp" alt="Dashboard v2" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/skyview.webp" alt="Skyview" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/crypto-pg-dashboard.webp" alt="Crypto PG Dashboard" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/overview.webp" alt="B2B trainer admin dashboard" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/cover-after.png" alt="Modernized white-label learner dashboard" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/analytics.webp" alt="Trainer analytics and reporting" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/ai-flows.webp" alt="AI-assisted trainer admin flows" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/design-system-1.png" alt="Design system foundations" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/cover-before.png" alt="Legacy white-label learner dashboard" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/system.webp" alt="Trainer operations design system" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/design-system-2.png" alt="Design system components" loading="lazy" /></figure>
+        </div>
+      </section>
+
+      <section class="wg-section" aria-labelledby="wg-mobile">
+        <h2 class="wg-section-label" id="wg-mobile">Mobile</h2>
+        <div class="wg-grid">
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/mobile-app-design.webp" alt="Mobile app design" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/learner-app.png" alt="Learner App across web and mobile" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/sign-in.webp" alt="Sign in" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/checkout-for-students.webp" alt="Checkout for Students" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/more-work/events-details.webp" alt="Events details page" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/marketing-banner.png" alt="Continue Learning marketing banner system" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/design-system-3.png" alt="Design system layout and spacing" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-white-label/design-system-4.png" alt="Design system documentation" loading="lazy" /></figure>
+          <figure class="wg-card"><img class="cs-zoom" src="/assets/case-study-trainer-dashboard/research.webp" alt="Trainer dashboard research" loading="lazy" /></figure>
+        </div>
+      </section>
+
+      <div class="cs-lightbox cs-lightbox--filmstrip" id="csLightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image viewer">
         <button class="cs-lightbox-nav prev" id="csLightboxPrev" type="button" aria-label="Previous image">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <button class="cs-lightbox-nav next" id="csLightboxNext" type="button" aria-label="Next image">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
-        <figcaption id="csLightboxCaption"></figcaption>
+        <div class="cs-lightbox-stage">
+          <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
+          <figcaption id="csLightboxCaption"></figcaption>
+        </div>
+        <div class="cs-lightbox-strip" id="csLightboxStrip" hidden>
+          <div class="cs-lightbox-strip-rail" id="csLightboxStripRail" role="listbox" aria-label="Image previews"></div>
+        </div>
       </div>
-
     </main>
   </div>
 

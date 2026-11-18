@@ -198,8 +198,8 @@ html[data-theme='dark'] .hp2-pixel-frame--hero {
 
 .hp2-pcard-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 48px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px 48px;
 }
 
 .hp2-pcard {
@@ -215,11 +215,18 @@ html[data-theme='dark'] .hp2-pixel-frame--hero {
   cursor: pointer;
   text-align: left;
   color: inherit;
-  transition: transform 0.35s var(--ease, ease);
+  /* oil-polish: quieter Fluent hover (was transform-only 3px) */
+  transition: transform 0.28s var(--ease, ease);
 }
 
 .hp2-pcard:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+}
+
+.hp2-pcard:hover .hp2-pcard-media img,
+.hp2-pcard:focus-visible .hp2-pcard-media img {
+  /* oil-polish: soft media lift */
+  filter: brightness(1.04);
 }
 
 .hp2-pcard:focus-visible {
@@ -236,7 +243,8 @@ html[data-theme='dark'] .hp2-pixel-frame--hero {
   overflow: hidden;
   background: #ffffff;
   border: 0;
-  border-radius: 6px;
+  /* oil-polish: Fluent corner (was 6px) */
+  border-radius: 4px;
 }
 
 html[data-theme='dark'] .hp2-pcard-media {
@@ -249,13 +257,15 @@ html[data-theme='dark'] .hp2-pcard-media {
   height: 100%;
   object-fit: cover;
   border: 0;
-  border-radius: 6px;
+  border-radius: 4px;
+  transition: filter 0.28s var(--ease, ease);
 }
 
 .hp2-pcard-copy {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* oil-polish: tighter meta↔title pair (was 8px) */
+  gap: 6px;
 }
 
 .hp2-pcard-meta {
@@ -263,7 +273,8 @@ html[data-theme='dark'] .hp2-pcard-media {
   font-size: 14px;
   font-weight: 600;
   line-height: 18px;
-  letter-spacing: -0.28px;
+  /* oil-polish: category tracking (was -0.28px) */
+  letter-spacing: 0;
   text-transform: none;
   color: var(--ab-kicker, #0077b3);
 }
@@ -276,7 +287,7 @@ html[data-theme='dark'] .hp2-pcard-meta {
   margin: 0;
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.45;
   letter-spacing: -0.075px;
   color: var(--text, #000);
 }
@@ -392,7 +403,7 @@ html:not([data-theme='dark']) .tfh-canvas {
 
 .hp2-shelf-rail {
   --hp2-shelf-gap: 48px;
-  --hp2-shelf-card-w: calc((100vw - var(--hp2-shelf-pad) * 2 - var(--hp2-shelf-gap)) / 2);
+  --hp2-shelf-card-w: calc((100vw - var(--hp2-shelf-pad) * 2 - var(--hp2-shelf-gap) * 2) / 3);
   display: flex;
   gap: var(--hp2-shelf-gap);
   overflow-x: auto;
@@ -485,6 +496,11 @@ html[data-theme='dark'] .hp2-shelf-btn:hover:not(:disabled) {
   .hp2-shelf-rail {
     --hp2-shelf-gap: 24px;
     --hp2-shelf-card-w: calc(100vw - var(--hp2-shelf-pad) * 2);
+  }
+
+  .ab-page .hp2-shelf-rail {
+    --hp2-shelf-gap: 24px;
+    --hp2-shelf-card-w: 100%;
   }
 }
 

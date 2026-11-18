@@ -344,12 +344,27 @@ a:where(.btn-primary, .nav-link, .nav-social a, .social a, .cs-nav-item, .cs-nav
 
 button { font: inherit; cursor: pointer; }
 
+body {
+  max-width: 2160px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .site {
   width: 100%;
   max-width: calc(var(--max-w) + var(--page-pad) * 2);
   margin: 0 auto;
   padding: 40px var(--page-pad) 132px;
   transition: opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.site-header,
+.site-nav {
+  width: 100%;
+  max-width: 2160px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .site:has([data-site-footer]),
@@ -400,7 +415,8 @@ html[data-theme='dark'] body:has(#page-about) {
 .nav-link {
   font-size: 14px;
   line-height: 22.4px;
-  letter-spacing: -0.5px;
+  /* oil-polish: Segoe nav tracking (was -0.5px) */
+  letter-spacing: -0.1px;
   color: var(--text-secondary);
   transition: color 0.2s var(--ease);
 }
@@ -1029,9 +1045,11 @@ html[data-theme="dark"] .btn-primary {
   box-sizing: border-box;
 }
 
+/* Stay inside the page shell so Contact me lines up with body gutters. */
 .cs-panel > .site-cta--pixel,
 body:has(#page-home) .site-cta--pixel,
-body:has(#page-about) .site-cta--pixel {
+body:has(#page-about) .site-cta--pixel,
+body:has(#page-work) .site-cta--pixel {
   width: 100%;
   left: auto;
   margin-left: 0;
@@ -1047,6 +1065,8 @@ body:has(#page-about) .site-cta--pixel {
   max-width: none;
   margin: 0;
   padding-bottom: calc(clamp(140px, 26vw, 220px) + 100px);
+  /* Text starts at the same inset as .ab-content / .wg-page (padding is on the section). */
+  padding-inline: 0;
 }
 
 .cta-signature {
@@ -1058,9 +1078,10 @@ body:has(#page-about) .site-cta--pixel {
 .cta-num {
   margin: 0 0 16px;
   font-size: 24px;
-  font-weight: 400;
+  /* oil-polish: match ab-num Semilight (was 400 / -1.2px) */
+  font-weight: 350;
   line-height: 1.2;
-  letter-spacing: -1.2px;
+  letter-spacing: -0.4px;
   color: var(--text-muted);
 }
 
@@ -1069,8 +1090,9 @@ body:has(#page-about) .site-cta--pixel {
   max-width: 720px;
   font-size: 48px;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -2.4px;
+  line-height: 1.25;
+  /* oil-polish: match ab-h tracking (was -2.4px) */
+  letter-spacing: -1.6px;
   color: var(--text);
 }
 
@@ -1081,7 +1103,8 @@ body:has(#page-about) .site-cta--pixel {
 @media (max-width: 900px) {
   .cta-title {
     font-size: 32px;
-    letter-spacing: -1.4px;
+    /* oil-polish: mobile CTA title (was -1.4px) */
+    letter-spacing: -1px;
   }
 }
 
@@ -1107,7 +1130,8 @@ button.btn-primary {
   background: transparent;
   color: var(--text);
   font-size: 13px;
-  font-weight: 450;
+  /* oil-polish: real Segoe weight (was 450) */
+  font-weight: 400;
   line-height: 19.5px;
   letter-spacing: 0;
   text-decoration: none;
@@ -1115,7 +1139,8 @@ button.btn-primary {
 }
 
 html[data-theme="dark"] .btn-primary {
-  --cta-green: #ace1af;
+  /* oil-polish: quiet accent border (was #ace1af mint) */
+  --cta-green: #00b3ff;
 }
 
 .cta-actions {
@@ -1132,7 +1157,8 @@ html[data-theme="dark"] .btn-primary {
   font-size: 14px;
   font-weight: 600;
   line-height: 18px;
-  letter-spacing: -0.28px;
+  /* oil-polish: colophon tracking (was -0.28px) */
+  letter-spacing: -0.1px;
   color: var(--text-muted);
 }
 
@@ -1170,6 +1196,14 @@ html[data-theme="dark"] .btn-primary {
   inset: -1px;
   pointer-events: none;
   overflow: visible;
+  /* oil-polish: handles only on interaction (was always visible) */
+  opacity: 0;
+  transition: opacity 0.18s var(--ease);
+}
+
+.btn-primary:hover .selection-handles,
+.btn-primary:focus-visible .selection-handles {
+  opacity: 1;
 }
 
 .btn-primary .selection-handles i {

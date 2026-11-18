@@ -1,25 +1,29 @@
 /* Editorial type hierarchy shared by About + Home (inspired by case studies). */
 
-/* Full-bleed like case-study panels (escape .site max-width). */
+/* Wide editorial shell — capped and centered, not viewport-full forever. */
 body:has(#page-about) .site,
 body:has(#page-home) .site {
-  max-width: none;
+  max-width: 2160px;
   width: 100%;
-  margin: 0;
+  margin: 0 auto;
   padding: 40px 0 0;
 }
 
 body:has(#page-about) .site-header,
 body:has(#page-home) .site-header {
-  margin: 0;
+  margin: 0 auto;
   padding: 0 var(--ab-gutter, 120px) 32px;
   box-sizing: border-box;
+  max-width: 2160px;
+  width: 100%;
 }
 
 body:has(#page-about) .site-nav,
 body:has(#page-home) .site-nav {
   width: 100%;
-  max-width: none;
+  max-width: 2160px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Gutter lives on body so site header + footer share page text alignment. */
@@ -66,7 +70,8 @@ html[data-theme='dark'] .ab-page {
   font-size: 14px;
   font-weight: 600;
   line-height: 18px;
-  letter-spacing: -0.28px;
+  /* oil-polish: kicker tracking (was -0.28px) */
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ab-kicker);
 }
@@ -76,7 +81,8 @@ html[data-theme='dark'] .ab-page {
   font-size: clamp(40px, 7vw, 72px);
   font-weight: 400;
   line-height: 1.1;
-  letter-spacing: -0.05em;
+  /* oil-polish: Segoe display tracking (was -0.05em) */
+  letter-spacing: -0.03em;
   color: var(--text);
 }
 
@@ -85,9 +91,16 @@ html[data-theme='dark'] .ab-page {
   max-width: 720px;
   font-size: 24px;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -1.2px;
-  color: var(--text);
+  line-height: 1.25;
+  /* oil-polish: soften subhead tracking (was -1.2px) */
+  letter-spacing: -0.6px;
+  /* oil-polish: secondary under name (was --text) */
+  color: var(--text-secondary);
+}
+
+/* oil-polish: clearer break before lead block */
+.ab-page .ab-section:has(> .ab-lead) {
+  padding-top: 72px;
 }
 
 .ab-byline {
@@ -97,10 +110,16 @@ html[data-theme='dark'] .ab-page {
   gap: 12px;
   margin-top: 30px;
   font-size: 14px;
-  font-weight: 600;
+  /* oil-polish: quieter meta weight (was 600) */
+  font-weight: 400;
   line-height: 18px;
-  letter-spacing: -0.28px;
+  /* oil-polish: byline tracking (was -0.28px) */
+  letter-spacing: -0.1px;
   color: var(--text);
+}
+
+.ab-byline .ab-year {
+  font-weight: 600;
 }
 
 .ab-byline-rule {
@@ -121,17 +140,19 @@ html[data-theme='dark'] .ab-page {
   max-width: 920px;
   font-size: 48px;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -2.4px;
+  line-height: 1.25;
+  /* oil-polish: lead tracking (was -2.4px) */
+  letter-spacing: -1.6px;
   color: var(--text);
 }
 
 .ab-num {
   margin: 0 0 16px;
   font-size: 24px;
-  font-weight: 400;
+  /* oil-polish: Semilight section index (was 400 / -1.2px) */
+  font-weight: 350;
   line-height: 1.2;
-  letter-spacing: -1.2px;
+  letter-spacing: -0.4px;
   color: var(--text-muted);
 }
 
@@ -140,19 +161,23 @@ html[data-theme='dark'] .ab-page {
   max-width: 720px;
   font-size: 48px;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -2.4px;
+  line-height: 1.25;
+  /* oil-polish: section title tracking (was -2.4px) */
+  letter-spacing: -1.6px;
   color: var(--text);
 }
 
 .ab-copy {
   max-width: 500px;
-  margin: 24px 0 0;
+  /* oil-polish: air under lead (was 24px) */
+  margin: 32px 0 0;
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: -0.8px;
-  color: var(--text);
+  /* oil-polish: Fluent reading rhythm (was 1.4 / -0.8px) */
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+  /* oil-polish: secondary body tone (was --text) */
+  color: var(--text-secondary);
 }
 
 .ab-copy + .ab-copy {
@@ -164,8 +189,9 @@ html[data-theme='dark'] .ab-page {
   max-width: 920px;
   font-size: 48px;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -2.4px;
+  line-height: 1.25;
+  /* oil-polish: pull tracking (was -2.4px) */
+  letter-spacing: -1.6px;
   color: var(--ab-pull);
 }
 
@@ -426,17 +452,22 @@ html[data-theme='dark'] .ab-photo {
 /* Home-specific editorial wrappers */
 .ab-page .hp2-projects {
   padding-top: 0;
-  gap: 96px;
+  gap: 128px;
 }
 
 .ab-page .hp2-project-group {
   display: flex;
   flex-direction: column;
   gap: 0;
+  padding: 24px 0 48px;
+}
+
+.ab-page .hp2-project-group .ab-num {
+  margin-bottom: 20px;
 }
 
 .ab-page .hp2-project-group .ab-h {
-  margin-bottom: 40px;
+  margin-bottom: 64px;
 }
 
 .ab-page .hp2-project-group > .section-label,
@@ -444,20 +475,30 @@ html[data-theme='dark'] .ab-photo {
   display: none;
 }
 
+.ab-page .hp2-more.ab-section {
+  padding-top: 120px;
+  padding-bottom: 48px;
+}
+
 .ab-page .hp2-more .section-head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  margin: 0 0 40px;
+  margin: 0 0 64px;
 }
 
 .ab-page .hp2-more .section-head .ab-num {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .ab-page .hp2-more .section-head .ab-h {
   margin: 0;
+}
+
+/* Extra air between major home blocks (work / play / more / jobs) */
+.ab-page .lumia-hub + .lumia-hub .ab-section {
+  padding-top: 120px;
 }
 
 .ab-page .hp2-more .view-all {
@@ -475,14 +516,26 @@ html[data-theme='dark'] .ab-photo {
   opacity: 0.75;
 }
 
+/* Shelf stays inside the 2160 shell — match project card columns (3-up + 48px gap). */
 .ab-page .hp2-shelf {
   --hp2-shelf-pad: var(--ab-gutter, 120px);
+  --hp2-shelf-gap: 48px;
+  width: calc(100% + var(--ab-gutter, 120px) * 2);
+  max-width: none;
+  left: auto;
+  margin-left: calc(var(--ab-gutter, 120px) * -1);
+  margin-right: calc(var(--ab-gutter, 120px) * -1);
+}
+
+.ab-page .hp2-shelf-rail {
+  --hp2-shelf-card-w: calc((100% - var(--hp2-shelf-gap) * 2) / 3);
 }
 
 .ab-hero-figure {
   margin: 56px 0 0;
   width: 100%;
-  border-radius: 10px;
+  /* oil-polish: match card radius (was 10px) */
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -493,7 +546,8 @@ html[data-theme='dark'] .ab-photo {
 .ab-hero-figure .hp2-pixel-frame {
   margin: 0;
   width: 100%;
-  border-radius: 10px;
+  /* oil-polish: match card radius (was 10px) */
+  border-radius: 4px;
 }
 
 .ab-hero-row {
@@ -525,8 +579,9 @@ html[data-theme='dark'] .ab-photo {
 .ab-hero-row .site-clock {
   margin-left: auto;
   font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.28px;
+  /* oil-polish: clock weight/tracking (was 600 / -0.28px) */
+  font-weight: 400;
+  letter-spacing: -0.1px;
   color: var(--text-muted);
 }
 
@@ -555,12 +610,14 @@ html[data-theme='dark'] .ab-photo {
   .ab-h,
   .ab-pull {
     font-size: 32px;
-    letter-spacing: -1.4px;
+    /* oil-polish: mobile display tracking (was -1.4px) */
+    letter-spacing: -1px;
   }
 
   .ab-sub {
     font-size: 20px;
-    letter-spacing: -0.8px;
+    /* oil-polish: mobile sub tracking (was -0.8px) */
+    letter-spacing: -0.4px;
   }
 
   .ab-strip {

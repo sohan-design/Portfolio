@@ -740,6 +740,9 @@ function initCopyEmail() {
       var capEl = document.getElementById('csLightboxCaption');
       var prevBtn = document.getElementById('csLightboxPrev');
       var nextBtn = document.getElementById('csLightboxNext');
+      var stripEl = document.getElementById('csLightboxStrip');
+      var stripRail = document.getElementById('csLightboxStripRail');
+      var hasFilmstrip = !!(stripEl && stripRail && box.classList.contains('cs-lightbox--filmstrip'));
 
       // ordered list of zoomable figures in the same preview group (scoped so
       // Best Projects, more-work, and an open case study never mix)
@@ -752,6 +755,38 @@ function initCopyEmail() {
       }
       var current = 0;
       show.fitToken = 0;
+
+      function syncFilmstrip(figs) {
+        if (!hasFilmstrip) return;
+        stripEl.hidden = false;
+        var buttons = stripRail.querySelectorAll('.cs-lightbox-thumb');
+        if (buttons.length !== figs.length) {
+          stripRail.innerHTML = '';
+          figs.forEach(function (fig, index) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'cs-lightbox-thumb';
+            btn.setAttribute('role', 'option');
+            btn.setAttribute('aria-label', fig.getAttribute('alt') || ('Image ' + (index + 1)));
+            btn.setAttribute('data-index', String(index));
+            var thumb = document.createElement('img');
+            thumb.src = fig.currentSrc || fig.getAttribute('src');
+            thumb.alt = '';
+            thumb.loading = 'lazy';
+            btn.appendChild(thumb);
+            stripRail.appendChild(btn);
+          });
+          buttons = stripRail.querySelectorAll('.cs-lightbox-thumb');
+        }
+        Array.prototype.forEach.call(buttons, function (btn, index) {
+          var active = index === current;
+          btn.classList.toggle('is-active', active);
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
+          if (active && typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+          }
+        });
+      }
 
       function show(i) {
         var figs = figures();
@@ -783,7 +818,7 @@ function initCopyEmail() {
           if (!nw || !nh) return;
           var border = 16;
           var maxW = Math.min(1170, window.innerWidth * 0.96) - border;
-          var maxH = window.innerHeight * 0.8 - border;
+          var maxH = window.innerHeight * (hasFilmstrip ? 0.68 : 0.8) - border;
           // Portrait frames match the height of a 16:10 horizontal preview so
           // they don't run edge-to-edge or cover the caption.
           if (nh > nw) maxH = Math.min(maxH, maxW * (10 / 16));
@@ -822,9 +857,13 @@ function initCopyEmail() {
         imgEl.style.display = 'block';
         var cardTitle = fig.closest && fig.closest('.hp2-pcard') && fig.closest('.hp2-pcard').querySelector('.hp2-pcard-title');
         capEl.textContent = fig.getAttribute('data-caption') || (cardTitle && cardTitle.textContent.replace(/\s+/g, ' ').trim()) || fig.getAttribute('alt') || '';
+        syncFilmstrip(figs);
       }
       function openBox(fig) {
+        // Works page: one continuous set across all categories (not per-grid).
         groupRoot = (fig.closest && (
+          fig.closest('#page-work') ||
+          fig.closest('.wg-page') ||
           fig.closest('.hp2-pcard-grid') ||
           fig.closest('.hp2-shelf') ||
           fig.closest('.mw-grid') ||
@@ -841,6 +880,7 @@ function initCopyEmail() {
         box.classList.remove('open');
         box.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('cs-lightbox-open');
+        if (hasFilmstrip) stripEl.hidden = true;
       }
 
       // delegate: any zoomable figure opens the preview
@@ -848,11 +888,25 @@ function initCopyEmail() {
         var fig = e.target.closest && e.target.closest('img.cs-zoom');
         if (fig && !(fig.closest && fig.closest('.hp2-pcard'))) openBox(fig);
       });
-      // click the backdrop (not the image or arrows) to dismiss
+      // click the backdrop (not the image, strip, or arrows) to dismiss
       box.addEventListener('click', function (e) {
-        if (e.target === imgEl || e.target === frameEl || e.target === clipEl || (e.target.closest && e.target.closest('.cs-lightbox-nav'))) return;
+        if (e.target === imgEl || e.target === frameEl || e.target === clipEl) return;
+        if (e.target.closest && (
+          e.target.closest('.cs-lightbox-nav') ||
+          e.target.closest('.cs-lightbox-strip') ||
+          e.target.closest('.cs-lightbox-stage')
+        )) return;
         closeBox();
       });
+      if (hasFilmstrip) {
+        stripRail.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('.cs-lightbox-thumb');
+          if (!btn) return;
+          e.stopPropagation();
+          var index = parseInt(btn.getAttribute('data-index'), 10);
+          if (!isNaN(index)) show(index);
+        });
+      }
       prevBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current - 1); });
       nextBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current + 1); });
 
