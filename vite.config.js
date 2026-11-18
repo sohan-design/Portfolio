@@ -8,6 +8,8 @@ const MPA_ROUTES = [
   '/work/redesigned-payment-pages',
   '/work/white-label-evolution',
   '/work/b2b-trainer-dashboard',
+  '/work/b2c-learner-app',
+  // Legacy draft URLs redirect to the live case studies.
   '/work/b2b-trainer-dashboard-draft',
   '/work/white-label-evolution-draft',
   '/work/redesigned-payment-pages-draft',
@@ -71,6 +73,7 @@ export default defineConfig({
         cosmo: resolve(__dirname, 'work/redesigned-payment-pages/index.html'),
         whitelabel: resolve(__dirname, 'work/white-label-evolution/index.html'),
         trainer: resolve(__dirname, 'work/b2b-trainer-dashboard/index.html'),
+        b2c: resolve(__dirname, 'work/b2c-learner-app/index.html'),
         trainerDraft: resolve(__dirname, 'work/b2b-trainer-dashboard-draft/index.html'),
         whitelabelDraft: resolve(__dirname, 'work/white-label-evolution-draft/index.html'),
         cosmoDraft: resolve(__dirname, 'work/redesigned-payment-pages-draft/index.html'),

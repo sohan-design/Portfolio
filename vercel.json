@@ -1,4 +1,26 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/work/b2b-trainer-dashboard-draft",
+      "destination": "/work/b2b-trainer-dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/work/white-label-evolution-draft",
+      "destination": "/work/white-label-evolution",
+      "permanent": true
+    },
+    {
+      "source": "/work/redesigned-payment-pages-draft",
+      "destination": "/work/redesigned-payment-pages",
+      "permanent": true
+    },
+    {
+      "source": "/work/b2c-learner-app-draft",
+      "destination": "/work/b2c-learner-app",
+      "permanent": true
+    }
+  ]
 }

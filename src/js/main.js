@@ -661,10 +661,10 @@ function initCopyEmail() {
       });
       // Each project's dedicated case-study page.
       var STUDY_URLS = {
-        cosmo: '/work/redesigned-payment-pages-draft',
-        whitelabel: '/work/white-label-evolution-draft',
-        trainer: '/work/b2b-trainer-dashboard-draft',
-        b2c: '/work/b2c-learner-app-draft',
+        cosmo: '/work/redesigned-payment-pages',
+        whitelabel: '/work/white-label-evolution',
+        trainer: '/work/b2b-trainer-dashboard',
+        b2c: '/work/b2c-learner-app',
         ios: '/work/putting-common-sense-back-into-ios',
         'ai-process': '/work/design-engineering-the-new-ai-process',
         'tech-for-humans': '/work/tech-for-humans'
