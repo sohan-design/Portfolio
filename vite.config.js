@@ -74,10 +74,9 @@ export default defineConfig({
         whitelabel: resolve(__dirname, 'work/white-label-evolution/index.html'),
         trainer: resolve(__dirname, 'work/b2b-trainer-dashboard/index.html'),
         b2c: resolve(__dirname, 'work/b2c-learner-app/index.html'),
-        trainerDraft: resolve(__dirname, 'work/b2b-trainer-dashboard-draft/index.html'),
-        whitelabelDraft: resolve(__dirname, 'work/white-label-evolution-draft/index.html'),
-        cosmoDraft: resolve(__dirname, 'work/redesigned-payment-pages-draft/index.html'),
-        b2cDraft: resolve(__dirname, 'work/b2c-learner-app-draft/index.html'),
+        // Draft redirect HTML is not a Vite build input — vercel.json handles
+        // those routes. Bundling them fails (EISDIR) because <link canonical>
+        // points at a directory Vite tries to read as an asset.
         ios: resolve(__dirname, 'work/putting-common-sense-back-into-ios/index.html'),
         aiProcess: resolve(__dirname, 'work/design-engineering-the-new-ai-process/index.html'),
         techForHumans: resolve(__dirname, 'work/tech-for-humans/index.html'),
