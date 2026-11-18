@@ -1,4 +1,4 @@
-/** Footer pixel wave — static valley, scratches on scroll then settles. */
+/** Footer pixel skyline — subtle Minecraft-style bar towers, scratches on scroll. */
 export function initCtaPixelWave(root) {
   var scope = root || document;
   var section = scope.querySelector('.site-cta--pixel');
@@ -27,15 +27,52 @@ export function initCtaPixelWave(root) {
   var lastY = scrollTop();
   var raf = 0;
   var settling = false;
+  var seed = Math.floor(Math.random() * 1e9);
 
   function hash(x, y) {
-    var n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+    var n = Math.sin((x + seed * 0.0001) * 127.1 + (y + seed * 0.0003) * 311.7) * 43758.5453;
     return n - Math.floor(n);
   }
 
-  function waveHeight(nx) {
-    var edge = Math.pow(Math.abs(nx - 0.5) * 2, 1.35);
-    return 0.28 + edge * 0.62;
+  function noise1(x) {
+    var i = Math.floor(x);
+    var f = x - i;
+    var u = f * f * (3 - 2 * f);
+    var a = hash(i, 1);
+    var b = hash(i + 1, 1);
+    return a + (b - a) * u;
+  }
+
+  /**
+   * Skyline as discrete towers / music bars.
+   * Each "building" is 1–3 pixel columns wide with a flat top (Minecraft silhouette).
+   */
+  function buildSkylineHeights() {
+    var heights = new Float32Array(cols);
+    var c = 0;
+    while (c < cols) {
+      var width = 1 + Math.floor(hash(c, 2) * 3); // 1–3 columns
+      var nx = cols <= 1 ? 0.5 : c / (cols - 1);
+
+      // Soft city rhythm: low ambient + occasional taller towers
+      var ambient = 0.1 + noise1(nx * 4.5 + seed * 0.00002) * 0.18;
+      var bar = noise1(c * 0.37 + 11.3);
+      var tall = hash(c, 17) > 0.78 ? 0.22 + hash(c, 19) * 0.28 : 0;
+      var mid = hash(c, 23) > 0.55 ? 0.08 + hash(c, 29) * 0.12 : 0;
+      var h = Math.max(0.06, Math.min(0.72, ambient + bar * 0.22 + tall + mid));
+
+      for (var k = 0; k < width && c + k < cols; k++) {
+        // Tiny per-column wobble so towers aren't perfectly flat slabs
+        heights[c + k] = h + (hash(c + k, 41) - 0.5) * 0.03;
+      }
+      // Small alley / gap between some buildings
+      c += width;
+      if (c < cols && hash(c, 7) > 0.62) {
+        heights[c] = Math.max(0.04, h * 0.35);
+        c += 1;
+      }
+    }
+    return heights;
   }
 
   function buildBase() {
@@ -57,26 +94,30 @@ export function initCtaPixelWave(root) {
     base = new Int8Array(cols * rows);
     scratch = new Float32Array(cols * rows);
 
+    var skyline = buildSkylineHeights();
+
     for (var c = 0; c < cols; c++) {
-      var nx = cols <= 1 ? 0.5 : c / (cols - 1);
-      var fill = waveHeight(nx);
-      var fillRows = Math.floor(fill * rows);
+      var fillRows = Math.floor(skyline[c] * rows);
 
       for (var r = 0; r < rows; r++) {
         var i = r * cols + c;
         var fromBottom = rows - 1 - r;
 
         if (fromBottom < fillRows) {
-          var dens = fromBottom < 2 ? 1 : 0.92 - (fromBottom / Math.max(1, fillRows)) * 0.18;
+          // Solid tower body — denser toward the ground, like stacked blocks
+          var dens = fromBottom < 2 ? 1 : 0.94 - (fromBottom / Math.max(1, fillRows)) * 0.12;
+          // Sparse "window" holes near the top third of taller towers
+          var nearTop = fromBottom > fillRows * 0.55;
+          if (nearTop && fillRows > 4 && hash(c, r + 50) > 0.88) {
+            continue;
+          }
           if (hash(c, r) < dens) {
             base[i] = 1 + Math.floor(hash(c + 9, r + 3) * COLORS.length);
           }
-        } else if (fromBottom < fillRows + 4) {
-          var spray = 0.18 * (1 - (fromBottom - fillRows) / 4);
-          if (hash(c + 2, r + 7) < spray) {
-            base[i] = 1 + Math.floor(hash(c + 4, r) * 3);
-          }
-        } else if (fromBottom < fillRows + 10 && hash(c * 3, r * 5) < 0.045) {
+        } else if (fromBottom === fillRows && hash(c, 61) > 0.7) {
+          // Single antenna / spire pixel on some rooftops
+          base[i] = 1 + Math.floor(hash(c, 63) * 3);
+        } else if (fromBottom < fillRows + 3 && hash(c * 3, r * 5) < 0.028) {
           base[i] = -1;
         }
       }
@@ -87,7 +128,7 @@ export function initCtaPixelWave(root) {
     if (reduce) return 1;
     var phase = (i % 23) * 0.55;
     var wave = 0.5 + 0.5 * Math.sin(now * 0.00115 + phase);
-    return 0.38 + 0.62 * wave;
+    return 0.42 + 0.58 * wave;
   }
 
   function paint(now) {

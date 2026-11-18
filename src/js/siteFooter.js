@@ -1,8 +1,8 @@
 /** Single site footer. Edit this file to update every page. */
 var FOOTER_HTML =
   '<div class="cta-inner">' +
-    '<h2 class="cta-title">Let&rsquo;s build something people<br />actually want.</h2>' +
-    '<p class="cta-sub">Whether you&rsquo;re starting from scratch or refining what exists, I&rsquo;m ready to help.</p>' +
+    '<p class="cta-num">05</p>' +
+    '<h2 class="cta-title">Contact me</h2>' +
     '<div class="cta-actions">' +
       '<a class="btn-primary selection-control" href="https://www.linkedin.com/in/sohan-bhute/" target="_blank" rel="noopener">' +
         '<span class="action-content">' +
@@ -18,6 +18,13 @@ var FOOTER_HTML =
         '</span>' +
         '<span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
       '</button>' +
+      '<a class="btn-primary selection-control" href="/assets/Sohan-Bhute-Resume.pdf" download="Sohan-Bhute-Resume.pdf">' +
+        '<span class="action-content">' +
+          '<span class="action-label">Resume</span>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v12M8 12l4 4 4-4M6 20h12" stroke-linecap="round" stroke-linejoin="round"></path></svg>' +
+        '</span>' +
+        '<span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
+      '</a>' +
     '</div>' +
     '<p class="cta-colophon">© 2026 Sohan Bhute <span aria-hidden="true">·</span> Made with Cursor</p>' +
   '</div>' +

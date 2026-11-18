@@ -12,6 +12,7 @@
   <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="/src/styles/main.css" />
   <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
+  <link rel="stylesheet" href="/src/styles/about-page.css" />
   <script>
     (function () {
       try {
@@ -107,212 +108,215 @@
       </nav>
     </header>
 
-    <main class="page" id="page-home">
-      <section class="hero" data-reveal-lead>
-        <div class="hero-top">
-          <div class="hero-floats" aria-hidden="true">
-            <span class="hero-float"><img src="/assets/homepage-v2/pixel-icons/bag.svg" alt="" width="36" height="36" /></span>
-            <span class="hero-float"><img src="/assets/homepage-v2/pixel-icons/robot.svg" alt="" width="36" height="36" /></span>
-            <span class="hero-float"><img src="/assets/homepage-v2/pixel-icons/earth.svg" alt="" width="36" height="36" /></span>
-          </div>
-          <div
-            class="hero-avatar avatar"
-            data-cursor-cycle
-            data-cursor="Hi."
-            tabindex="0"
-            role="img"
-            aria-label="Portrait of Sohan — hover for a hello"
-          >
-            <div class="hero-avatar-photo">
-              <img src="/assets/v3/profile.jpeg" alt="Portrait of Sohan" width="44" height="44" />
+    <main class="page ab-page" id="page-home">
+      <article class="ab-content">
+        <section class="ab-section" data-reveal-lead data-reveal>
+          <div class="ab-hero-row">
+            <div
+              class="hero-avatar avatar"
+              data-cursor-cycle
+              data-cursor="Hi."
+              tabindex="0"
+              role="img"
+              aria-label="Portrait of Sohan — hover for a hello"
+            >
+              <div class="hero-avatar-photo">
+                <img src="/assets/v3/profile.jpeg" alt="Portrait of Sohan" width="44" height="44" />
+              </div>
+              <img class="hero-avatar-accent" src="/assets/v3/profile-accent.svg" alt="" width="24" height="2" aria-hidden="true" />
             </div>
-            <img class="hero-avatar-accent" src="/assets/v3/profile-accent.svg" alt="" width="24" height="2" aria-hidden="true" />
+            <p class="ab-byline">
+              <span class="ab-year">4+ years</span>
+              <span class="ab-byline-rule" aria-hidden="true"></span>
+              <span>Senior Product Designer at <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a></span>
+            </p>
+            <span class="site-clock" data-clock aria-live="off"></span>
           </div>
-          <span class="site-clock" data-clock aria-live="off"></span>
+          <h1 class="ab-title">Sohan Bhute</h1>
+          <p class="ab-sub">CS student turned product designer &amp; researcher — building intuitive, emotional product experiences.</p>
+        </section>
+
+        <section class="ab-section" data-reveal>
+          <p class="ab-lead">I&rsquo;m jumping into design engineering to put micro-interactions and craft into the stack.</p>
+          <p class="ab-copy">Shipping AI-assisted LMS experiences, design systems, and faster frontend with Cursor &amp; Figma MCP. Also an architecture dropout — still chasing that mix of art and tech.</p>
+        </section>
+
+        <div class="ab-hero-figure" data-reveal>
+          <figure class="hp2-pixel-frame hp2-pixel-frame--hero" data-hp2-pixel-frame>
+            <img src="/assets/homepage-v2/hero-statue.jpg" alt="Blue classical bust in profile wearing a red visor" width="1500" height="840" />
+            <canvas class="hp2-pixel-mask" aria-hidden="true"></canvas>
+          </figure>
         </div>
-        <div class="hero-copy">
-          <p class="hero-lead">I&rsquo;m Sohan, a CS student turned product designer &amp; researcher with <strong>4+ years creating intuitive, emotional product experiences.</strong> I&rsquo;m jumping into design engineering to put micro-interactions and craft into the stack.</p>
-          <p class="hero-sub">Currently Senior Product Designer at <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a> — shipping AI-assisted LMS experiences, design systems, and faster frontend with Cursor &amp; Figma MCP.</p>
-          <p class="hero-note">Also an architecture dropout. Still chasing that mix of art and tech.</p>
-        </div>
-      </section>
 
-      <figure class="hp2-pixel-frame hp2-pixel-frame--hero" data-hp2-pixel-frame data-reveal>
-        <img src="/assets/homepage-v2/hero-statue.jpg" alt="Blue classical bust in profile wearing a red visor" width="1500" height="840" />
-        <canvas class="hp2-pixel-mask" aria-hidden="true"></canvas>
-      </figure>
+        <section class="projects hp2-projects ab-section" id="work">
+          <div class="hp2-project-group" data-reveal>
+            <p class="ab-num">01</p>
+            <h2 class="ab-h">Case Studies</h2>
+            <div class="project-grid hp2-pcard-grid">
+              <article class="hp2-pcard project" data-project="whitelabel" tabindex="0" role="button" aria-label="Read case study: How did a white-label learner dashboard unlock 40% more sales?">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-white-label.webp" alt="White-label learner dashboard with continue learning, courses, and today’s classes" loading="lazy" width="1024" height="681" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">B2B SaaS · White-Label LMS</p>
+                  <h3 class="hp2-pcard-title">How did a white-label learner dashboard unlock <strong>40% more sales</strong>?</h3>
+                </div>
+              </article>
 
-      <section class="projects hp2-projects" id="work">
-        <div class="hp2-project-group" data-reveal>
-          <h2 class="section-label">Case Studies</h2>
-          <div class="project-grid hp2-pcard-grid">
-            <article class="hp2-pcard project" data-project="whitelabel" tabindex="0" role="button" aria-label="Read case study: How did a white-label learner dashboard unlock 40% more sales?">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-white-label.webp" alt="White-label learner dashboard with continue learning, courses, and today’s classes" loading="lazy" width="1024" height="681" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">B2B SaaS · White-Label LMS</p>
-                <h3 class="hp2-pcard-title">How did a white-label learner dashboard unlock <strong>40% more sales</strong>?</h3>
-              </div>
-            </article>
+              <article class="hp2-pcard project" data-project="trainer" tabindex="0" role="button" aria-label="Read case study: How did a B2B trainer dashboard unlock 40% more sales?">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-trainer.webp" alt="Edmingle trainer marketing collage — brand, offices, and flexible pricing plans" loading="lazy" width="1024" height="651" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">B2B SaaS · Branding</p>
+                  <h3 class="hp2-pcard-title">How did a B2B trainer dashboard unlock <strong>40% more sales</strong>?</h3>
+                </div>
+              </article>
 
-            <article class="hp2-pcard project" data-project="trainer" tabindex="0" role="button" aria-label="Read case study: How did a B2B trainer dashboard unlock 40% more sales?">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-trainer.webp" alt="Edmingle trainer marketing collage — brand, offices, and flexible pricing plans" loading="lazy" width="1024" height="651" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">B2B SaaS · Branding</p>
-                <h3 class="hp2-pcard-title">How did a B2B trainer dashboard unlock <strong>40% more sales</strong>?</h3>
-              </div>
-            </article>
-
-            <article class="hp2-pcard project" data-project="b2c" tabindex="0" role="button" aria-label="Read case study: How did a B2C learner app bring training to web and mobile?">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-b2c-mobile.webp" alt="B2C learner mobile app and web product stills" loading="lazy" width="1280" height="800" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">B2C · Mobile App · Web</p>
-                <h3 class="hp2-pcard-title">How did a B2C learner app bring training to <strong>web and mobile</strong>?</h3>
-              </div>
-            </article>
+              <article class="hp2-pcard project" data-project="b2c" tabindex="0" role="button" aria-label="Read case study: How did a B2C learner app bring training to web and mobile?">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-b2c-mobile.webp" alt="B2C learner mobile app and web product stills" loading="lazy" width="1280" height="800" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">B2C · Mobile App · Web</p>
+                  <h3 class="hp2-pcard-title">How did a B2C learner app bring training to <strong>web and mobile</strong>?</h3>
+                </div>
+              </article>
+            </div>
           </div>
-        </div>
 
-        <div class="hp2-project-group" data-reveal>
-          <h2 class="section-label">Articles &amp; Experiments</h2>
-          <div class="project-grid hp2-pcard-grid">
-            <article class="hp2-pcard project" data-project="ai-process" tabindex="0" role="button" aria-label="Read article: Design Engineering: The New AI Process">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-ai-process.webp" alt="Cursor with the composer open beside a source file" loading="lazy" width="1024" height="640" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">Design Engineering · AI</p>
-                <h3 class="hp2-pcard-title">Design Engineering: The New <strong>AI Process</strong></h3>
-              </div>
-            </article>
+          <div class="hp2-project-group" data-reveal>
+            <p class="ab-num">02</p>
+            <h2 class="ab-h">Articles &amp; Experiments</h2>
+            <div class="project-grid hp2-pcard-grid">
+              <article class="hp2-pcard project" data-project="ai-process" tabindex="0" role="button" aria-label="Read article: Design Engineering: The New AI Process">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-ai-process.webp" alt="Cursor with the composer open beside a source file" loading="lazy" width="1024" height="640" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">Design Engineering · AI</p>
+                  <h3 class="hp2-pcard-title">Design Engineering: The New <strong>AI Process</strong></h3>
+                </div>
+              </article>
 
-            <article class="hp2-pcard project" data-project="ios" tabindex="0" role="button" aria-label="Read article: Good Design, Bad UX">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-ios-common-sense.jpg" alt="A frustrated iOS user" loading="lazy" width="1200" height="809" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">UX Critique · Operating Systems</p>
-                <h3 class="hp2-pcard-title">Good design, bad UX: what an OS taught me about <strong>UX</strong></h3>
-              </div>
-            </article>
+              <article class="hp2-pcard project" data-project="ios" tabindex="0" role="button" aria-label="Read article: Good Design, Bad UX">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-ios-common-sense.jpg" alt="A frustrated iOS user" loading="lazy" width="1200" height="809" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">UX Critique · Operating Systems</p>
+                  <h3 class="hp2-pcard-title">Good design, bad UX: what an OS taught me about <strong>UX</strong></h3>
+                </div>
+              </article>
 
-            <article class="hp2-pcard project" data-href="https://glass-chat-three.vercel.app/" tabindex="0" role="button" aria-label="Open live demo: Veda AI glass chat">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-veda-ai.jpg" alt="Veda AI chat prompt bar on an orange pixel grid" loading="lazy" width="1024" height="516" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">AI Chat · Live Demo</p>
-                <h3 class="hp2-pcard-title">What does a glassy AI chat workspace feel like in <strong>Veda AI</strong>?</h3>
-              </div>
-            </article>
+              <article class="hp2-pcard project" data-href="https://glass-chat-three.vercel.app/" tabindex="0" role="button" aria-label="Open live demo: Veda AI glass chat">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-veda-ai.jpg" alt="Veda AI chat prompt bar on an orange pixel grid" loading="lazy" width="1024" height="516" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">AI Chat · Live Demo</p>
+                  <h3 class="hp2-pcard-title">What does a glassy AI chat workspace feel like in <strong>Veda AI</strong>?</h3>
+                </div>
+              </article>
 
-            <article class="hp2-pcard project" data-project="tech-for-humans" tabindex="0" role="button" aria-label="Open experiment: Tech for humans infinite canvas">
-              <div class="hp2-pcard-media">
-                <img src="/assets/homepage-v2/card-tech-for-humans.webp" alt="The Ultimate Background Remover — Tech for humans series" loading="lazy" width="1280" height="800" />
-              </div>
-              <div class="hp2-pcard-copy">
-                <p class="hp2-pcard-meta">Content Design · Infinite Canvas</p>
-                <h3 class="hp2-pcard-title">Tech for humans: an infinite canvas of <strong>design stories</strong></h3>
-              </div>
-            </article>
+              <article class="hp2-pcard project" data-project="tech-for-humans" tabindex="0" role="button" aria-label="Open experiment: Tech for humans infinite canvas">
+                <div class="hp2-pcard-media">
+                  <img src="/assets/homepage-v2/card-tech-for-humans.webp" alt="The Ultimate Background Remover — Tech for humans series" loading="lazy" width="1280" height="800" />
+                </div>
+                <div class="hp2-pcard-copy">
+                  <p class="hp2-pcard-meta">Content Design · Infinite Canvas</p>
+                  <h3 class="hp2-pcard-title">Tech for humans: an infinite canvas of <strong>design stories</strong></h3>
+                </div>
+              </article>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="more-preview hp2-more">
-        <div class="section-head" data-reveal>
-          <h2 class="section-label">More Work</h2>
-          <a class="view-all" href="/more-work">View all</a>
-        </div>
-
-        <div class="hp2-shelf" data-hp2-shelf data-reveal>
-          <div class="hp2-shelf-rail" data-hp2-shelf-rail tabindex="0" aria-label="More work carousel">
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/dashboard-v2.webp" alt="Dashboard v2" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/skyview.webp" alt="Skyview" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/mobile-app-design.webp" alt="Mobile app design" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/ai-insights.webp" alt="AI Insights" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/checkout-for-students.webp" alt="Checkout for Students" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/create.webp" alt="Create" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/crypto-pg-dashboard.webp" alt="Crypto PG Dashboard" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/events-details.webp" alt="Events details page" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/sign-in.webp" alt="Sign in" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/404.webp" alt="404" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/help-support-panel.jpg" alt="Help and Support panel with Veda AI search" loading="lazy" /></figure>
-            <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/homepage-v2/shelf-progressive.jpg" alt="Marketing analytics dashboard" loading="lazy" /></figure>
+        <section class="more-preview hp2-more ab-section" data-reveal>
+          <div class="section-head">
+            <div>
+              <p class="ab-num">03</p>
+              <h2 class="ab-h">More Work</h2>
+            </div>
+            <a class="view-all" href="/more-work">View all</a>
           </div>
-          <div class="hp2-shelf-controls" aria-hidden="false">
-            <button type="button" class="hp2-shelf-btn" data-hp2-shelf-prev aria-label="Previous">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.5 2.5L4 6l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+          <div class="hp2-shelf" data-hp2-shelf>
+            <div class="hp2-shelf-rail" data-hp2-shelf-rail tabindex="0" aria-label="More work carousel">
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/dashboard-v2.webp" alt="Dashboard v2" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/skyview.webp" alt="Skyview" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/mobile-app-design.webp" alt="Mobile app design" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/ai-insights.webp" alt="AI Insights" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/checkout-for-students.webp" alt="Checkout for Students" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/create.webp" alt="Create" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/crypto-pg-dashboard.webp" alt="Crypto PG Dashboard" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/events-details.webp" alt="Events details page" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/sign-in.webp" alt="Sign in" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/404.webp" alt="404" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/more-work/help-support-panel.jpg" alt="Help and Support panel with Veda AI search" loading="lazy" /></figure>
+              <figure class="hp2-shelf-card"><img class="cs-zoom hp2-shelf-img" src="/assets/homepage-v2/shelf-progressive.jpg" alt="Marketing analytics dashboard" loading="lazy" /></figure>
+            </div>
+            <div class="hp2-shelf-controls" aria-hidden="false">
+              <button type="button" class="hp2-shelf-btn" data-hp2-shelf-prev aria-label="Previous">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.5 2.5L4 6l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="hp2-shelf-btn" data-hp2-shelf-next aria-label="Next">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.5 2.5L8 6 4.5 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cs-lightbox" id="csLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+            <button class="cs-lightbox-nav prev" id="csLightboxPrev" type="button" aria-label="Previous image">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button type="button" class="hp2-shelf-btn" data-hp2-shelf-next aria-label="Next">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.5 2.5L8 6 4.5 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <button class="cs-lightbox-nav next" id="csLightboxNext" type="button" aria-label="Next image">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
+            <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
+            <figcaption id="csLightboxCaption"></figcaption>
           </div>
-        </div>
+        </section>
 
-        <div class="cs-lightbox" id="csLightbox" role="dialog" aria-modal="true" aria-hidden="true">
-          <button class="cs-lightbox-nav prev" id="csLightboxPrev" type="button" aria-label="Previous image">
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M12 5L7 10L12 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="cs-lightbox-nav next" id="csLightboxNext" type="button" aria-label="Next image">
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
-          <figcaption id="csLightboxCaption"></figcaption>
-        </div>
-      </section>
-
-      <section class="experience">
-        <h2 class="section-label" data-reveal>Experience</h2>
-        <div class="exp-list">
-          <article class="exp-item" data-reveal>
-            <div class="exp-head">
-              <h3 class="exp-role">Senior Product Designer</h3>
-              <div class="exp-meta">
-                <a class="exp-company" href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
-                <span class="exp-date">Jan 2025 – Present</span>
+        <section class="ab-section" data-reveal>
+          <p class="ab-num">04</p>
+          <h2 class="ab-h">Experience</h2>
+          <div class="ab-exp">
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">Senior Product Designer</h3>
+              <div class="ab-exp-meta">
+                <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
+                <span class="ab-exp-date">Jan 2025 – Present</span>
               </div>
-            </div>
-            <p class="exp-desc">Redesigned the AI-assisted enterprise dashboard and learner experience, boosting sales by 60%. Introduced Design System 1.0 (+40% design efficiency), streamlined navigation, and automated graphical dependencies.</p>
-          </article>
-          <article class="exp-item" data-reveal>
-            <div class="exp-head">
-              <h3 class="exp-role">Product Designer</h3>
-              <div class="exp-meta">
-                <a class="exp-company" href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
-                <span class="exp-date">Jan 2022 – Dec 2024</span>
+              <p class="ab-exp-desc">Redesigned the AI-assisted enterprise dashboard and learner experience, boosting sales by 60%. Introduced Design System 1.0 (+40% design efficiency), streamlined navigation, and automated graphical dependencies.</p>
+            </article>
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">Product Designer</h3>
+              <div class="ab-exp-meta">
+                <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
+                <span class="ab-exp-date">Jan 2022 – Dec 2024</span>
               </div>
-            </div>
-            <p class="exp-desc">Improved core UX journeys (50% less friction), AI-assisted bulk CSV actions, and collaborated across eng and support. Revamped visual identity and website for Edmingle 2024.</p>
-          </article>
-          <article class="exp-item" data-reveal>
-            <div class="exp-head">
-              <h3 class="exp-role">Visual and Product Designer <span class="exp-aside">Side project</span></h3>
-              <div class="exp-meta">
-                <span class="exp-company">Zyncspace</span>
-                <span class="exp-date">Apr 2025 – Nov 2025</span>
+              <p class="ab-exp-desc">Improved core UX journeys (50% less friction), AI-assisted bulk CSV actions, and collaborated across eng and support. Revamped visual identity and website for Edmingle 2024.</p>
+            </article>
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">Visual and Product Designer <span class="ab-exp-aside">Side project</span></h3>
+              <div class="ab-exp-meta">
+                <span class="ab-exp-company">Zyncspace</span>
+                <span class="ab-exp-date">Apr 2025 – Nov 2025</span>
               </div>
-            </div>
-            <p class="exp-desc">Produced branding and website for Zyncspace; shipped MVP, website, and ads under tight timelines.</p>
-          </article>
-          <article class="exp-item" data-reveal>
-            <div class="exp-head">
-              <h3 class="exp-role">UI/UX Designer</h3>
-              <div class="exp-meta">
-                <a class="exp-company" href="https://www.cyberior.com" target="_blank" rel="noopener">Europ Assistance</a>
-                <span class="exp-date">Jun 2021 – Nov 2021</span>
+              <p class="ab-exp-desc">Produced branding and website for Zyncspace; shipped MVP, website, and ads under tight timelines.</p>
+            </article>
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">UI/UX Designer</h3>
+              <div class="ab-exp-meta">
+                <a href="https://www.cyberior.com" target="_blank" rel="noopener">Europ Assistance</a>
+                <span class="ab-exp-date">Jun 2021 – Nov 2021</span>
               </div>
-            </div>
-            <p class="exp-desc">Moved the design process from Photoshop to Figma, revamped dashboards with cybersecurity metrics, and rebuilt Cyberior.com.</p>
-          </article>
-        </div>
-      </section>
-
+              <p class="ab-exp-desc">Moved the design process from Photoshop to Figma, revamped dashboards with cybersecurity metrics, and rebuilt Cyberior.com.</p>
+            </article>
+          </div>
+        </section>
+      </article>
     </main>
   </div>
 

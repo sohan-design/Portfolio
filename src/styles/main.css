@@ -998,13 +998,13 @@ html[data-theme="dark"] .btn-primary {
   font-weight: 400;
 }
 
-/* ---------- CTA footer (dark pixel wave) ---------- */
+/* ---------- CTA footer (editorial + pixel terrain) ---------- */
 .site-cta {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 40px;
-  text-align: center;
+  align-items: stretch;
+  gap: 0;
+  text-align: left;
   padding-top: 24px;
 }
 
@@ -1014,22 +1014,26 @@ html[data-theme="dark"] .btn-primary {
 }
 
 .site-cta--pixel {
+  --cta-gutter: var(--ab-gutter, 120px);
   position: relative;
   width: 100vw;
   left: 50%;
   margin-left: -50vw;
-  margin-top: clamp(48px, 8vw, 96px);
-  padding: clamp(72px, 10vw, 120px) var(--page-pad, 24px) 0;
+  margin-top: clamp(64px, 10vw, 120px);
+  padding: clamp(48px, 8vw, 96px) var(--cta-gutter) 0;
   gap: 0;
   background: transparent;
   color: var(--text);
   overflow: hidden;
-  min-height: clamp(380px, 52vw, 520px);
+  min-height: clamp(360px, 48vw, 480px);
+  box-sizing: border-box;
 }
 
-.cs-panel > .site-cta--pixel {
+.cs-panel > .site-cta--pixel,
+body:has(#page-home) .site-cta--pixel,
+body:has(#page-about) .site-cta--pixel {
   width: 100%;
-  left: 0;
+  left: auto;
   margin-left: 0;
 }
 
@@ -1038,11 +1042,11 @@ html[data-theme="dark"] .btn-primary {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  max-width: 560px;
-  margin: 0 auto;
-  padding-bottom: clamp(120px, 22vw, 200px);
+  align-items: flex-start;
+  gap: 0;
+  max-width: none;
+  margin: 0;
+  padding-bottom: calc(clamp(140px, 26vw, 220px) + 100px);
 }
 
 .cta-signature {
@@ -1051,12 +1055,22 @@ html[data-theme="dark"] .btn-primary {
   transform: rotate(-6deg);
 }
 
+.cta-num {
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  color: var(--text-muted);
+}
+
 .cta-title {
   margin: 0;
-  font-size: clamp(24px, 4vw, 26px);
-  line-height: 1.45;
-  letter-spacing: -0.16px;
+  max-width: 720px;
+  font-size: 48px;
   font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -2.4px;
   color: var(--text);
 }
 
@@ -1064,17 +1078,15 @@ html[data-theme="dark"] .btn-primary {
   color: var(--text);
 }
 
-.cta-sub {
-  margin: 0;
-  max-width: 403px;
-  font-size: 18px;
-  line-height: 28.8px;
-  letter-spacing: -0.09px;
-  color: var(--text-secondary);
+@media (max-width: 900px) {
+  .cta-title {
+    font-size: 32px;
+    letter-spacing: -1.4px;
+  }
 }
 
-.site-cta--pixel .cta-sub {
-  color: var(--text-secondary);
+.cta-sub {
+  display: none;
 }
 
 button.btn-primary {
@@ -1108,22 +1120,26 @@ html[data-theme="dark"] .btn-primary {
 
 .cta-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 12px;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 28px;
 }
 
 .cta-colophon {
-  margin: 28px 0 0;
-  font-size: 11px;
-  line-height: 1.4;
-  letter-spacing: 0;
-  color: var(--text-faint);
+  margin: 40px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: -0.28px;
+  color: var(--text-muted);
 }
 
 .cta-colophon span {
-  margin: 0 6px;
+  margin: 0 8px;
+  font-weight: 400;
+  opacity: 0.6;
 }
 
 .btn-primary .action-content {
@@ -1190,7 +1206,7 @@ html[data-theme="dark"] .btn-primary {
   right: 0;
   bottom: 0;
   width: 100%;
-  height: clamp(160px, 32vw, 280px);
+  height: clamp(200px, 38vw, 340px);
   pointer-events: none;
   z-index: 0;
 }

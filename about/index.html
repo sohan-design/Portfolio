@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About · Sugandha</title>
-  <meta name="description" content="About Sugandha — a product designer specialising in enterprise SaaS, dev, and AI tools." />
-  <meta name="theme-color" content="#ffffff" />
+  <title>About · Sohan Bhute</title>
+  <meta name="description" content="About Sohan Bhute — a product designer working across enterprise SaaS, developer tools, and AI products." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <link rel="stylesheet" href="/src/styles/main.css" />
   <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
+  <link rel="stylesheet" href="/src/styles/about-page.css" />
   <script>
     (function () {
       try {
@@ -22,7 +24,6 @@
   </script>
 </head>
 <body class="hp2-exp">
-  <!-- Intro loader -->
   <div class="intro-loader" id="introLoader" aria-hidden="true">
     <div class="intro-loader-inner">
       <div class="intro-icons">
@@ -52,7 +53,6 @@
       var type = nav ? nav.type : 'navigate';
       var seen = false;
       try { seen = sessionStorage.getItem('introLoaderSeen') === '1'; } catch (e) {}
-      // Play on hard reload, or first visit in this tab. Skip in-app navigations.
       if (!(type === 'reload' || (type === 'navigate' && !seen))) {
         el.remove();
         return;
@@ -103,52 +103,157 @@
       </nav>
     </header>
 
-    <main class="about-page" id="page-about">
-      <div class="about-inner">
-        <h1 class="page-title" data-reveal data-reveal-lead>About Me</h1>
+    <main class="about-page ab-page" id="page-about">
+      <article class="ab-content">
+        <section class="ab-section" data-reveal data-reveal-lead>
+          <p class="ab-kicker">Product design</p>
+          <h1 class="ab-title">About Me</h1>
+          <p class="ab-sub">Enterprise SaaS, developer tools, and AI products.</p>
+          <p class="ab-byline">
+            <span class="ab-year">4+ years</span>
+            <span class="ab-byline-rule" aria-hidden="true"></span>
+            <span>Senior Product Designer at Edmingle</span>
+          </p>
+        </section>
 
-        <div class="about-stack" data-reveal role="button" tabindex="0" aria-label="Cycle through photos">
-          <figure class="about-photo" data-pos="0"><img src="/assets/about/about-4.svg" alt="Dubai product design project" loading="lazy" /></figure>
-          <figure class="about-photo" data-pos="1"><img src="/assets/about/about-1.svg" alt="Making art with friends" loading="lazy" /></figure>
-          <figure class="about-photo" data-pos="2"><img src="/assets/about/about-2.svg" alt="Gallery hopping" loading="lazy" /></figure>
-          <figure class="about-photo" data-pos="3"><img src="/assets/about/about-3.svg" alt="Nature" loading="lazy" /></figure>
-          <figure class="about-photo" data-pos="4"><img src="/assets/about/about-5.svg" alt="Creating indoors" loading="lazy" /></figure>
-          <figure class="about-photo" data-pos="5"><img src="/assets/about/about-6.svg" alt="Friends" loading="lazy" /></figure>
+        <div class="ab-hero-media" data-reveal>
+          <div class="ab-stack about-stack" role="button" tabindex="0" aria-label="Cycle through photos">
+            <figure class="ab-photo about-photo" data-pos="0"><img src="/assets/about/about-4.svg" alt="Dubai product design project" loading="lazy" /></figure>
+            <figure class="ab-photo about-photo" data-pos="1"><img src="/assets/about/about-1.svg" alt="Making art with friends" loading="lazy" /></figure>
+            <figure class="ab-photo about-photo" data-pos="2"><img src="/assets/about/about-2.svg" alt="Gallery hopping" loading="lazy" /></figure>
+            <figure class="ab-photo about-photo" data-pos="3"><img src="/assets/about/about-3.svg" alt="Nature" loading="lazy" /></figure>
+            <figure class="ab-photo about-photo" data-pos="4"><img src="/assets/about/about-5.svg" alt="Creating indoors" loading="lazy" /></figure>
+            <figure class="ab-photo about-photo" data-pos="5"><img src="/assets/about/about-6.svg" alt="Friends" loading="lazy" /></figure>
+          </div>
+          <p class="ab-caption">Some quick facts about me — click the stack</p>
         </div>
 
-        <p class="about-caption" data-reveal>Some quick facts about me</p>
+        <section class="ab-section" data-reveal>
+          <p class="ab-lead">I design products where bad UX still hurts — and good craft still compounds.</p>
+        </section>
 
-        <div class="about-copy" data-reveal>
-          <p>Hi, I&rsquo;m Sohan, a product designer who lives in <strong>enterprise SaaS, dev, and AI tools</strong>. I&rsquo;ve been designing for four years, going on five, and I still get a kick out of it. <strong>Impact, creativity, and the particular pain of bad UX</strong> are why I became a designer in the first place.</p>
-          <p>None of this was a straight line. It started in a place where nobody was talking about interfaces, least of all me.</p>
-        </div>
+        <section class="ab-section" data-reveal>
+          <p class="ab-num">01</p>
+          <h2 class="ab-h">Who I am</h2>
+          <p class="ab-copy">Hi, I&rsquo;m Sohan, a product designer who lives in <strong>enterprise SaaS, dev, and AI tools</strong>. I&rsquo;ve been designing for four years, going on five, and I still get a kick out of it. Impact, creativity, and the particular pain of bad UX are why I became a designer in the first place.</p>
+          <p class="ab-copy">None of this was a straight line. It started in a place where nobody was talking about interfaces, least of all me.</p>
+        </section>
 
-        <div class="about-more" data-reveal>
-          <section class="am-block">
-            <h3 class="am-heading">A few detours before design&hellip;</h3>
-            <ol class="am-steps">
-              <li class="am-step"><span class="am-num">1</span><p>When I was young I was deep into calligraphy. That habit turned into graphic design. I loved how white type could sit on a good landscape and make the whole thing feel finished. I was also quietly obsessed with operating systems and their interfaces. I just didn&rsquo;t know yet that interfaces were a thing you could spend a life on.</p></li>
-              <li class="am-step"><span class="am-num">2</span><p>I grew up in Allapalli, a remote pocket on the Maharashtra&ndash;Telangana border where the cultures blend into each other. So remote that BSNL was the only network in town. The place is a kind of bliss, except the signal. I only understood the bliss later, once city life arrived and drowned it out.</p></li>
-              <li class="am-step"><span class="am-num">3</span><p>A boy from a village, sitting in an internet cafe, finds out there is a degree called Architecture. I think I was the first person in a 200km radius who actually chased design as a career. I was in. Then, somewhere in the third semester, I realized designing spaces just didn&rsquo;t float my boat.</p></li>
-              <li class="am-step"><span class="am-num">4</span><p>So I quit. I picked a plain computer science degree, and I loved the logic of how code worked. Finally there was room to poke at the place where design meets the machine. I taught myself the rest, and eventually I landed a product design job.</p></li>
-            </ol>
-            <div class="am-strip">
-              <figure class="am-card"><img src="/assets/about/detour-1.svg" alt="Awareness campaign" loading="lazy" /></figure>
-              <figure class="am-card"><img src="/assets/about/detour-3.svg" alt="Menstrual hygiene session" loading="lazy" /></figure>
-              <figure class="am-card"><img src="/assets/about/detour-2.svg" alt="First job after graduation" loading="lazy" /></figure>
-              <figure class="am-card"><img src="/assets/about/detour-4.svg" alt="Student work" loading="lazy" /></figure>
-              <figure class="am-card"><img src="/assets/about/detour-5.svg" alt="Commissioned work" loading="lazy" /></figure>
+        <section class="ab-section" data-reveal>
+          <p class="ab-num">02</p>
+          <h2 class="ab-h">Skills &amp; tools</h2>
+          <p class="ab-copy">The craft I use every week — from product systems to shipping with AI in the loop.</p>
+          <div class="ab-split">
+            <div>
+              <h3>Product</h3>
+              <ul>
+                <li>Product strategy &amp; IA</li>
+                <li>Enterprise SaaS UX</li>
+                <li>Design systems</li>
+                <li>White-label &amp; theming</li>
+              </ul>
             </div>
-          </section>
+            <div>
+              <h3>Craft</h3>
+              <ul>
+                <li>Figma &amp; prototyping</li>
+                <li>Visual &amp; brand design</li>
+                <li>Motion &amp; micro-interaction</li>
+                <li>Design engineering</li>
+              </ul>
+            </div>
+            <div>
+              <h3>AI &amp; build</h3>
+              <ul>
+                <li>Cursor &amp; Claude</li>
+                <li>AI-assisted workflows</li>
+                <li>Framer &amp; front-end handoff</li>
+                <li>Paper, Lottie, shaders</li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-          <section class="am-block">
-            <h3 class="am-heading">Where I am today&hellip;</h3>
-            <p>That job turned into a career I&rsquo;m proud of. Four years on, I&rsquo;ve gone from teaching myself the basics to shaping real products. The way I work now looks nothing like the kid lettering in a notebook.</p>
-            <p>With AI rewriting the job, I believe in myself as a designer more than ever. I remember how boxed-in it used to feel, capped by whatever we could push around on a canvas. Now, if we can imagine it, we can actually build it. That makes us the <strong>most powerful generation of designers to ever exist</strong>, and I can&rsquo;t wait to see what we do with it.</p>
-          </section>
-        </div>
-      </div>
+        <section class="ab-section" data-reveal>
+          <p class="ab-num">03</p>
+          <h2 class="ab-h">Experience</h2>
+          <div class="ab-exp">
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">Senior Product Designer</h3>
+              <div class="ab-exp-meta">
+                <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
+                <span class="ab-exp-date">Jan 2025 – Present</span>
+              </div>
+              <p class="ab-exp-desc">Redesigned the AI-assisted enterprise dashboard and learner experience, boosting sales by 60%. Introduced Design System 1.0 (+40% design efficiency), streamlined navigation, and automated graphical dependencies.</p>
+            </article>
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">Product Designer</h3>
+              <div class="ab-exp-meta">
+                <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
+                <span class="ab-exp-date">Jan 2022 – Dec 2024</span>
+              </div>
+              <p class="ab-exp-desc">Improved core UX journeys (50% less friction), AI-assisted bulk CSV actions, and collaborated across eng and support. Revamped visual identity and website for Edmingle 2024.</p>
+            </article>
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">Visual and Product Designer <span class="ab-exp-aside">Side project</span></h3>
+              <div class="ab-exp-meta">
+                <span class="ab-exp-company">Zyncspace</span>
+                <span class="ab-exp-date">Apr 2025 – Nov 2025</span>
+              </div>
+              <p class="ab-exp-desc">Produced branding and website for Zyncspace; shipped MVP, website, and ads under tight timelines.</p>
+            </article>
+            <article class="ab-exp-item">
+              <h3 class="ab-exp-role">UI/UX Designer</h3>
+              <div class="ab-exp-meta">
+                <a href="https://www.cyberior.com" target="_blank" rel="noopener">Europ Assistance</a>
+                <span class="ab-exp-date">Jun 2021 – Nov 2021</span>
+              </div>
+              <p class="ab-exp-desc">Moved the design process from Photoshop to Figma, revamped dashboards with cybersecurity metrics, and rebuilt Cyberior.com.</p>
+            </article>
+          </div>
+        </section>
 
+        <section class="ab-section" data-reveal>
+          <p class="ab-pull">A few detours before design&hellip;</p>
+          <ol class="ab-steps">
+            <li class="ab-step">
+              <p class="ab-step-num">01</p>
+              <p>When I was young I was deep into calligraphy. That habit turned into graphic design. I loved how white type could sit on a good landscape and make the whole thing feel finished. I was also quietly obsessed with operating systems and their interfaces. I just didn&rsquo;t know yet that interfaces were a thing you could spend a life on.</p>
+            </li>
+            <li class="ab-step">
+              <p class="ab-step-num">02</p>
+              <p>I grew up in Allapalli, a remote pocket on the Maharashtra&ndash;Telangana border where the cultures blend into each other. So remote that BSNL was the only network in town. The place is a kind of bliss, except the signal. I only understood the bliss later, once city life arrived and drowned it out.</p>
+            </li>
+            <li class="ab-step">
+              <p class="ab-step-num">03</p>
+              <p>A boy from a village, sitting in an internet cafe, finds out there is a degree called Architecture. I think I was the first person in a 200km radius who actually chased design as a career. I was in. Then, somewhere in the third semester, I realized designing spaces just didn&rsquo;t float my boat.</p>
+            </li>
+            <li class="ab-step">
+              <p class="ab-step-num">04</p>
+              <p>So I quit. I picked a plain computer science degree, and I loved the logic of how code worked. Finally there was room to poke at the place where design meets the machine. I taught myself the rest, and eventually I landed a product design job.</p>
+            </li>
+          </ol>
+          <div class="ab-strip" aria-label="Detour photos">
+            <figure class="ab-card"><img src="/assets/about/detour-1.svg" alt="Awareness campaign" loading="lazy" /></figure>
+            <figure class="ab-card"><img src="/assets/about/detour-3.svg" alt="Menstrual hygiene session" loading="lazy" /></figure>
+            <figure class="ab-card"><img src="/assets/about/detour-2.svg" alt="First job after graduation" loading="lazy" /></figure>
+            <figure class="ab-card"><img src="/assets/about/detour-4.svg" alt="Student work" loading="lazy" /></figure>
+            <figure class="ab-card"><img src="/assets/about/detour-5.svg" alt="Commissioned work" loading="lazy" /></figure>
+          </div>
+        </section>
+
+        <section class="ab-section" data-reveal>
+          <p class="ab-num">04</p>
+          <h2 class="ab-h">Where I am today</h2>
+          <p class="ab-copy">That job turned into a career I&rsquo;m proud of. Four years on, I&rsquo;ve gone from teaching myself the basics to shaping real products. The way I work now looks nothing like the kid lettering in a notebook.</p>
+          <p class="ab-copy">With AI rewriting the job, I believe in myself as a designer more than ever. I remember how boxed-in it used to feel, capped by whatever we could push around on a canvas. Now, if we can imagine it, we can actually build it. That makes us the <strong>most powerful generation of designers to ever exist</strong>, and I can&rsquo;t wait to see what we do with it.</p>
+          <div class="ab-cta-row">
+            <a class="ab-cta" href="https://www.linkedin.com/in/sohan-bhute/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="ab-cta" href="mailto:sohan.work@proton.me">Email</a>
+            <a class="ab-cta" href="/assets/Sohan-Bhute-Resume.pdf" download="Sohan-Bhute-Resume.pdf">Resume</a>
+          </div>
+        </section>
+      </article>
     </main>
   </div>
 
