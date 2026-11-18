@@ -66,9 +66,10 @@ function initCopyEmail() {
     var progressBar = loader.querySelector('.intro-progress-bar');
     var current = 0;
     var loopsDone = 0;
-    var totalLoops = 2;
-    var iconDelay = 140;
-    var holdLast = 210;
+    // One clear pass so each mark is readable (was 2 fast loops).
+    var totalLoops = 1;
+    var iconDelay = 200;
+    var holdLast = 280;
     var step = 0;
     var totalSteps = icons.length * totalLoops;
 
@@ -119,7 +120,7 @@ function initCopyEmail() {
     }
 
     setProgress(0);
-    setTimeout(function () { showNext(); }, 150);
+    setTimeout(function () { showNext(); }, 105);
   })();
 
   // Strip any legacy separator.svg images from case-study dividers.

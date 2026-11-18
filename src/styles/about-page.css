@@ -323,6 +323,13 @@ html[data-theme='dark'] .ab-photo {
   color: var(--text-muted);
 }
 
+.ab-exp-arrow {
+  display: inline-block;
+  margin: 0 0.35em;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 .ab-exp-meta {
   display: flex;
   flex-wrap: wrap;
@@ -353,6 +360,23 @@ html[data-theme='dark'] .ab-photo {
   line-height: 1.4;
   letter-spacing: -0.8px;
   color: var(--text);
+}
+
+/* Side work sits after a clear break — not part of the employment stack. */
+.ab-exp-side {
+  margin-top: 16px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline);
+}
+
+.ab-exp-side-label {
+  margin: 0 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .ab-steps {

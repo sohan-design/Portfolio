@@ -221,7 +221,7 @@ body {
 }
 
 .intro-loader.is-exiting {
-  animation: intro-reveal 0.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: intro-reveal 0.42s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 .intro-loader.is-done {
@@ -303,7 +303,7 @@ body {
   background: #ffffff;
   border-radius: inherit;
   transform-origin: left center;
-  transition: width 0.2s linear;
+  transition: width 0.14s linear;
 }
 
 body.intro-loading {
@@ -1130,8 +1130,7 @@ button.btn-primary {
   background: transparent;
   color: var(--text);
   font-size: 13px;
-  /* oil-polish: real Segoe weight (was 450) */
-  font-weight: 400;
+  font-weight: 450;
   line-height: 19.5px;
   letter-spacing: 0;
   text-decoration: none;
@@ -1139,8 +1138,7 @@ button.btn-primary {
 }
 
 html[data-theme="dark"] .btn-primary {
-  /* oil-polish: quiet accent border (was #ace1af mint) */
-  --cta-green: #00b3ff;
+  --cta-green: #ace1af;
 }
 
 .cta-actions {
@@ -1196,14 +1194,6 @@ html[data-theme="dark"] .btn-primary {
   inset: -1px;
   pointer-events: none;
   overflow: visible;
-  /* oil-polish: handles only on interaction (was always visible) */
-  opacity: 0;
-  transition: opacity 0.18s var(--ease);
-}
-
-.btn-primary:hover .selection-handles,
-.btn-primary:focus-visible .selection-handles {
-  opacity: 1;
 }
 
 .btn-primary .selection-handles i {
@@ -1219,15 +1209,16 @@ html[data-theme="dark"] .btn-primary {
 .btn-primary .selection-handles i:nth-child(3) { bottom: -1px; left: -1px; }
 .btn-primary .selection-handles i:nth-child(4) { bottom: -1px; right: -1px; }
 
+/* Static CTAs — no hover fill / underline interaction */
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background: color-mix(in srgb, var(--cta-green) 9%, transparent);
+  background: transparent;
   text-decoration: none;
 }
 
 .btn-primary:hover .action-label,
 .btn-primary:focus-visible .action-label {
-  text-decoration-color: currentColor;
+  text-decoration-color: transparent;
 }
 
 .btn-primary:active {
