@@ -280,17 +280,22 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 .cs-draft .td-hero-figure {
+  --td-figure-shadow: rgba(21, 121, 255, 0.55);
   margin: 0 0 96px;
   width: 100%;
   max-width: none;
-  aspect-ratio: 1120 / 664;
   border-radius: 10px;
   overflow: visible;
   background: transparent;
-  box-shadow: 0 32px 96px rgba(255, 255, 255, 0.5);
 }
 
-.cs-draft .td-hero-figure img {
+.cs-draft .td-hero-figure:not(.td-hero-carousel) {
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 0 96px 40px var(--td-figure-shadow);
+  transition: box-shadow 0.08s ease;
+}
+
+.cs-draft .td-hero-figure:not(.td-hero-carousel) img {
   display: block;
   width: 100%;
   height: 100%;
@@ -298,6 +303,48 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   object-position: center 40%;
   border-radius: 10px;
   background: var(--td-figure-bg);
+}
+
+.cs-draft .td-hero-carousel {
+  position: relative;
+}
+
+.cs-draft .td-hero-carousel-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--td-figure-bg);
+  box-shadow: 0 0 96px 40px var(--td-figure-shadow);
+  transition: box-shadow 0.08s ease;
+}
+
+.cs-draft .td-hero-carousel-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.08s ease;
+}
+
+.cs-draft .td-hero-carousel-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-draft .td-hero-figure,
+  .cs-draft .td-hero-carousel-viewport,
+  .cs-draft .td-hero-carousel-slide {
+    transition: none;
+  }
 }
 
 .cs-draft .td-figure {
@@ -358,6 +405,37 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   line-height: 1.4;
   letter-spacing: -0.8px;
   color: var(--td-text-primary);
+}
+
+.cs-draft p.td-cta-wrap {
+  margin: 20px 0 0;
+}
+
+.cs-draft a.td-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+  color: var(--td-kicker);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.cs-draft a.td-cta::after {
+  content: '↗';
+  font-size: 0.72em;
+  font-weight: 400;
+  line-height: 1;
+  translate: 0 -0.05em;
+}
+
+.cs-draft a.td-cta:hover,
+.cs-draft a.td-cta:focus-visible {
+  opacity: 0.75;
 }
 
 .cs-draft p.td-pull {

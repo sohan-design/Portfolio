@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech for humans · Sohan Bhute</title>
+  <meta name="description" content="An infinite canvas of design stories from Tech for humans — drag to explore." />
+  <meta property="og:title" content="Tech for humans · Sohan Bhute" />
+  <meta property="og:description" content="An infinite canvas of design stories from Tech for humans — drag to explore." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#050508" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio-theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.style.colorScheme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="tfh-page">
+  <header class="tfh-chrome">
+    <a class="tfh-back" href="/#work">← Best Projects</a>
+    <p class="tfh-hint">Drag to explore</p>
+  </header>
+
+  <main class="tfh-stage" aria-label="Tech for humans infinite canvas">
+    <div class="hp2-infinite-canvas tfh-canvas" data-infinite-canvas role="img" aria-label="Drag to explore the Tech for humans image grid">
+      <canvas></canvas>
+    </div>
+  </main>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

@@ -176,6 +176,24 @@ html[data-theme='dark'] .hp2-pixel-frame--hero {
 /* ----- Best Projects cards (Figma pixel-frame) ----- */
 .hp2-projects {
   padding-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.hp2-project-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hp2-project-group > .section-label {
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+.hp2-project-group:first-child > .section-label {
+  padding-top: 32px;
 }
 
 .hp2-pcard-grid {
@@ -234,6 +252,26 @@ html[data-theme='dark'] .hp2-pcard-media {
   border-radius: 6px;
 }
 
+.hp2-pcard-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hp2-pcard-meta {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted, rgba(0, 0, 0, 0.5));
+}
+
+html[data-theme='dark'] .hp2-pcard-meta {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .hp2-pcard-title {
   margin: 0;
   font-size: 18px;
@@ -245,6 +283,96 @@ html[data-theme='dark'] .hp2-pcard-media {
 
 .hp2-pcard-title strong {
   font-weight: 600;
+}
+
+/* ----- Tech for humans infinite canvas page ----- */
+.tfh-page {
+  margin: 0;
+  min-height: 100vh;
+  background: #050508;
+  color: #fff;
+  overflow: hidden;
+}
+
+html:not([data-theme='dark']) .tfh-page {
+  background: #f4f4f6;
+  color: #111;
+}
+
+.tfh-chrome {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(5, 5, 8, 0.72), rgba(5, 5, 8, 0));
+}
+
+html:not([data-theme='dark']) .tfh-chrome {
+  background: linear-gradient(to bottom, rgba(244, 244, 246, 0.85), rgba(244, 244, 246, 0));
+}
+
+.tfh-back,
+.tfh-hint {
+  pointer-events: auto;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.72;
+}
+
+.tfh-back:hover,
+.tfh-back:focus-visible {
+  opacity: 1;
+}
+
+.tfh-stage {
+  position: fixed;
+  inset: 0;
+}
+
+.hp2-infinite-canvas,
+.tfh-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  background-color: #050508;
+  background-image: radial-gradient(circle, rgba(80, 120, 255, 0.35) 1px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+html:not([data-theme='dark']) .hp2-infinite-canvas,
+html:not([data-theme='dark']) .tfh-canvas {
+  background-color: #f4f4f6;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.18) 1px, transparent 1.2px);
+}
+
+.hp2-infinite-canvas.is-dragging,
+.tfh-canvas.is-dragging {
+  cursor: grabbing;
+}
+
+.hp2-infinite-canvas canvas,
+.tfh-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 /* ----- Apple-style full-bleed More Work shelf ----- */

@@ -28,6 +28,11 @@ export function mountSiteFooter() {
     node.remove();
   });
 
+  // Full-bleed pages (e.g. infinite canvas) keep chrome out of the stage.
+  if (document.body.classList.contains('tfh-page') || document.body.hasAttribute('data-no-site-footer')) {
+    return;
+  }
+
   var host = document.querySelector('.cs-panel') || document.querySelector('.site') || document.querySelector('main');
   if (!host) return;
 

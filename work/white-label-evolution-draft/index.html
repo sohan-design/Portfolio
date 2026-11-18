@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>White-Label Evolution · Sohan Bhute</title>
+  <meta name="description" content="Case study: modernizing a white-labeled learner dashboard with monetization and a design system." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/trainer-draft.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio-theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.style.colorScheme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-study="whitelabel-draft">
+  <div class="cs-overlay cs-draft" id="caseStudyWhitelabelDraft" data-project="whitelabel-draft" data-hero-intro role="dialog" aria-modal="true" aria-labelledby="td-title" aria-hidden="true">
+    <div class="cs-panel">
+      <article class="cs-content">
+        <div class="td-first-screen">
+          <header class="site-header">
+            <nav class="site-nav" aria-label="Primary">
+              <div class="nav-links">
+                <a class="nav-link" href="/" data-nav="home">Home</a>
+                <a class="nav-link" href="/more-work" data-nav="works">Works</a>
+                <a class="nav-link" href="/about" data-nav="about">About</a>
+                <a class="nav-link" href="/assets/Sohan-Bhute-Resume.pdf" download="Sohan-Bhute-Resume.pdf">Resume</a>
+              </div>
+              <div class="nav-social">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
+                  <span class="theme-toggle-icons" aria-hidden="true">
+                    <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+                    <svg class="theme-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
+                  </span>
+                  <span class="theme-toggle-tooltip">Dark mode</span>
+                </button>
+                <div class="nav-actions">
+                  <a class="btn-primary selection-control" href="https://www.linkedin.com/in/sohan-bhute/" target="_blank" rel="noopener">
+                    <span class="action-content">
+                      <span class="action-label">LinkedIn</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
+                    </span>
+                    <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </a>
+                  <button class="btn-primary selection-control" type="button" data-copy-email="sohan.work@proton.me">
+                    <span class="action-content">
+                      <span class="action-label">Email</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5"></rect><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"></path></svg>
+                    </span>
+                    <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </button>
+                </div>
+              </div>
+            </nav>
+          </header>
+
+          <div class="td-hero-fill cs-hero-fill" aria-hidden="true">
+            <div class="td-hero-shader cs-hero-shader" data-hero-shader data-shader-color="#34A853" data-shader-size="34" data-shader-speed="0.115"></div>
+          </div>
+
+          <section class="td-section td-hero" id="td-hero">
+            <div class="td-hero-intro">
+              <p class="td-kicker">Product design &amp; white-label LMS</p>
+              <h1 class="td-title" id="td-title">
+                <span class="td-title-line">White-Label Evolution</span>
+              </h1>
+              <p class="td-sub">A learner surface that can also sell</p>
+              <p class="td-byline">
+                <span class="td-year">2024</span>
+                <span class="td-byline-rule" aria-hidden="true"></span>
+                Contributors: <span>Me (Product Designer), Design &amp; product</span>
+              </p>
+              <div class="td-stats">
+                <div class="td-stat"><strong>40%</strong><span>More sales</span></div>
+                <div class="td-stat"><strong>60%+</strong><span>Banner adoption</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <figure class="td-hero-figure">
+          <img src="/assets/case-study-white-label/cover-after.png" alt="Modernized white-label learner dashboard after redesign" width="1280" height="800" />
+        </figure>
+
+        <section class="td-section td-block" id="td-vision">
+          <p class="td-lead">I modernized a legacy white-labeled learner dashboard so tutors could grow revenue from a single lead without turning learning into an ad wall.</p>
+        </section>
+
+        <section class="td-section td-block" id="td-problem">
+          <h2 class="td-h">The Problem</h2>
+          <p class="td-copy">The learner apps were how people consumed content, but the interface felt dated and flat. The LMS only sold courses, which blocked tutor upsell and kept clients stuck in a catalog model.</p>
+          <div class="td-split">
+            <div>
+              <h3>Outdated interface</h3>
+              <p>Little colour, almost no shadow, and no system — a non-uniform experience.</p>
+            </div>
+            <div>
+              <h3>No upselling path</h3>
+              <p>Tutors needed more revenue from one lead. Clients wanted to sell more than courses.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="td-section td-block" id="td-tension">
+          <p class="td-pull">Learning had to stay primary — while marketing and monetization finally got real estate that didn’t feel cheap.</p>
+          <div class="td-split">
+            <div>
+              <h3>Good</h3>
+              <ul>
+                <li>Fully white-labelled Web, iOS, and Android</li>
+                <li>Tutors already uploading through admin</li>
+                <li>~80% of clients asking for monetization</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Bad</h3>
+              <ul>
+                <li>Dated, flat, monotonous UI</li>
+                <li>No design system</li>
+                <li>Promo either avoided or plastered on home</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="td-section td-block" id="td-banners">
+          <p class="td-num">01</p>
+          <h2 class="td-h">We gave marketing real estate without letting ads own the first impression.</h2>
+          <p class="td-copy">The first card always stayed Continue Learning. After a short delay, promo cards could auto-scroll. Memberships, blogs, events, communities, and referrals sat behind that same learning-first strip — so visibility went up without making home feel like an ad wall.</p>
+          <figure class="td-figure">
+            <img src="/assets/case-study-white-label/marketing-banner.png" alt="Learning-first marketing banner strip on the learner home" />
+          </figure>
+        </section>
+
+        <section class="td-section td-block" id="td-system">
+          <p class="td-num">02</p>
+          <h2 class="td-h">We rebuilt the interface on Ant Design so every white-label theme could scale without one-off UI.</h2>
+          <p class="td-copy">A white base, subtle shadows, WCAG-safe colour, and quieter brand accents replaced the flat skin. Documented components, spacing, and layout rules let engineers theme Web and mobile without inventing screens from scratch.</p>
+          <figure class="td-figure">
+            <img src="/assets/case-study-white-label/design-system-1.png" alt="White-label design system foundations" />
+          </figure>
+        </section>
+
+        <section class="td-section td-block" id="td-result">
+          <h2 class="td-h">The Result</h2>
+          <p class="td-copy">White-label stopped meaning a dated skin on a course player. Sales rose, enterprise clients arrived, and the banner system became the monetization surface clients actually adopted.</p>
+          <div class="td-stats">
+            <div class="td-stat"><strong>40%</strong><span>More sales</span></div>
+            <div class="td-stat"><strong>10+</strong><span>Industry-leading clients</span></div>
+            <div class="td-stat"><strong>60%+</strong><span>Banner adoption</span></div>
+            <div class="td-stat"><strong>2 mo</strong><span>Timeline</span></div>
+          </div>
+        </section>
+
+        <section class="td-section td-block" id="td-team">
+          <h2 class="td-h">From the team</h2>
+          <div class="td-quotes">
+            <blockquote class="td-quote">
+              <p>“Continue Learning owns the first paint. Marketing finally got real estate without making the home feel like an ad wall.”</p>
+              <cite>Product</cite>
+            </blockquote>
+            <blockquote class="td-quote">
+              <p>“Clients stopped choosing between looking cheap and making no money. The banner strip was the first monetization surface they actually adopted.”</p>
+              <cite>Client success</cite>
+            </blockquote>
+            <blockquote class="td-quote">
+              <p>“Ant Design plus documented spacing meant white-label themes stopped inventing one-off UI.”</p>
+              <cite>Front-end</cite>
+            </blockquote>
+            <blockquote class="td-quote">
+              <p>“Support tickets shifted from ‘why does this look dated?’ to ‘how do I push this membership?’”</p>
+              <cite>The support team</cite>
+            </blockquote>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

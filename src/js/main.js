@@ -5,6 +5,8 @@ import { initThemeToggle } from './theme.js';
 import { initCtaPixelWave } from './ctaWave.js';
 import { mountSiteFooter } from './siteFooter.js';
 import { initClickPixelPop } from './clickPixelPop.js';
+import { initDraftHeroCarousels } from './draftHeroCarousel.js';
+import { initInfiniteProjectCanvases } from './infiniteProjectCanvas.js';
 
 // Initialize Vercel Analytics
 inject();
@@ -659,11 +661,13 @@ function initCopyEmail() {
       });
       // Each project's dedicated case-study page.
       var STUDY_URLS = {
-        cosmo: '/work/redesigned-payment-pages',
-        whitelabel: '/work/white-label-evolution',
-        trainer: '/work/b2b-trainer-dashboard',
+        cosmo: '/work/redesigned-payment-pages-draft',
+        whitelabel: '/work/white-label-evolution-draft',
+        trainer: '/work/b2b-trainer-dashboard-draft',
+        b2c: '/work/b2c-learner-app-draft',
         ios: '/work/putting-common-sense-back-into-ios',
-        'ai-process': '/work/design-engineering-the-new-ai-process'
+        'ai-process': '/work/design-engineering-the-new-ai-process',
+        'tech-for-humans': '/work/tech-for-humans'
       };
       var modals = {};
       Array.prototype.forEach.call(document.querySelectorAll('.pm-overlay'), function (m) {
@@ -935,5 +939,7 @@ function initCopyEmail() {
   initFooterLotties();
   mountSiteFooter();
   initCtaPixelWave(document);
+  initDraftHeroCarousels(document);
+  initInfiniteProjectCanvases(document);
 
 })();
