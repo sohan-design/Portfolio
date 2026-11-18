@@ -326,39 +326,43 @@ function initAvatarCursor() {
 }
 
 
-/** Apple-style full-bleed horizontal shelf. */
+/** Apple-style full-bleed horizontal shelf (home More Work + about gallery). */
 function initShelf(root) {
-  var shelf = root.querySelector('[data-hp2-shelf]');
-  if (!shelf) return;
-  var rail = shelf.querySelector('[data-hp2-shelf-rail]');
-  var prev = shelf.querySelector('[data-hp2-shelf-prev]');
-  var next = shelf.querySelector('[data-hp2-shelf-next]');
-  if (!rail) return;
+  var shelves = (root || document).querySelectorAll('[data-hp2-shelf]');
+  Array.prototype.forEach.call(shelves, function (shelf) {
+    if (shelf.dataset.shelfReady) return;
+    shelf.dataset.shelfReady = '1';
 
-  function cardStep() {
-    var card = rail.querySelector('.hp2-shelf-card');
-    if (!card) return 320;
-    var styles = getComputedStyle(rail);
-    var gap = parseFloat(styles.columnGap || styles.gap) || 20;
-    return card.getBoundingClientRect().width + gap;
-  }
+    var rail = shelf.querySelector('[data-hp2-shelf-rail]');
+    var prev = shelf.querySelector('[data-hp2-shelf-prev]');
+    var next = shelf.querySelector('[data-hp2-shelf-next]');
+    if (!rail) return;
 
-  function updateButtons() {
-    var max = rail.scrollWidth - rail.clientWidth - 2;
-    if (prev) prev.disabled = rail.scrollLeft <= 2;
-    if (next) next.disabled = rail.scrollLeft >= max;
-  }
+    function cardStep() {
+      var card = rail.querySelector('.hp2-shelf-card');
+      if (!card) return 320;
+      var styles = getComputedStyle(rail);
+      var gap = parseFloat(styles.columnGap || styles.gap) || 20;
+      return card.getBoundingClientRect().width + gap;
+    }
 
-  function scrollByDir(dir) {
-    rail.scrollBy({ left: dir * cardStep(), behavior: 'smooth' });
-    setTimeout(updateButtons, 350);
-  }
+    function updateButtons() {
+      var max = rail.scrollWidth - rail.clientWidth - 2;
+      if (prev) prev.disabled = rail.scrollLeft <= 2;
+      if (next) next.disabled = rail.scrollLeft >= max;
+    }
 
-  if (prev) prev.addEventListener('click', function () { scrollByDir(-1); });
-  if (next) next.addEventListener('click', function () { scrollByDir(1); });
-  rail.addEventListener('scroll', updateButtons, { passive: true });
-  window.addEventListener('resize', updateButtons);
-  updateButtons();
+    function scrollByDir(dir) {
+      rail.scrollBy({ left: dir * cardStep(), behavior: 'smooth' });
+      setTimeout(updateButtons, 350);
+    }
+
+    if (prev) prev.addEventListener('click', function () { scrollByDir(-1); });
+    if (next) next.addEventListener('click', function () { scrollByDir(1); });
+    rail.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+  });
 }
 
 function boot() {
@@ -380,9 +384,9 @@ function boot() {
   var home = document.getElementById('page-home');
   if (home) {
     initPixelFrame(home);
-    initShelf(home);
     initAvatarCursor();
   }
+  initShelf(document);
 
   // Repaint in the same task as the theme swap: the view transition snapshots
   // the new frame immediately, so a rAF-deferred sync would capture stale fills.

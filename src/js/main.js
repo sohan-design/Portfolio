@@ -6,6 +6,7 @@ import { initCtaPixelWave } from './ctaWave.js';
 import { mountSiteFooter } from './siteFooter.js';
 import { initClickPixelPop } from './clickPixelPop.js';
 import { initDraftHeroCarousels } from './draftHeroCarousel.js';
+import { initLumiaMobile } from './lumiaMobile.js';
 import { initInfiniteProjectCanvases } from './infiniteProjectCanvas.js';
 
 // Initialize Vercel Analytics
@@ -940,6 +941,7 @@ function initCopyEmail() {
   mountSiteFooter();
   initCtaPixelWave(document);
   initDraftHeroCarousels(document);
+  initLumiaMobile();
   initInfiniteProjectCanvases(document);
 
 })();

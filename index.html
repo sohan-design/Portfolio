@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/src/styles/main.css" />
   <link rel="stylesheet" href="/src/styles/homepage-v2.css" />
   <link rel="stylesheet" href="/src/styles/about-page.css" />
+  <link rel="stylesheet" href="/src/styles/lumia-mobile.css" />
   <script>
     (function () {
       try {
@@ -109,49 +110,62 @@
     </header>
 
     <main class="page ab-page" id="page-home">
-      <article class="ab-content">
-        <section class="ab-section" data-reveal-lead data-reveal>
-          <div class="ab-hero-row">
-            <div
-              class="hero-avatar avatar"
-              data-cursor-cycle
-              data-cursor="Hi."
-              tabindex="0"
-              role="img"
-              aria-label="Portrait of Sohan — hover for a hello"
-            >
-              <div class="hero-avatar-photo">
-                <img src="/assets/v3/profile.jpeg" alt="Portrait of Sohan" width="44" height="44" />
+      <nav class="lumia-pivot" aria-label="Section tabs">
+        <div class="lumia-pivot-rail" data-lumia-pivot-rail>
+          <button type="button" class="lumia-pivot-tab is-active" data-lumia-jump="sohan">sohan</button>
+          <button type="button" class="lumia-pivot-tab" data-lumia-jump="work">work</button>
+          <button type="button" class="lumia-pivot-tab" data-lumia-jump="play">play</button>
+          <button type="button" class="lumia-pivot-tab" data-lumia-jump="more">more</button>
+          <button type="button" class="lumia-pivot-tab" data-lumia-jump="jobs">jobs</button>
+          <button type="button" class="lumia-pivot-tab" data-lumia-jump="ping">contact</button>
+        </div>
+      </nav>
+      <article class="ab-content lumia-panorama">
+        <div class="lumia-hub" data-lumia-hub="sohan">
+          <section class="ab-section" data-reveal-lead data-reveal>
+            <div class="ab-hero-row">
+              <div
+                class="hero-avatar avatar"
+                data-cursor-cycle
+                data-cursor="Hi."
+                tabindex="0"
+                role="img"
+                aria-label="Portrait of Sohan — hover for a hello"
+              >
+                <div class="hero-avatar-photo">
+                  <img src="/assets/v3/profile.webp" alt="Portrait of Sohan" width="44" height="44" />
+                </div>
+                <img class="hero-avatar-accent" src="/assets/v3/profile-accent.svg" alt="" width="24" height="2" aria-hidden="true" />
               </div>
-              <img class="hero-avatar-accent" src="/assets/v3/profile-accent.svg" alt="" width="24" height="2" aria-hidden="true" />
+              <p class="ab-byline">
+                <span class="ab-year">4+ years</span>
+                <span class="ab-byline-rule" aria-hidden="true"></span>
+                <span>Senior Product Designer at <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a></span>
+              </p>
+              <span class="site-clock" data-clock aria-live="off"></span>
             </div>
-            <p class="ab-byline">
-              <span class="ab-year">4+ years</span>
-              <span class="ab-byline-rule" aria-hidden="true"></span>
-              <span>Senior Product Designer at <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a></span>
-            </p>
-            <span class="site-clock" data-clock aria-live="off"></span>
+            <h1 class="ab-title">Sohan Bhute</h1>
+            <p class="ab-sub">CS student turned product designer &amp; researcher — building intuitive, emotional product experiences.</p>
+          </section>
+
+          <section class="ab-section" data-reveal>
+            <p class="ab-lead">I&rsquo;m jumping into design engineering to put micro-interactions and craft into the stack.</p>
+            <p class="ab-copy">Shipping AI-assisted LMS experiences, design systems, and faster frontend with Cursor &amp; Figma MCP. Also an architecture dropout — still chasing that mix of art and tech.</p>
+          </section>
+
+          <div class="ab-hero-figure" data-reveal>
+            <figure class="hp2-pixel-frame hp2-pixel-frame--hero" data-hp2-pixel-frame>
+              <img src="/assets/homepage-v2/hero-statue.jpg" alt="Blue classical bust in profile wearing a red visor" width="1500" height="840" />
+              <canvas class="hp2-pixel-mask" aria-hidden="true"></canvas>
+            </figure>
           </div>
-          <h1 class="ab-title">Sohan Bhute</h1>
-          <p class="ab-sub">CS student turned product designer &amp; researcher — building intuitive, emotional product experiences.</p>
-        </section>
-
-        <section class="ab-section" data-reveal>
-          <p class="ab-lead">I&rsquo;m jumping into design engineering to put micro-interactions and craft into the stack.</p>
-          <p class="ab-copy">Shipping AI-assisted LMS experiences, design systems, and faster frontend with Cursor &amp; Figma MCP. Also an architecture dropout — still chasing that mix of art and tech.</p>
-        </section>
-
-        <div class="ab-hero-figure" data-reveal>
-          <figure class="hp2-pixel-frame hp2-pixel-frame--hero" data-hp2-pixel-frame>
-            <img src="/assets/homepage-v2/hero-statue.jpg" alt="Blue classical bust in profile wearing a red visor" width="1500" height="840" />
-            <canvas class="hp2-pixel-mask" aria-hidden="true"></canvas>
-          </figure>
         </div>
 
-        <section class="projects hp2-projects ab-section" id="work">
-          <div class="hp2-project-group" data-reveal>
-            <p class="ab-num">01</p>
-            <h2 class="ab-h">Case Studies</h2>
+        <div class="lumia-hub" data-lumia-hub="work" id="work">
+          <section class="projects hp2-projects ab-section">
+            <div class="hp2-project-group" data-reveal>
+              <p class="ab-num">01</p>
+              <h2 class="ab-h">Case Studies</h2>
             <div class="project-grid hp2-pcard-grid">
               <article class="hp2-pcard project" data-project="whitelabel" tabindex="0" role="button" aria-label="Read case study: How did a white-label learner dashboard unlock 40% more sales?">
                 <div class="hp2-pcard-media">
@@ -183,63 +197,69 @@
                 </div>
               </article>
             </div>
-          </div>
-
-          <div class="hp2-project-group" data-reveal>
-            <p class="ab-num">02</p>
-            <h2 class="ab-h">Articles &amp; Experiments</h2>
-            <div class="project-grid hp2-pcard-grid">
-              <article class="hp2-pcard project" data-project="ai-process" tabindex="0" role="button" aria-label="Read article: Design Engineering: The New AI Process">
-                <div class="hp2-pcard-media">
-                  <img src="/assets/homepage-v2/card-ai-process.webp" alt="Cursor with the composer open beside a source file" loading="lazy" width="1024" height="640" />
-                </div>
-                <div class="hp2-pcard-copy">
-                  <p class="hp2-pcard-meta">Design Engineering · AI</p>
-                  <h3 class="hp2-pcard-title">Design Engineering: The New <strong>AI Process</strong></h3>
-                </div>
-              </article>
-
-              <article class="hp2-pcard project" data-project="ios" tabindex="0" role="button" aria-label="Read article: Good Design, Bad UX">
-                <div class="hp2-pcard-media">
-                  <img src="/assets/homepage-v2/card-ios-common-sense.jpg" alt="A frustrated iOS user" loading="lazy" width="1200" height="809" />
-                </div>
-                <div class="hp2-pcard-copy">
-                  <p class="hp2-pcard-meta">UX Critique · Operating Systems</p>
-                  <h3 class="hp2-pcard-title">Good design, bad UX: what an OS taught me about <strong>UX</strong></h3>
-                </div>
-              </article>
-
-              <article class="hp2-pcard project" data-href="https://glass-chat-three.vercel.app/" tabindex="0" role="button" aria-label="Open live demo: Veda AI glass chat">
-                <div class="hp2-pcard-media">
-                  <img src="/assets/homepage-v2/card-veda-ai.jpg" alt="Veda AI chat prompt bar on an orange pixel grid" loading="lazy" width="1024" height="516" />
-                </div>
-                <div class="hp2-pcard-copy">
-                  <p class="hp2-pcard-meta">AI Chat · Live Demo</p>
-                  <h3 class="hp2-pcard-title">What does a glassy AI chat workspace feel like in <strong>Veda AI</strong>?</h3>
-                </div>
-              </article>
-
-              <article class="hp2-pcard project" data-project="tech-for-humans" tabindex="0" role="button" aria-label="Open experiment: Tech for humans infinite canvas">
-                <div class="hp2-pcard-media">
-                  <img src="/assets/homepage-v2/card-tech-for-humans.webp" alt="The Ultimate Background Remover — Tech for humans series" loading="lazy" width="1280" height="800" />
-                </div>
-                <div class="hp2-pcard-copy">
-                  <p class="hp2-pcard-meta">Content Design · Infinite Canvas</p>
-                  <h3 class="hp2-pcard-title">Tech for humans: an infinite canvas of <strong>design stories</strong></h3>
-                </div>
-              </article>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <section class="more-preview hp2-more ab-section" data-reveal>
-          <div class="section-head">
-            <div>
-              <p class="ab-num">03</p>
-              <h2 class="ab-h">More Work</h2>
+        <div class="lumia-hub" data-lumia-hub="play">
+          <section class="projects hp2-projects ab-section">
+            <div class="hp2-project-group" data-reveal>
+              <p class="ab-num">02</p>
+              <h2 class="ab-h">Articles &amp; Experiments</h2>
+              <div class="project-grid hp2-pcard-grid">
+                <article class="hp2-pcard project" data-project="ai-process" tabindex="0" role="button" aria-label="Read article: Design Engineering: The New AI Process">
+                  <div class="hp2-pcard-media">
+                    <img src="/assets/homepage-v2/card-ai-process.webp" alt="Cursor with the composer open beside a source file" loading="lazy" width="1024" height="640" />
+                  </div>
+                  <div class="hp2-pcard-copy">
+                    <p class="hp2-pcard-meta">Design Engineering · AI</p>
+                    <h3 class="hp2-pcard-title">Design Engineering: The New <strong>AI Process</strong></h3>
+                  </div>
+                </article>
+
+                <article class="hp2-pcard project" data-project="ios" tabindex="0" role="button" aria-label="Read article: Good Design, Bad UX">
+                  <div class="hp2-pcard-media">
+                    <img src="/assets/homepage-v2/card-ios-common-sense.jpg" alt="A frustrated iOS user" loading="lazy" width="1200" height="809" />
+                  </div>
+                  <div class="hp2-pcard-copy">
+                    <p class="hp2-pcard-meta">UX Critique · Operating Systems</p>
+                    <h3 class="hp2-pcard-title">Good design, bad UX: what an OS taught me about <strong>UX</strong></h3>
+                  </div>
+                </article>
+
+                <article class="hp2-pcard project" data-href="https://glass-chat-three.vercel.app/" tabindex="0" role="button" aria-label="Open live demo: Veda AI glass chat">
+                  <div class="hp2-pcard-media">
+                    <img src="/assets/homepage-v2/card-veda-ai.jpg" alt="Veda AI chat prompt bar on an orange pixel grid" loading="lazy" width="1024" height="516" />
+                  </div>
+                  <div class="hp2-pcard-copy">
+                    <p class="hp2-pcard-meta">AI Chat · Live Demo</p>
+                    <h3 class="hp2-pcard-title">What does a glassy AI chat workspace feel like in <strong>Veda AI</strong>?</h3>
+                  </div>
+                </article>
+
+                <article class="hp2-pcard project" data-project="tech-for-humans" tabindex="0" role="button" aria-label="Open experiment: Tech for humans infinite canvas">
+                  <div class="hp2-pcard-media">
+                    <img src="/assets/homepage-v2/card-tech-for-humans.webp" alt="The Ultimate Background Remover — Tech for humans series" loading="lazy" width="1280" height="800" />
+                  </div>
+                  <div class="hp2-pcard-copy">
+                    <p class="hp2-pcard-meta">Content Design · Infinite Canvas</p>
+                    <h3 class="hp2-pcard-title">Tech for humans: an infinite canvas of <strong>design stories</strong></h3>
+                  </div>
+                </article>
+              </div>
             </div>
-            <a class="view-all" href="/more-work">View all</a>
-          </div>
+          </section>
+        </div>
+
+        <div class="lumia-hub" data-lumia-hub="more">
+          <section class="more-preview hp2-more ab-section" data-reveal>
+            <div class="section-head">
+              <div>
+                <p class="ab-num">03</p>
+                <h2 class="ab-h">More Work</h2>
+              </div>
+              <a class="view-all" href="/more-work">View all</a>
+            </div>
 
           <div class="hp2-shelf" data-hp2-shelf>
             <div class="hp2-shelf-rail" data-hp2-shelf-rail tabindex="0" aria-label="More work carousel">
@@ -276,48 +296,83 @@
             <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="" />
             <figcaption id="csLightboxCaption"></figcaption>
           </div>
-        </section>
+          </section>
+        </div>
 
-        <section class="ab-section" data-reveal>
-          <p class="ab-num">04</p>
-          <h2 class="ab-h">Experience</h2>
-          <div class="ab-exp">
-            <article class="ab-exp-item">
-              <h3 class="ab-exp-role">Senior Product Designer</h3>
-              <div class="ab-exp-meta">
-                <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
-                <span class="ab-exp-date">Jan 2025 – Present</span>
-              </div>
-              <p class="ab-exp-desc">Redesigned the AI-assisted enterprise dashboard and learner experience, boosting sales by 60%. Introduced Design System 1.0 (+40% design efficiency), streamlined navigation, and automated graphical dependencies.</p>
-            </article>
-            <article class="ab-exp-item">
-              <h3 class="ab-exp-role">Product Designer</h3>
-              <div class="ab-exp-meta">
-                <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
-                <span class="ab-exp-date">Jan 2022 – Dec 2024</span>
-              </div>
-              <p class="ab-exp-desc">Improved core UX journeys (50% less friction), AI-assisted bulk CSV actions, and collaborated across eng and support. Revamped visual identity and website for Edmingle 2024.</p>
-            </article>
-            <article class="ab-exp-item">
-              <h3 class="ab-exp-role">Visual and Product Designer <span class="ab-exp-aside">Side project</span></h3>
-              <div class="ab-exp-meta">
-                <span class="ab-exp-company">Zyncspace</span>
-                <span class="ab-exp-date">Apr 2025 – Nov 2025</span>
-              </div>
-              <p class="ab-exp-desc">Produced branding and website for Zyncspace; shipped MVP, website, and ads under tight timelines.</p>
-            </article>
-            <article class="ab-exp-item">
-              <h3 class="ab-exp-role">UI/UX Designer</h3>
-              <div class="ab-exp-meta">
-                <a href="https://www.cyberior.com" target="_blank" rel="noopener">Europ Assistance</a>
-                <span class="ab-exp-date">Jun 2021 – Nov 2021</span>
-              </div>
-              <p class="ab-exp-desc">Moved the design process from Photoshop to Figma, revamped dashboards with cybersecurity metrics, and rebuilt Cyberior.com.</p>
-            </article>
-          </div>
-        </section>
+        <div class="lumia-hub" data-lumia-hub="jobs">
+          <section class="ab-section" data-reveal>
+            <p class="ab-num">04</p>
+            <h2 class="ab-h">Experience</h2>
+            <div class="ab-exp">
+              <article class="ab-exp-item">
+                <h3 class="ab-exp-role">Senior Product Designer</h3>
+                <div class="ab-exp-meta">
+                  <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
+                  <span class="ab-exp-date">Jan 2025 – Present</span>
+                </div>
+                <p class="ab-exp-desc">Redesigned the AI-assisted enterprise dashboard and learner experience, boosting sales by 60%. Introduced Design System 1.0 (+40% design efficiency), streamlined navigation, and automated graphical dependencies.</p>
+              </article>
+              <article class="ab-exp-item">
+                <h3 class="ab-exp-role">Product Designer</h3>
+                <div class="ab-exp-meta">
+                  <a href="https://edmingle.com" target="_blank" rel="noopener">Edmingle</a>
+                  <span class="ab-exp-date">Jan 2022 – Dec 2024</span>
+                </div>
+                <p class="ab-exp-desc">Improved core UX journeys (50% less friction), AI-assisted bulk CSV actions, and collaborated across eng and support. Revamped visual identity and website for Edmingle 2024.</p>
+              </article>
+              <article class="ab-exp-item">
+                <h3 class="ab-exp-role">Visual and Product Designer <span class="ab-exp-aside">Side project</span></h3>
+                <div class="ab-exp-meta">
+                  <span class="ab-exp-company">Zyncspace</span>
+                  <span class="ab-exp-date">Apr 2025 – Nov 2025</span>
+                </div>
+                <p class="ab-exp-desc">Produced branding and website for Zyncspace; shipped MVP, website, and ads under tight timelines.</p>
+              </article>
+              <article class="ab-exp-item">
+                <h3 class="ab-exp-role">UI/UX Designer</h3>
+                <div class="ab-exp-meta">
+                  <a href="https://www.cyberior.com" target="_blank" rel="noopener">Europ Assistance</a>
+                  <span class="ab-exp-date">Jun 2021 – Nov 2021</span>
+                </div>
+                <p class="ab-exp-desc">Moved the design process from Photoshop to Figma, revamped dashboards with cybersecurity metrics, and rebuilt Cyberior.com.</p>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div class="lumia-hub" data-lumia-hub="ping" id="ping">
+          <section class="ab-section lumia-contact" data-reveal>
+            <p class="ab-num">05</p>
+            <h2 class="ab-h">Contact me</h2>
+            <div class="lumia-contact-actions cta-actions">
+              <a class="btn-primary selection-control" href="https://www.linkedin.com/in/sohan-bhute/" target="_blank" rel="noopener">
+                <span class="action-content">
+                  <span class="action-label">LinkedIn</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"></path></svg>
+                </span>
+                <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </a>
+              <button class="btn-primary selection-control" type="button" data-copy-email="sohan.work@proton.me">
+                <span class="action-content">
+                  <span class="action-label">Email</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5"></rect><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"></path></svg>
+                </span>
+                <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </button>
+              <a class="btn-primary selection-control" href="/assets/Sohan-Bhute-Resume.pdf" download="Sohan-Bhute-Resume.pdf">
+                <span class="action-content">
+                  <span class="action-label">Resume</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v12M8 12l4 4 4-4M6 20h12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </span>
+                <span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </a>
+            </div>
+            <p class="cta-colophon">© 2026 Sohan Bhute · Made with Cursor</p>
+          </section>
+        </div>
       </article>
     </main>
+
   </div>
 
   <div id="cursor" aria-hidden="true">

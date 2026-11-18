@@ -1,0 +1,297 @@
+/**
+ * Windows Phone / Lumia Metro mobile shell — max-width 480px only.
+ * Desktop (>480px) is untouched: hubs are display:contents; pivot hidden.
+ */
+
+.lumia-pivot {
+  display: none;
+}
+
+.lumia-hub {
+  display: contents;
+}
+
+/* Contact hub duplicates the footer CTA on small screens — hide on desktop */
+.lumia-contact {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  body:has(#page-home) {
+    --lumia-pad: 16px;
+    --lumia-accent: var(--ab-kicker, #00b3ff);
+    overflow: hidden;
+  }
+
+  body:has(#page-home) .site {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Pivot replaces the top site nav on mobile home */
+  body:has(#page-home) .site-header {
+    display: none;
+  }
+
+  body:has(#page-home) .site-cta--pixel {
+    display: none;
+  }
+
+  body:has(#page-home) .intro-loader {
+    display: none;
+  }
+
+  body:has(#page-home) #page-home {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- Pivot tabs (panorama titles) ---- */
+  body:has(#page-home) .lumia-pivot {
+    display: block;
+    flex: none;
+    padding: 18px 0 8px;
+    overflow: hidden;
+  }
+
+  body:has(#page-home) .lumia-pivot-rail {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    gap: 22px;
+    padding: 0 var(--lumia-pad);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(#page-home) .lumia-pivot-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(#page-home) .lumia-pivot-tab {
+    appearance: none;
+    flex: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: color-mix(in srgb, var(--text) 28%, transparent);
+    font-family: inherit;
+    font-size: clamp(40px, 12vw, 56px);
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  body:has(#page-home) .lumia-pivot-tab.is-active {
+    color: var(--text);
+  }
+
+  body:has(#page-home) .lumia-pivot-tab:focus-visible {
+    outline: 2px solid var(--lumia-accent);
+    outline-offset: 4px;
+  }
+
+  body:has(#page-home) .ab-content.lumia-panorama {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-height: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  body:has(#page-home) .ab-content.lumia-panorama::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ---- Hubs (panorama panels) ---- */
+  body:has(#page-home) .lumia-hub {
+    display: block;
+    flex: 0 0 88vw;
+    width: 88vw;
+    max-width: 88vw;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    padding: 12px var(--lumia-pad) 40px;
+  }
+
+  /* Numbered editorial headings stay as section labels inside hubs */
+  body:has(#page-home) .lumia-hub .ab-section {
+    padding-top: 0;
+  }
+
+  body:has(#page-home) .lumia-hub .ab-section + .ab-section {
+    padding-top: 28px;
+  }
+
+  body:has(#page-home) .lumia-hub .ab-title {
+    font-size: 28px;
+    letter-spacing: -0.04em;
+  }
+
+  body:has(#page-home) .lumia-hub .ab-sub {
+    font-size: 16px;
+    letter-spacing: -0.4px;
+    max-width: none;
+  }
+
+  body:has(#page-home) .lumia-hub .ab-lead {
+    font-size: 22px;
+    letter-spacing: -0.8px;
+    max-width: none;
+  }
+
+  body:has(#page-home) .lumia-hub .ab-copy {
+    max-width: none;
+    font-size: 14px;
+  }
+
+  body:has(#page-home) .lumia-hub .ab-hero-row {
+    margin: 0 0 20px;
+    gap: 10px 12px;
+  }
+
+  body:has(#page-home) .lumia-hub .site-clock {
+    width: 100%;
+    margin-left: 0;
+    font-size: 12px;
+  }
+
+  body:has(#page-home) .ab-hero-figure {
+    margin: 28px 0 0;
+  }
+
+  body:has(#page-home) .ab-hero-figure .hp2-pixel-frame,
+  body:has(#page-home) .ab-hero-figure .hp2-pixel-frame img {
+    border-radius: 0;
+  }
+
+  /* ---- Live tiles ---- */
+  body:has(#page-home) .hp2-projects {
+    padding-top: 0;
+    gap: 0;
+  }
+
+  body:has(#page-home) .hp2-project-group {
+    gap: 12px;
+  }
+
+  body:has(#page-home) .hp2-pcard-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  body:has(#page-home) .hp2-pcard {
+    gap: 8px;
+  }
+
+  body:has(#page-home) .hp2-pcard:hover {
+    transform: none;
+  }
+
+  body:has(#page-home) .hp2-pcard-media {
+    aspect-ratio: 1;
+    border-radius: 0;
+  }
+
+  body:has(#page-home) .hp2-pcard-media img {
+    border-radius: 0;
+  }
+
+  body:has(#page-home) .hp2-pcard-meta {
+    font-size: 11px;
+    letter-spacing: -0.1px;
+  }
+
+  body:has(#page-home) .hp2-pcard-title {
+    font-size: 13px;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+  }
+
+  body:has(#page-home) .hp2-more .section-head {
+    margin-bottom: 12px;
+  }
+
+  body:has(#page-home) .hp2-shelf {
+    --hp2-shelf-pad: var(--lumia-pad);
+    width: 100%;
+    left: auto;
+    margin-left: 0;
+  }
+
+  body:has(#page-home) .hp2-shelf-rail {
+    --hp2-shelf-gap: 6px;
+    --hp2-shelf-card-w: calc(88vw - var(--lumia-pad) * 2 - 24px);
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+
+  body:has(#page-home) .hp2-shelf-card {
+    border-radius: 0;
+    aspect-ratio: 1;
+  }
+
+  body:has(#page-home) .hp2-shelf-controls {
+    padding-inline: 0;
+    margin-top: 8px;
+  }
+
+  body:has(#page-home) .ab-exp {
+    gap: 20px;
+    margin-top: 0;
+    max-width: none;
+  }
+
+  body:has(#page-home) .ab-exp-role {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  body:has(#page-home) .ab-exp-desc {
+    font-size: 13px;
+    max-width: none;
+  }
+
+  body:has(#page-home) .lumia-contact {
+    display: block;
+  }
+
+  body:has(#page-home) .lumia-contact .cta-actions {
+    margin-top: 20px;
+  }
+
+  body:has(#page-home) .lumia-contact .cta-colophon {
+    margin-top: 32px;
+  }
+
+  body:has(#page-home) #cursor {
+    display: none !important;
+  }
+}

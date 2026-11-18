@@ -214,6 +214,16 @@ html[data-theme='dark'] .ab-page {
   width: 100%;
 }
 
+/* About gallery — same horizontal shelf as More Work on home */
+.ab-hero-media .ab-shelf {
+  --hp2-shelf-pad: var(--ab-gutter, 120px);
+  margin-top: 0;
+}
+
+.ab-hero-media .ab-caption {
+  padding-inline: 0;
+}
+
 .ab-stack {
   position: relative;
   width: min(100%, 560px);
