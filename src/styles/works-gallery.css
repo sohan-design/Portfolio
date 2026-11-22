@@ -31,6 +31,19 @@ body[data-page="work"] .site-header {
   box-sizing: border-box;
 }
 
+body[data-page="work"] .site-header.is-sticky-nav {
+  height: 64px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-inline: var(--wg-gutter);
+  margin-bottom: 0;
+}
+
+body[data-page="work"] .site-header.is-sticky-nav.is-nav-fixed {
+  margin: 0;
+  padding-inline: var(--wg-gutter);
+}
+
 body[data-page="work"] .site-nav {
   max-width: var(--wg-max);
   margin-left: auto;

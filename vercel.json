@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/resume",
+      "destination": "/resume.pdf",
+      "permanent": false
+    },
+    {
       "source": "/work/b2b-trainer-dashboard-draft",
       "destination": "/work/b2b-trainer-dashboard",
       "permanent": true

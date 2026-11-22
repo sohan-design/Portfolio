@@ -18,6 +18,21 @@ body[data-page="home"] .site-header {
   width: 100%;
 }
 
+body[data-page="about"] .site-header.is-sticky-nav,
+body[data-page="home"] .site-header.is-sticky-nav {
+  height: 64px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-inline: var(--ab-gutter, 120px);
+  margin-bottom: 0;
+}
+
+body[data-page="about"] .site-header.is-sticky-nav.is-nav-fixed,
+body[data-page="home"] .site-header.is-sticky-nav.is-nav-fixed {
+  margin: 0;
+  padding-inline: var(--ab-gutter, 120px);
+}
+
 body[data-page="about"] .site-nav,
 body[data-page="home"] .site-nav {
   width: 100%;

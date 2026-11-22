@@ -1,6 +1,5 @@
 /** Single site footer. Edit this file to update every page. */
 var FOOTER_HTML =
-  '<canvas class="cta-dither" data-cta-wave aria-hidden="true"></canvas>' +
   '<div class="cta-inner">' +
     '<div class="cta-hero-copy">' +
       '<p class="cta-num">05</p>' +
@@ -20,7 +19,7 @@ var FOOTER_HTML =
           '</span>' +
           '<span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
         '</button>' +
-        '<a class="btn-primary selection-control" href="/assets/Sohan-Bhute-Resume.pdf" download="Sohan-Bhute-Resume.pdf">' +
+        '<a class="btn-primary selection-control" href="/resume.pdf" download="Sohan-Bhute-Resume.pdf">' +
           '<span class="action-content">' +
             '<span class="action-label">Resume</span>' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v12M8 12l4 4 4-4M6 20h12" stroke-linecap="round" stroke-linejoin="round"></path></svg>' +
@@ -28,8 +27,11 @@ var FOOTER_HTML =
           '<span class="selection-handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
         '</a>' +
       '</div>' +
+      '<p class="cta-colophon">© 2026 Sohan Bhute <span aria-hidden="true">·</span> Made with Cursor</p>' +
     '</div>' +
-    '<p class="cta-colophon">© 2026 Sohan Bhute <span aria-hidden="true">·</span> Made with Cursor</p>' +
+  '</div>' +
+  '<div class="cta-scene">' +
+    '<canvas class="cta-scene-canvas" data-cta-wave aria-hidden="true"></canvas>' +
   '</div>';
 
 export function mountSiteFooter() {

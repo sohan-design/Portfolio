@@ -394,6 +394,59 @@ html[data-theme='dark'] body[data-page="about"] {
   margin-bottom: var(--section-gap);
 }
 
+.site-header.is-sticky-nav {
+  height: 64px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  /* Static in the document until JS docks it on scroll. */
+  position: relative;
+  z-index: 40;
+}
+
+.site-header.is-sticky-nav .site-nav {
+  height: 100%;
+}
+
+.site-header-spacer {
+  height: 0;
+  flex: none;
+  pointer-events: none;
+}
+
+.site-header.is-sticky-nav.is-nav-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-inline: var(--page-pad, 24px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateY(0);
+  transition: transform 0.35s var(--ease);
+  will-change: transform;
+}
+
+.site-header.is-sticky-nav.is-nav-fixed.is-nav-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header.is-sticky-nav.is-nav-fixed {
+    transition: none;
+  }
+
+  .site-header.is-sticky-nav.is-nav-fixed.is-nav-hidden {
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
 .site-nav {
   display: flex;
   align-items: center;
@@ -1040,8 +1093,7 @@ html[data-theme="dark"] .btn-primary {
   padding: 0;
   background: transparent;
   color: var(--text);
-  overflow: hidden;
-  min-height: clamp(480px, 64vh, 720px);
+  overflow: visible;
   box-sizing: border-box;
 }
 
@@ -1049,14 +1101,19 @@ html[data-theme='dark'] .site-cta--dither {
   --cta-muted: rgba(255, 255, 255, 0.48);
 }
 
-.cta-dither {
-  position: absolute;
-  inset: 0;
+/* Pixel-art park. Sky is transparent, so the page color shows through. */
+.cta-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 256 / 130;
+  margin-top: clamp(-120px, -6vw, -32px);
+  pointer-events: none;
+}
+
+.cta-scene-canvas {
   display: block;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 0;
   image-rendering: pixelated;
 }
 
@@ -1065,13 +1122,19 @@ html[data-theme='dark'] .site-cta--dither {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 64px;
-  min-height: clamp(480px, 64vh, 720px);
+  justify-content: flex-start;
   max-width: calc(var(--max-w, 2160px) + var(--cta-gutter) * 2);
   margin: 0 auto;
   padding: clamp(40px, 6vw, 72px) var(--cta-gutter) clamp(28px, 4vw, 40px);
   box-sizing: border-box;
+}
+
+/* Gutter-aligned pages: start on the same left edge as the section headings. */
+body[data-page="home"] .site-cta--dither .cta-inner,
+body[data-page="about"] .site-cta--dither .cta-inner,
+body[data-page="work"] .site-cta--dither .cta-inner {
+  max-width: none;
+  margin: 0;
 }
 
 .cta-hero-copy {
@@ -1085,23 +1148,23 @@ html[data-theme='dark'] .site-cta--dither {
   transform: rotate(-6deg);
 }
 
+/* Same type as the section headings (.ab-num / .ab-h). */
 .cta-num {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   font-size: 24px;
   font-weight: 350;
   line-height: 1.2;
   letter-spacing: -0.4px;
-  color: var(--cta-muted);
+  color: var(--text-muted);
 }
 
 .cta-title {
   margin: 0;
   max-width: 720px;
-  font-size: clamp(40px, 6vw, 64px);
+  font-size: 48px;
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  line-height: 1.25;
+  letter-spacing: -1.6px;
   color: var(--text);
 }
 
@@ -1111,8 +1174,8 @@ html[data-theme='dark'] .site-cta--dither {
 
 @media (max-width: 900px) {
   .cta-title {
-    font-size: 36px;
-    letter-spacing: -0.02em;
+    font-size: 32px;
+    letter-spacing: -1px;
   }
 }
 
@@ -1164,7 +1227,11 @@ html[data-theme="dark"] .btn-primary {
   font-weight: 600;
   line-height: 18px;
   letter-spacing: -0.1px;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--text-muted);
+}
+
+.site-cta--dither .cta-colophon {
+  margin-top: 24px;
 }
 
 .cta-colophon span {

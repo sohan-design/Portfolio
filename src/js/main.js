@@ -8,6 +8,7 @@ import { initClickPixelPop } from './clickPixelPop.js';
 import { initDraftHeroCarousels } from './draftHeroCarousel.js';
 import { initLumiaMobile } from './lumiaMobile.js';
 import { initInfiniteProjectCanvases } from './infiniteProjectCanvas.js';
+import { initStickyNav } from './stickyNav.js';
 
 // Initialize Vercel Analytics
 inject();
@@ -41,6 +42,7 @@ function initCopyEmail() {
 
 (function () {
   initThemeToggle();
+  initStickyNav();
   initClickPixelPop();
   initCopyEmail();
 

@@ -44,6 +44,11 @@ function mpaRouteRewrite() {
       return next();
     }
 
+    if (pathname === '/resume') {
+      req.url = `/resume.pdf${search}`;
+      return next();
+    }
+
     if (MPA_ROUTES.includes(pathname)) {
       req.url = `${pathname}/index.html${search}`;
     }
