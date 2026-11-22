@@ -377,14 +377,14 @@ body:has([data-site-footer]) .cs-panel {
 }
 
 /* Works and About use the homepage surface color. */
-body:has(#page-work),
-body:has(#page-about) {
+body[data-page="work"],
+body[data-page="about"] {
   --bg: #ffffff;
   background: #ffffff;
 }
 
-html[data-theme='dark'] body:has(#page-work),
-html[data-theme='dark'] body:has(#page-about) {
+html[data-theme='dark'] body[data-page="work"],
+html[data-theme='dark'] body[data-page="about"] {
   --bg: #000000;
   background: #000000;
 }
@@ -1257,7 +1257,7 @@ html[data-theme='dark'] .site-cta--dither .btn-primary .selection-handles i {
   position: fixed;
   right: 20px;
   bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-  z-index: 900;
+  z-index: 1200;
   display: inline-flex;
   align-items: center;
   gap: 6px;

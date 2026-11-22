@@ -1,6 +1,6 @@
 /* Works page — Direction A: stacked category grids + filmstrip viewer */
 
-body:has(#page-work) {
+body[data-page="work"] {
   --wg-gutter: clamp(24px, 5vw, 120px);
   /* Contact me footer reads --ab-gutter — keep it locked to Works body. */
   --ab-gutter: var(--wg-gutter);
@@ -12,18 +12,18 @@ body:has(#page-work) {
   --wg-mat-color: rgba(255, 255, 255, 0.15);
 }
 
-html[data-theme='light'] body:has(#page-work) {
+html[data-theme='light'] body[data-page="work"] {
   --wg-mat-color: rgba(0, 0, 0, 0.12);
 }
 
-body:has(#page-work) .site {
+body[data-page="work"] .site {
   max-width: var(--wg-max);
   width: 100%;
   margin: 0 auto;
   padding: 40px 0 0;
 }
 
-body:has(#page-work) .site-header {
+body[data-page="work"] .site-header {
   margin: 0 auto;
   padding: 0 var(--wg-gutter) 24px;
   max-width: var(--wg-max);
@@ -31,7 +31,7 @@ body:has(#page-work) .site-header {
   box-sizing: border-box;
 }
 
-body:has(#page-work) .site-nav {
+body[data-page="work"] .site-nav {
   max-width: var(--wg-max);
   margin-left: auto;
   margin-right: auto;
@@ -129,7 +129,7 @@ body:has(#page-work) .site-nav {
 }
 
 @media (max-width: 900px) {
-  body:has(#page-work) {
+  body[data-page="work"] {
     --wg-gutter: 48px;
     --wg-gap-row: 40px;
     --wg-gap-col: 24px;
@@ -141,7 +141,7 @@ body:has(#page-work) .site-nav {
 }
 
 @media (max-width: 640px) {
-  body:has(#page-work) {
+  body[data-page="work"] {
     --wg-gutter: 24px;
   }
 

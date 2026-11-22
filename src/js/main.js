@@ -749,10 +749,18 @@ function initCopyEmail() {
       // Best Projects, more-work, and an open case study never mix)
       var groupRoot = null;
       function figures() {
-        if (groupRoot) return Array.prototype.slice.call(groupRoot.querySelectorAll('img.cs-zoom'));
-        var openPanel = document.querySelector('.cs-overlay.open .cs-panel');
-        var scope = openPanel || document;
-        return Array.prototype.slice.call(scope.querySelectorAll('img.cs-zoom'));
+        var list;
+        if (groupRoot) {
+          list = Array.prototype.slice.call(groupRoot.querySelectorAll('img.cs-zoom'));
+        } else {
+          var openPanel = document.querySelector('.cs-overlay.open .cs-panel');
+          var scope = openPanel || document;
+          list = Array.prototype.slice.call(scope.querySelectorAll('img.cs-zoom'));
+        }
+        // Marquee clones duplicate imgs — keep one entry per source.
+        return list.filter(function (img) {
+          return !img.hasAttribute('data-ab-clone');
+        });
       }
       var current = 0;
       show.fitToken = 0;
@@ -871,7 +879,17 @@ function initCopyEmail() {
           fig.closest('.cs-panel')
         )) || null;
         var figs = figures();
-        show(figs.indexOf(fig));
+        var idx = figs.indexOf(fig);
+        if (idx < 0) {
+          var src = fig.currentSrc || fig.getAttribute('src') || '';
+          for (var i = 0; i < figs.length; i++) {
+            if ((figs[i].currentSrc || figs[i].getAttribute('src') || '') === src) {
+              idx = i;
+              break;
+            }
+          }
+        }
+        show(Math.max(0, idx));
         box.classList.add('open');
         box.setAttribute('aria-hidden', 'false');
         document.body.classList.add('cs-lightbox-open');
@@ -1025,23 +1043,57 @@ function initBackToTop() {
   var reduce =
     window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Case studies scroll inside .cs-panel; home/about use the window.
+  function scrollRoot() {
+    return (
+      document.querySelector('.cs-overlay.open .cs-panel') ||
+      document.querySelector('.cs-draft .cs-panel') ||
+      document.querySelector('.cs-panel') ||
+      null
+    );
+  }
+
   function scrollY() {
+    var root = scrollRoot();
+    if (root) return root.scrollTop || 0;
     return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
   }
 
   function sync() {
-    btn.classList.toggle('is-visible', scrollY() > 200);
+    btn.classList.toggle('is-visible', scrollY() > 160);
   }
 
   btn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    var root = scrollRoot();
+    var behavior = reduce ? 'auto' : 'smooth';
+    if (root) {
+      if (typeof root.scrollTo === 'function') {
+        root.scrollTo({ top: 0, behavior: behavior });
+      } else {
+        root.scrollTop = 0;
+      }
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: behavior });
   });
+
+  function bindRoot() {
+    var root = scrollRoot();
+    if (root && root !== bindRoot._el) {
+      if (bindRoot._el) bindRoot._el.removeEventListener('scroll', sync);
+      bindRoot._el = root;
+      root.addEventListener('scroll', sync, { passive: true });
+    }
+    sync();
+  }
+  bindRoot._el = null;
 
   window.addEventListener('scroll', sync, { passive: true });
   document.addEventListener('scroll', sync, { passive: true, capture: true });
-  window.addEventListener('resize', sync, { passive: true });
-  // Catch late layout / hash jumps.
-  window.setTimeout(sync, 0);
-  window.setTimeout(sync, 400);
-  sync();
+  window.addEventListener('resize', bindRoot, { passive: true });
+  // Catch late layout / hash jumps / overlay open.
+  window.setTimeout(bindRoot, 0);
+  window.setTimeout(bindRoot, 400);
+  window.setTimeout(bindRoot, 1000);
+  bindRoot();
 }

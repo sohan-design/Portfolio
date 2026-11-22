@@ -326,6 +326,152 @@ function initAvatarCursor() {
 }
 
 
+/** About gallery — infinite horizontal auto-scroll marquee. */
+function initAboutMarquee(shelf) {
+  var rail = shelf.querySelector('[data-hp2-shelf-rail]');
+  var prev = shelf.querySelector('[data-hp2-shelf-prev]');
+  var next = shelf.querySelector('[data-hp2-shelf-next]');
+  if (!rail || rail.dataset.marqueeReady) return;
+  rail.dataset.marqueeReady = '1';
+
+  var originals = Array.prototype.slice.call(rail.querySelectorAll('.hp2-shelf-card'));
+  if (!originals.length) return;
+
+  var track = document.createElement('div');
+  track.className = 'ab-marquee-track';
+  // Bento rhythm: each photo gets a size variant + a small colour block after it.
+  var unit = [];
+  originals.forEach(function (card, i) {
+    card.classList.add('ab-tile', 'ab-tile--v' + (i % 3));
+    track.appendChild(card);
+    unit.push(card);
+    var accent = document.createElement('span');
+    accent.className = 'ab-accent ab-accent--v' + (i % 3);
+    accent.setAttribute('aria-hidden', 'true');
+    track.appendChild(accent);
+    unit.push(accent);
+  });
+  originals = unit;
+  rail.appendChild(track);
+  shelf.classList.add('ab-shelf--marquee');
+
+  function cloneCard(card) {
+    var clone = card.cloneNode(true);
+    clone.setAttribute('data-ab-clone', '');
+    clone.setAttribute('aria-hidden', 'true');
+    var img = clone.querySelector('img');
+    if (img) {
+      img.setAttribute('data-ab-clone', '');
+      img.removeAttribute('loading');
+    }
+    return clone;
+  }
+
+  var reduce =
+    window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var state = {
+    loopWidth: 0,
+    offset: 0,
+    paused: false,
+    hover: false,
+    speed: 0.55,
+    last: 0,
+  };
+  shelf._abMarquee = state;
+
+  function rebuild() {
+    Array.prototype.slice.call(track.querySelectorAll('[data-ab-clone]')).forEach(function (node) {
+      node.remove();
+    });
+
+    // Grow one set until it spans the rail, then duplicate that set once.
+    var guard = 0;
+    while (track.scrollWidth < rail.clientWidth * 1.15 && guard < 8) {
+      originals.forEach(function (card) {
+        track.appendChild(cloneCard(card));
+      });
+      guard += 1;
+    }
+
+    var baseCards = Array.prototype.slice.call(track.children);
+    var baseCount = baseCards.length;
+    baseCards.forEach(function (card) {
+      track.appendChild(cloneCard(card));
+    });
+
+    // Exact loop distance: first original → first clone.
+    var first = track.children[0];
+    var twin = track.children[baseCount];
+    state.loopWidth = twin && first ? twin.offsetLeft - first.offsetLeft : Math.round(track.scrollWidth / 2);
+
+    if (state.loopWidth > 0 && state.offset >= state.loopWidth) {
+      state.offset = state.offset % state.loopWidth;
+    }
+    track.style.transform = 'translate3d(' + -state.offset + 'px,0,0)';
+  }
+
+  rebuild();
+
+  if (reduce) {
+    shelf.classList.add('ab-shelf--static');
+    return;
+  }
+
+  function syncPaused() {
+    var ae = document.activeElement;
+    var focusOnControls = !!(ae && ae.closest && ae.closest('.hp2-shelf-controls') && shelf.contains(ae));
+    state.paused = state.hover || focusOnControls;
+  }
+
+  function step() {
+    if (state.paused || state.loopWidth <= 0) return;
+    state.offset += state.speed;
+    if (state.offset >= state.loopWidth) state.offset -= state.loopWidth;
+    track.style.transform = 'translate3d(' + -state.offset + 'px,0,0)';
+  }
+
+  if (shelf._marqueeTimer) clearInterval(shelf._marqueeTimer);
+  if (shelf._marqueeRaf) cancelAnimationFrame(shelf._marqueeRaf);
+  // Interval keeps crawling even when rAF is throttled (background / embedded preview).
+  shelf._marqueeTimer = setInterval(step, 16);
+
+  shelf.addEventListener('mouseenter', function () { state.hover = true; syncPaused(); });
+  shelf.addEventListener('mouseleave', function () { state.hover = false; syncPaused(); state.last = 0; });
+  shelf.addEventListener('focusin', syncPaused);
+  shelf.addEventListener('focusout', function () {
+    window.setTimeout(syncPaused, 0);
+  });
+
+  function nudge(dir) {
+    var card = track.querySelector('.hp2-shelf-card');
+    var accent = track.querySelector('.ab-accent');
+    if (!card || !state.loopWidth) return;
+    var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 24;
+    var step = card.getBoundingClientRect().width + gap +
+      (accent ? accent.getBoundingClientRect().width + gap : 0);
+    state.offset += dir * step;
+    while (state.offset < 0) state.offset += state.loopWidth;
+    while (state.offset >= state.loopWidth) state.offset -= state.loopWidth;
+    track.style.transform = 'translate3d(' + -state.offset + 'px,0,0)';
+  }
+
+  if (prev) {
+    prev.disabled = false;
+    prev.addEventListener('click', function () { nudge(-1); });
+  }
+  if (next) {
+    next.disabled = false;
+    next.addEventListener('click', function () { nudge(1); });
+  }
+
+  var resizeT = 0;
+  window.addEventListener('resize', function () {
+    window.clearTimeout(resizeT);
+    resizeT = window.setTimeout(rebuild, 120);
+  });
+}
+
 /** Apple-style full-bleed horizontal shelf (home More Work + about gallery). */
 function initShelf(root) {
   var shelves = (root || document).querySelectorAll('[data-hp2-shelf]');
@@ -337,6 +483,12 @@ function initShelf(root) {
     var prev = shelf.querySelector('[data-hp2-shelf-prev]');
     var next = shelf.querySelector('[data-hp2-shelf-next]');
     if (!rail) return;
+
+    // About page: infinite auto-scroll marquee.
+    if (shelf.classList.contains('ab-shelf') || document.body.getAttribute('data-page') === 'about') {
+      initAboutMarquee(shelf);
+      return;
+    }
 
     function cardStep() {
       var card = rail.querySelector('.hp2-shelf-card');

@@ -1,16 +1,16 @@
 /* Editorial type hierarchy shared by About + Home (inspired by case studies). */
 
 /* Wide editorial shell — capped and centered, not viewport-full forever. */
-body:has(#page-about) .site,
-body:has(#page-home) .site {
+body[data-page="about"] .site,
+body[data-page="home"] .site {
   max-width: 2160px;
   width: 100%;
   margin: 0 auto;
   padding: 40px 0 0;
 }
 
-body:has(#page-about) .site-header,
-body:has(#page-home) .site-header {
+body[data-page="about"] .site-header,
+body[data-page="home"] .site-header {
   margin: 0 auto;
   padding: 0 var(--ab-gutter, 120px) 32px;
   box-sizing: border-box;
@@ -18,8 +18,8 @@ body:has(#page-home) .site-header {
   width: 100%;
 }
 
-body:has(#page-about) .site-nav,
-body:has(#page-home) .site-nav {
+body[data-page="about"] .site-nav,
+body[data-page="home"] .site-nav {
   width: 100%;
   max-width: 2160px;
   margin-left: auto;
@@ -27,8 +27,8 @@ body:has(#page-home) .site-nav {
 }
 
 /* Gutter lives on body so site header + footer share page text alignment. */
-body:has(#page-about),
-body:has(#page-home) {
+body[data-page="about"],
+body[data-page="home"] {
   --ab-gutter: 120px;
 }
 
@@ -244,6 +244,141 @@ html[data-theme='dark'] .ab-page {
 .ab-hero-media .ab-shelf {
   --hp2-shelf-pad: var(--ab-gutter, 120px);
   margin-top: 0;
+}
+
+/* Infinite bento strip — staggered tiles, colour blocks, hairline grid */
+.ab-shelf--marquee {
+  --ab-marquee-gap: 20px;
+  --ab-marquee-radius: 16px;
+  --ab-strip-h: 400px;
+  --ab-grid-line: rgba(0, 0, 0, 0.08);
+  --ab-a1: #1857F5;
+  --ab-a2: #1FB6E8;
+  --ab-a3: #0A1F5C;
+}
+
+html[data-theme='dark'] .ab-shelf--marquee {
+  --ab-grid-line: rgba(255, 255, 255, 0.1);
+}
+
+.ab-shelf--marquee .hp2-shelf-rail {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  scroll-snap-type: none;
+  padding: 0;
+  height: var(--ab-strip-h);
+  /* Static editorial columns behind the moving tiles */
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--ab-grid-line) 0 1px,
+    transparent 1px 240px
+  );
+}
+
+.ab-shelf--marquee .ab-marquee-track {
+  /* Out of flow so the long track never widens the rail */
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  height: 100%;
+  gap: var(--ab-marquee-gap);
+  will-change: transform;
+}
+
+.ab-shelf--marquee .hp2-shelf-card {
+  flex: none;
+  border-radius: var(--ab-marquee-radius);
+  box-shadow: none;
+  scroll-snap-align: none;
+}
+
+/* Photo size variants — wide, square, landscape at different heights */
+.ab-shelf--marquee .ab-tile--v0 {
+  width: 380px;
+  aspect-ratio: 3 / 2;
+  margin-top: 24px;
+}
+
+.ab-shelf--marquee .ab-tile--v1 {
+  width: 260px;
+  aspect-ratio: 1;
+  margin-top: 116px;
+}
+
+.ab-shelf--marquee .ab-tile--v2 {
+  width: 320px;
+  aspect-ratio: 4 / 3;
+  margin-top: 56px;
+}
+
+/* Solid colour blocks */
+.ab-accent {
+  flex: none;
+  display: block;
+  border-radius: var(--ab-marquee-radius);
+}
+
+.ab-accent--v0 {
+  width: 88px;
+  height: 88px;
+  margin-top: 268px;
+  background: var(--ab-a1);
+}
+
+.ab-accent--v1 {
+  width: 64px;
+  height: 64px;
+  margin-top: 40px;
+  background: var(--ab-a2);
+}
+
+.ab-accent--v2 {
+  width: 120px;
+  height: 120px;
+  margin-top: 250px;
+  background: var(--ab-a3);
+}
+
+html[data-theme='dark'] .ab-accent--v2 {
+  background: #12307A;
+}
+
+@media (max-width: 720px) {
+  .ab-shelf--marquee {
+    --ab-strip-h: 280px;
+    --ab-marquee-gap: 14px;
+    --ab-marquee-radius: 12px;
+  }
+
+  .ab-shelf--marquee .ab-tile--v0 { width: 260px; margin-top: 16px; }
+  .ab-shelf--marquee .ab-tile--v1 { width: 180px; margin-top: 80px; }
+  .ab-shelf--marquee .ab-tile--v2 { width: 220px; margin-top: 40px; }
+  .ab-accent--v0 { width: 60px; height: 60px; margin-top: 190px; }
+  .ab-accent--v1 { width: 44px; height: 44px; margin-top: 28px; }
+  .ab-accent--v2 { width: 84px; height: 84px; margin-top: 176px; }
+}
+
+.ab-shelf--marquee .hp2-shelf-controls {
+  margin-top: 16px;
+  opacity: 0.4;
+}
+
+.ab-shelf--marquee .hp2-shelf-controls:hover,
+.ab-shelf--marquee .hp2-shelf-controls:focus-within {
+  opacity: 0.85;
+}
+
+.ab-shelf--static .hp2-shelf-rail {
+  overflow-x: auto;
+}
+
+.ab-shelf--static .ab-marquee-track {
+  transform: none !important;
 }
 
 .ab-hero-media .ab-caption {
@@ -620,13 +755,13 @@ html[data-theme='dark'] .ab-photo {
 }
 
 @media (max-width: 900px) {
-  body:has(#page-about),
-  body:has(#page-home) {
+  body[data-page="about"],
+  body[data-page="home"] {
     --ab-gutter: 48px;
   }
 
-  body:has(#page-about) .site-header,
-  body:has(#page-home) .site-header {
+  body[data-page="about"] .site-header,
+  body[data-page="home"] .site-header {
     padding-inline: 48px;
   }
 
@@ -650,13 +785,13 @@ html[data-theme='dark'] .ab-photo {
 }
 
 @media (max-width: 640px) {
-  body:has(#page-about),
-  body:has(#page-home) {
+  body[data-page="about"],
+  body[data-page="home"] {
     --ab-gutter: 24px;
   }
 
-  body:has(#page-about) .site-header,
-  body:has(#page-home) .site-header {
+  body[data-page="about"] .site-header,
+  body[data-page="home"] .site-header {
     padding-inline: 24px;
   }
 
