@@ -1,0 +1,18 @@
+---
+description: Always push commits to the portfolio-v3 branch
+alwaysApply: true
+---
+
+# Push target: portfolio-v3
+
+When the user asks to commit and push (or deploy live), land changes on **`portfolio-v3`**, not a feature/draft branch.
+
+## Required workflow
+
+1. Commit on the current working branch if needed.
+2. Update local `portfolio-v3` from `origin/portfolio-v3`.
+3. Merge or fast-forward `portfolio-v3` to include the new commits.
+4. Push with `git push -u origin portfolio-v3` (or `git push origin HEAD:portfolio-v3` only when that updates `portfolio-v3` to the intended tip).
+5. Prefer checking out `portfolio-v3` after the push so the workspace stays on the live branch.
+
+Do **not** treat a push to `cursor/*` or other feature branches as the final land unless the user explicitly asks for a PR-only push.
