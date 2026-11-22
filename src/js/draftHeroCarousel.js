@@ -1,7 +1,7 @@
 /**
  * Draft hero image carousel — 0.08s crossfade + per-slide colored blur shadow.
  */
-var INTERVAL_MS = 3200;
+var INTERVAL_MS = 800;
 
 export function initDraftHeroCarousels(root) {
   var scope = root || document;
