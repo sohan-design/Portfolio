@@ -992,11 +992,56 @@ function initCopyEmail() {
       }, { passive: true });
     })();
 
+  initBackToTop();
   initFooterLotties();
   mountSiteFooter();
   initCtaPixelWave(document);
   initDraftHeroCarousels(document);
   initLumiaMobile();
-  initInfiniteProjectCanvases(document);
+  try {
+    initInfiniteProjectCanvases(document);
+  } catch (err) {
+    console.warn(err);
+  }
 
 })();
+
+function initBackToTop() {
+  if (document.body.classList.contains('tfh-page') || document.body.hasAttribute('data-no-site-footer')) {
+    return;
+  }
+
+  document.querySelectorAll('.back-to-top').forEach(function (node) {
+    node.remove();
+  });
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'back-to-top';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.innerHTML = '<span class="back-to-top-mark" aria-hidden="true">↑</span><span>Top</span>';
+  document.body.appendChild(btn);
+
+  var reduce =
+    window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function scrollY() {
+    return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  }
+
+  function sync() {
+    btn.classList.toggle('is-visible', scrollY() > 200);
+  }
+
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  window.addEventListener('scroll', sync, { passive: true });
+  document.addEventListener('scroll', sync, { passive: true, capture: true });
+  window.addEventListener('resize', sync, { passive: true });
+  // Catch late layout / hash jumps.
+  window.setTimeout(sync, 0);
+  window.setTimeout(sync, 400);
+  sync();
+}

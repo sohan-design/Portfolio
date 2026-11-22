@@ -316,35 +316,18 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   border-radius: 10px;
   overflow: hidden;
   background: var(--td-figure-bg);
-  box-shadow: 0 0 96px 40px var(--td-figure-shadow);
-  transition: box-shadow 0.08s ease;
+  box-shadow:
+    0 0 72px 28px var(--td-figure-shadow),
+    0 28px 56px rgba(0, 0, 0, 0.28);
 }
 
 .cs-draft .td-hero-carousel-slide {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
   border-radius: 10px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.08s ease;
-}
-
-.cs-draft .td-hero-carousel-slide.is-active {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cs-draft .td-hero-figure,
-  .cs-draft .td-hero-carousel-viewport,
-  .cs-draft .td-hero-carousel-slide {
-    transition: none;
-  }
 }
 
 .cs-draft .td-figure {

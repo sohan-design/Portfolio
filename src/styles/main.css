@@ -1252,6 +1252,74 @@ html[data-theme='dark'] .site-cta--dither .btn-primary .selection-handles i {
   }
 }
 
+/* ---------- Back to top ---------- */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 0.22s var(--ease),
+    visibility 0.22s var(--ease),
+    transform 0.22s var(--ease),
+    color 0.18s var(--ease),
+    background-color 0.18s var(--ease);
+}
+
+html[data-theme='dark'] .back-to-top {
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  background: #fff;
+  color: #000;
+  outline: none;
+}
+
+.back-to-top-mark {
+  display: block;
+  font-size: 12px;
+  line-height: 1;
+  translate: 0 -0.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none;
+  }
+}
+
 /* ---------- More work page ---------- */
 .work-page .page-title,
 .about-page .page-title {
