@@ -62,6 +62,12 @@
   --hand: var(--font);
   --max-w: 837px;
   --page-pad: 24px;
+  /* Shared site chrome — home / about / works / case studies all use this shell. */
+  --nav-max: 2160px;
+  --nav-gutter: 120px;
+  --ab-gutter: var(--nav-gutter);
+  --wg-gutter: var(--nav-gutter);
+  --td-gutter: var(--nav-gutter);
   --radius-card: 25px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --section-gap: clamp(72px, 10vw, 131px);
@@ -104,6 +110,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   color-scheme: light;
+  /* Keep fixed nav / gutters aligned whether the page or .cs-panel scrolls. */
+  scrollbar-gutter: stable;
 }
 
 html[data-theme="dark"] {
@@ -361,10 +369,22 @@ body {
 .site-header,
 .site-nav {
   width: 100%;
-  max-width: 2160px;
+  max-width: var(--nav-max);
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --nav-gutter: 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --nav-gutter: 24px;
+  }
 }
 
 body:has([data-site-footer]) {
@@ -395,17 +415,19 @@ html[data-theme='dark'] body[data-page="about"] {
 }
 
 .site-header.is-sticky-nav {
-  height: 64px;
+  height: 72px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   /* Static in the document until JS docks it on scroll. */
   position: relative;
   z-index: 40;
+  overflow: visible;
 }
 
 .site-header.is-sticky-nav .site-nav {
   height: 100%;
+  overflow: visible;
 }
 
 .site-header-spacer {
@@ -422,29 +444,33 @@ html[data-theme='dark'] body[data-page="about"] {
   width: 100%;
   max-width: none;
   margin: 0;
-  padding-inline: var(--page-pad, 24px);
+  /* Full-bleed frosted bar; the inner nav keeps the shared home shell. */
+  padding-inline: 0;
+  display: flex;
+  justify-content: center;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transform: translateY(0);
-  transition: transform 0.35s var(--ease);
-  will-change: transform;
+  overflow: visible;
+  z-index: 50;
 }
 
-.site-header.is-sticky-nav.is-nav-fixed.is-nav-hidden {
-  transform: translateY(-100%);
-  pointer-events: none;
+.site-header.is-sticky-nav.is-nav-fixed .site-nav {
+  width: 100%;
+  max-width: var(--nav-max);
+  margin: 0 auto;
+  padding-inline: var(--nav-gutter);
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .site-header.is-sticky-nav.is-nav-fixed {
-    transition: none;
-  }
-
-  .site-header.is-sticky-nav.is-nav-fixed.is-nav-hidden {
-    transform: none;
-    pointer-events: auto;
-  }
+/* Case studies (panel scroll) — same docked bar height + shared shell. */
+.cs-panel .site-header.is-sticky-nav,
+.cs-draft .site-header.is-sticky-nav {
+  height: 72px;
+  box-sizing: border-box;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .site-nav {

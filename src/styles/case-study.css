@@ -73,11 +73,12 @@
       .cs-content .cs-footer { opacity: 1; transform: none; transition: none; }
     }
 
-    /* quick section nav (scroll-spy) — floats in the left gutter */
+    /* quick section nav (scroll-spy) — labels share the site navbar gutter.
+       Pull left by the active-dot + gap (6 + 12) so the text lines up with Home. */
     .cs-nav {
       position: fixed;
       top: 50%;
-      left: 56px;
+      left: calc(var(--nav-gutter) - 18px);
       transform: translateY(-50%);
       z-index: 4;
       display: flex;
@@ -1464,7 +1465,17 @@
     }
 
     /* Hero intro — large title anchored to the bottom, scales down on scroll
-       (inspired by shedsgns.me/taste). Used on the Edmingle case study. */
+       (inspired by shedsgns.me/taste). Essays use the shared home nav shell;
+       the 600px reading column is re-applied to title/body below. */
+    [data-hero-intro]:not(.cs-draft) .cs-content {
+      max-width: var(--nav-max);
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--nav-gutter) 80px;
+      box-sizing: border-box;
+      overflow-x: visible;
+    }
+
     [data-hero-intro] .cs-content {
       padding-top: 0;
       overflow-x: visible;
@@ -1482,12 +1493,47 @@
       position: relative;
     }
 
-    [data-hero-intro] .cs-hero .site-header {
+    /* Nav sits in the shared shell; docked state uses main.css full-bleed rules. */
+    [data-hero-intro]:not(.cs-draft) .cs-hero .site-header {
       flex: none;
       width: 100%;
       max-width: none;
       margin: 0 0 clamp(8px, 2vh, 20px);
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    [data-hero-intro] .cs-hero .site-header.is-sticky-nav {
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    [data-hero-intro] .cs-hero .site-header.is-sticky-nav.is-nav-fixed {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding-inline: 0;
+    }
+
+    [data-hero-intro]:not(.cs-draft) .cs-hero .site-header .site-nav {
+      width: 100%;
+      max-width: var(--nav-max);
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+
+    /* Keep essay copy on the original 600px measure inside the wider shell. */
+    [data-hero-intro]:not(.cs-draft) .cs-title-row,
+    [data-hero-intro]:not(.cs-draft) .cs-hero .cs-meta,
+    [data-hero-intro]:not(.cs-draft) .cs-section,
+    [data-hero-intro]:not(.cs-draft) .cs-divider,
+    [data-hero-intro]:not(.cs-draft) .cs-footer,
+    [data-hero-intro]:not(.cs-draft) .cs-cover {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     [data-hero-intro] .cs-hero-fill {

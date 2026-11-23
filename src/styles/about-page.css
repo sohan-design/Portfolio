@@ -1,9 +1,9 @@
 /* Editorial type hierarchy shared by About + Home (inspired by case studies). */
 
-/* Wide editorial shell — capped and centered, not viewport-full forever. */
+/* Wide editorial shell — same --nav-max / --nav-gutter as every other page. */
 body[data-page="about"] .site,
 body[data-page="home"] .site {
-  max-width: 2160px;
+  max-width: var(--nav-max);
   width: 100%;
   margin: 0 auto;
   padding: 40px 0 0;
@@ -12,39 +12,44 @@ body[data-page="home"] .site {
 body[data-page="about"] .site-header,
 body[data-page="home"] .site-header {
   margin: 0 auto;
-  padding: 0 var(--ab-gutter, 120px) 32px;
+  padding: 0 var(--nav-gutter) 32px;
   box-sizing: border-box;
-  max-width: 2160px;
+  max-width: var(--nav-max);
   width: 100%;
 }
 
 body[data-page="about"] .site-header.is-sticky-nav,
 body[data-page="home"] .site-header.is-sticky-nav {
-  height: 64px;
+  height: 72px;
   padding-top: 0;
   padding-bottom: 0;
-  padding-inline: var(--ab-gutter, 120px);
+  padding-inline: var(--nav-gutter);
   margin-bottom: 0;
 }
 
 body[data-page="about"] .site-header.is-sticky-nav.is-nav-fixed,
 body[data-page="home"] .site-header.is-sticky-nav.is-nav-fixed {
+  /* Fixed bar is full-bleed; shared .site-nav rule owns the shell padding. */
   margin: 0;
-  padding-inline: var(--ab-gutter, 120px);
+  padding-inline: 0;
 }
 
 body[data-page="about"] .site-nav,
 body[data-page="home"] .site-nav {
   width: 100%;
-  max-width: 2160px;
+  max-width: var(--nav-max);
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Gutter lives on body so site header + footer share page text alignment. */
-body[data-page="about"],
-body[data-page="home"] {
-  --ab-gutter: 120px;
+/* Beat the legacy .about-page column in case-study.css so About uses the
+   same full --nav-max shell as home (titles line up under the nav). */
+.about-page.ab-page {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding-top: 0;
+  align-items: stretch;
 }
 
 .ab-page {
@@ -67,6 +72,7 @@ html[data-theme='dark'] .ab-page {
 
 .ab-content {
   max-width: none;
+  width: 100%;
   margin: 0;
   padding: 0 var(--ab-gutter) 96px;
   box-sizing: border-box;
@@ -93,7 +99,7 @@ html[data-theme='dark'] .ab-page {
 
 .ab-title {
   margin: 0;
-  font-size: clamp(40px, 7vw, 72px);
+  font-size: 48px;
   font-weight: 400;
   line-height: 1.1;
   /* oil-polish: Segoe display tracking (was -0.05em) */
@@ -104,7 +110,7 @@ html[data-theme='dark'] .ab-page {
 .ab-sub {
   margin: 16px 0 0;
   max-width: 720px;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.25;
   /* oil-polish: soften subhead tracking (was -1.2px) */
@@ -186,7 +192,7 @@ html[data-theme='dark'] .ab-page {
   max-width: 500px;
   /* oil-polish: air under lead (was 24px) */
   margin: 32px 0 0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   /* oil-polish: Fluent reading rhythm (was 1.4 / -0.8px) */
   line-height: 1.5;
@@ -770,16 +776,6 @@ html[data-theme='dark'] .ab-photo {
 }
 
 @media (max-width: 900px) {
-  body[data-page="about"],
-  body[data-page="home"] {
-    --ab-gutter: 48px;
-  }
-
-  body[data-page="about"] .site-header,
-  body[data-page="home"] .site-header {
-    padding-inline: 48px;
-  }
-
   .ab-lead,
   .ab-h,
   .ab-pull {
@@ -789,7 +785,7 @@ html[data-theme='dark'] .ab-photo {
   }
 
   .ab-sub {
-    font-size: 20px;
+    font-size: 18px;
     /* oil-polish: mobile sub tracking (was -0.8px) */
     letter-spacing: -0.4px;
   }
@@ -800,16 +796,6 @@ html[data-theme='dark'] .ab-photo {
 }
 
 @media (max-width: 640px) {
-  body[data-page="about"],
-  body[data-page="home"] {
-    --ab-gutter: 24px;
-  }
-
-  body[data-page="about"] .site-header,
-  body[data-page="home"] .site-header {
-    padding-inline: 24px;
-  }
-
   .ab-title {
     font-size: clamp(32px, 10vw, 48px);
   }

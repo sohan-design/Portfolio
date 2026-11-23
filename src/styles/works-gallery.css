@@ -1,13 +1,11 @@
 /* Works page — Direction A: stacked category grids + filmstrip viewer */
 
 body[data-page="work"] {
-  --wg-gutter: clamp(24px, 5vw, 120px);
-  /* Contact me footer reads --ab-gutter — keep it locked to Works body. */
-  --ab-gutter: var(--wg-gutter);
+  /* --wg-gutter / --ab-gutter come from the shared --nav-gutter shell. */
   /* Match homepage .hp2-pcard-grid */
   --wg-gap-row: 56px;
   --wg-gap-col: 48px;
-  --wg-max: 2160px;
+  --wg-max: var(--nav-max);
   --wg-mat: 5px;
   --wg-mat-color: rgba(255, 255, 255, 0.15);
 }
@@ -25,27 +23,28 @@ body[data-page="work"] .site {
 
 body[data-page="work"] .site-header {
   margin: 0 auto;
-  padding: 0 var(--wg-gutter) 24px;
-  max-width: var(--wg-max);
+  padding: 0 var(--nav-gutter) 24px;
+  max-width: var(--nav-max);
   width: 100%;
   box-sizing: border-box;
 }
 
 body[data-page="work"] .site-header.is-sticky-nav {
-  height: 64px;
+  height: 72px;
   padding-top: 0;
   padding-bottom: 0;
-  padding-inline: var(--wg-gutter);
+  padding-inline: var(--nav-gutter);
   margin-bottom: 0;
 }
 
 body[data-page="work"] .site-header.is-sticky-nav.is-nav-fixed {
+  /* Fixed bar is full-bleed; shared .site-nav rule owns the shell padding. */
   margin: 0;
-  padding-inline: var(--wg-gutter);
+  padding-inline: 0;
 }
 
 body[data-page="work"] .site-nav {
-  max-width: var(--wg-max);
+  max-width: var(--nav-max);
   margin-left: auto;
   margin-right: auto;
 }
@@ -143,7 +142,6 @@ body[data-page="work"] .site-nav {
 
 @media (max-width: 900px) {
   body[data-page="work"] {
-    --wg-gutter: 48px;
     --wg-gap-row: 40px;
     --wg-gap-col: 24px;
   }
@@ -154,10 +152,6 @@ body[data-page="work"] .site-nav {
 }
 
 @media (max-width: 640px) {
-  body[data-page="work"] {
-    --wg-gutter: 24px;
-  }
-
   .wg-section {
     margin-bottom: 56px;
   }

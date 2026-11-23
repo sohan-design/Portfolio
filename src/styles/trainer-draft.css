@@ -7,7 +7,7 @@
 .cs-draft .cs-panel {
   --sans: var(--font);
   --mono: var(--font);
-  --td-gutter: 120px;
+  --td-gutter: var(--nav-gutter);
   --td-page-bg: var(--bg);
   --td-text-primary: var(--text);
   --td-text-muted: var(--text-muted);
@@ -91,16 +91,35 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   position: relative;
 }
 
+/* Pull out of .cs-content’s gutter so the bar matches home’s --nav-max shell.
+   Docked state uses the shared fixed full-bleed rules in main.css. */
 .cs-draft .site-header {
-  width: 100%;
-  margin: 0;
-  padding: 40px 0 32px;
   flex: none;
+  width: auto;
+  max-width: none;
+  margin: 0 calc(-1 * var(--td-gutter));
+  padding: 40px var(--nav-gutter) 32px;
+  box-sizing: border-box;
+}
+
+.cs-draft .site-header.is-sticky-nav {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.cs-draft .site-header.is-sticky-nav.is-nav-fixed {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-inline: 0;
 }
 
 .cs-draft .site-nav {
   width: 100%;
-  max-width: none;
+  max-width: var(--nav-max);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .cs-draft .td-hero-fill.cs-hero-fill {
@@ -516,19 +535,7 @@ html[data-theme="dark"] .cs-draft .cs-panel {
   color: var(--td-cite);
 }
 
-@media (max-width: 1280px) {
-  .cs-draft.cs-overlay,
-  .cs-draft .cs-panel {
-    --td-gutter: 80px;
-  }
-}
-
 @media (max-width: 1079px) {
-  .cs-draft.cs-overlay,
-  .cs-draft .cs-panel {
-    --td-gutter: 40px;
-  }
-
   .cs-draft .td-hero-shader.cs-hero-shader {
     --td-shader-w: clamp(120px, 32vw, 240px);
   }
@@ -599,11 +606,6 @@ html[data-theme="dark"] .cs-draft .cs-panel {
 }
 
 @media (max-width: 720px) {
-  .cs-draft.cs-overlay,
-  .cs-draft .cs-panel {
-    --td-gutter: 20px;
-  }
-
   .cs-draft .td-hero-fill.cs-hero-fill {
     min-height: clamp(64px, 16vh, 160px);
   }
